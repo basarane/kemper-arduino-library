@@ -35,14 +35,14 @@ void KemperRemoteDisplay::draw() {
 
 		if (kemper->state.mode != MODE_TUNER && kemperRemote->state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE)
 		{
-			static unsigned long saveTime = -1;
+			static unsigned long saveTime = 0;
 			static bool lastShowSave = false;
 
 			bool isSaved = !lastKemperRemoteState.isSaved && kemperRemote->state.isSaved;
 			if (isSaved) {
 				saveTime = millis();
 			}
-			bool showSave = millis() - saveTime < 2000 && saveTime>-1;
+			bool showSave = millis() - saveTime < 2000 && saveTime>0;
 			bool updateStomps = (lastKemperRemoteState.state == REMOTE_STATE_RIG_ASSIGN && kemperRemote->state.state != REMOTE_STATE_RIG_ASSIGN ) 
 					|| (lastKemperRemoteState.state == REMOTE_STATE_EXPRESSION_CALIBRATE && kemperRemote->state.state != REMOTE_STATE_EXPRESSION_CALIBRATE) 
 					|| (lastKemperState.mode == MODE_TUNER && kemper->state.mode != MODE_TUNER) || lastShowSave != showSave
@@ -51,12 +51,15 @@ void KemperRemoteDisplay::draw() {
 					|| forceShow;
 			if (isSaved) {
 				display->fillRect(0, 0, width-1, height/2, getColor(0,0,255));
-				char* saveText = "STOMP AND RIG ASSIGNMENTS SAVED";
+				char* saveText = "SETTINGS SAVED";
 				//display->drawText(5, 5, 40, saveText, strlen(saveText), getColor(255,255,255), 0, 14);
 				display->drawText(0, 0, width-1, height/2, TextAlignCenter, TextAlignMiddle, 40, saveText, strlen(saveText), getColor(255,255,255));
 			}
 
 			if (!showSave) {
+				debug("\nUpdate stomps: ");
+				debug(updateStomps);
+				debug("\n");
 				if (updateStomps) {
 					display->fillRect(0, 0, width-1, height/2, getColor(255,255,255));
 				}

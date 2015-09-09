@@ -19,23 +19,29 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 
 	state.currentPerformance = -1;
 	state.currentSlot = -1;
+	saveUpDown = 0;
 
 	for (int i=0;i<RIG_COUNT;i++)
 		rigMap[i] = i;
 
-	for (int i=0;i<RIG_COUNT;i++)
+	for (int i=0;i<SWITCH_RIG_COUNT;i++)
 		for (int j=0;j<SWITCH_STOMP_COUNT;j++) {
 			stompAssignment[i][j] = 0;
-			for (int k=0;k<PERFORM_SLOT_COUNT;k++) {
-				stompAssignmentPerform[i][k][j] = 0;
-			}
 		}
+	for (int k = 0; k<PERFORM_SLOT_COUNT; k++) {
+		for (int j = 0; j < SWITCH_STOMP_COUNT; j++) {
+			stompAssignmentPerform[k][j] = 0;
+		}
+	}
 	for (int j=0;j<SWITCH_STOMP_COUNT;j++)
 		currentStompAssignment[j] = 0;
 
+	EEPROM.get(sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT, rigMap);
+
+	/*
+	//@ersin - add EEPROM save
 	EEPROM.get( 0, stompAssignment );
 	EEPROM.get( sizeof(stompAssignment), stompAssignmentPerform );
-	EEPROM.get( sizeof(stompAssignment) + sizeof(stompAssignmentPerform), rigMap);
 
 	for (int i=0;i<RIG_COUNT;i++)
 		for (int j=0;j<SWITCH_STOMP_COUNT;j++) {
@@ -46,6 +52,7 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 					stompAssignmentPerform[i][k][j] = 0;
 			}
 		}
+		*/
 	for (int i=0;i<RIG_COUNT;i++)
 		if (rigMap[i] == 255)
 			rigMap[i] = i;
@@ -105,14 +112,18 @@ void KemperRemote::read() {
 	{
 		if (rigMap[currentRig] != kemper->state.currentRig || lastKemperMode!=MODE_BROWSE) {
 			currentRig = getRigIndex(kemper->state.currentRig);
-			memcpy(currentStompAssignment, stompAssignment[currentRig], SWITCH_STOMP_COUNT);
+			EEPROM.get((currentRig/SWITCH_RIG_COUNT)*sizeof(stompAssignment), stompAssignment);
+			memcpy(currentStompAssignment, stompAssignment[currentRig%SWITCH_RIG_COUNT], SWITCH_STOMP_COUNT);
 		}
 	}
 	if (kemper->state.mode == MODE_PERFORM) {
+		if (state.currentPerformance != kemper->state.performance) {
+			EEPROM.get(BROWSE_PAGE_COUNT*sizeof(stompAssignment) + (kemper->state.performance)*sizeof(stompAssignmentPerform), stompAssignmentPerform);
+		}
 		if (state.currentPerformance != kemper->state.performance || state.currentSlot != kemper->state.slot || lastKemperMode!=MODE_PERFORM) {
 			state.currentPerformance = kemper->state.performance;
 			state.currentSlot = kemper->state.slot;
-			memcpy(currentStompAssignment, stompAssignmentPerform[state.currentPerformance][state.currentSlot], SWITCH_STOMP_COUNT);
+			memcpy(currentStompAssignment, stompAssignmentPerform[state.currentSlot], SWITCH_STOMP_COUNT);
 		}
 	}
 
@@ -147,7 +158,7 @@ void KemperRemote::refreshStompAssignment() {
 	if (kemper->state.mode == MODE_BROWSE) {
 		assignment = stompAssignment[currentRig];
 	} else if (kemper->state.mode == MODE_PERFORM) {
-		assignment = stompAssignmentPerform[state.currentPerformance][state.currentSlot];
+		assignment = stompAssignmentPerform[state.currentSlot];
 	}
 	for (int i = 0;i<SWITCH_STOMP_COUNT;i++) {
 		if (assignment && assignment[i]==0) {
@@ -196,12 +207,12 @@ void KemperRemote::assignStomps(byte switchId, byte assign) {
 	currentStompAssignment[switchId] = assign;
 	if (kemper->state.mode == MODE_BROWSE) {
 		for (int i=0;i<SWITCH_STOMP_COUNT;i++) {
-			stompAssignment[currentRig][i] = currentStompAssignment[i]; // assign default assignments permanently
+			stompAssignment[currentRig%SWITCH_STOMP_COUNT][i] = currentStompAssignment[i]; // assign default assignments permanently
 			state.isSaved = false;
 		}
 	} else if (kemper->state.mode == MODE_PERFORM) {
 		for (int i=0;i<SWITCH_STOMP_COUNT;i++) {
-			stompAssignmentPerform[state.currentPerformance][state.currentSlot][i] = currentStompAssignment[i]; // assign default assignments permanently
+			stompAssignmentPerform[state.currentSlot][i] = currentStompAssignment[i]; // assign default assignments permanently
 			state.isSaved = false;
 		}
 	}
@@ -245,7 +256,6 @@ void KemperRemote::checkUpDownScroll() {
 	static unsigned long lastUpDownScroll = 0;
 	if (millis() - switchDownStart > 1000 && switchStates[SWITCH_UP] && switchStates[SWITCH_DOWN] && !state.isSaved) {
 		// save
-		state.isSaved = true;
 		save();
 	}
 	if (state.state == REMOTE_STATE_RIG_ASSIGN && millis() - switchDownStart > 500 && millis() - lastUpDownScroll>150) {
@@ -354,15 +364,7 @@ void KemperRemote::onSwitchDown(int sw) {
 		} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
 			if (rigAssignRig>0)
 				kemper->setRig(--rigAssignRig);
-		} else if (state.state != REMOTE_STATE_LOOPER) {
-			if (kemper->state.mode == MODE_PERFORM) {
-				kemper->setPerformance(kemper->state.performance-1);
-			} else if (kemper->state.mode == MODE_BROWSE) {
-				state.currentPage = (byte)max(0, state.currentPage-1);
-			}
-			debug(F("Page changed"));
-			debug(state.currentPage);
-		}
+		} 
 	}
 	if (sw == SWITCH_DOWN) {
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
@@ -370,15 +372,6 @@ void KemperRemote::onSwitchDown(int sw) {
 		} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
 			if (rigAssignRig<RIG_COUNT-2)
 				kemper->setRig(++rigAssignRig);
-		}
-		else {
-			if (kemper->state.mode == MODE_PERFORM) {
-				kemper->setPerformance(kemper->state.performance+1);
-			} else if (kemper->state.mode == MODE_BROWSE) {
-				state.currentPage = (byte)min(kemper->state.mode == MODE_PERFORM?125:25, state.currentPage+1);
-			}
-			debug(F("Page changed"));
-			debug(state.currentPage);
 		}
 	}
 	if (sw == SWITCH_TUNER) {
@@ -471,6 +464,32 @@ void KemperRemote::onSwitchUp(int sw) {
 		state.state = REMOTE_STATE_NORMAL;
 		debug(F("Normal Mode"));
 	}
+
+	if (sw == SWITCH_UP) {
+		if (state.state != REMOTE_STATE_STOMP_PARAMETER && state.state != REMOTE_STATE_RIG_ASSIGN && saveUpDown == 0) {
+			if (kemper->state.mode == MODE_PERFORM) {
+				kemper->setPerformance(kemper->state.performance - 1);
+			}
+			else if (kemper->state.mode == MODE_BROWSE) {
+				state.currentPage = (byte)max(0, state.currentPage - 1);
+			}
+			debug(F("Page changed"));
+			debug(state.currentPage);
+		}
+		saveUpDown = max(saveUpDown - 1, 0);
+	}
+	if (sw == SWITCH_DOWN) {
+		if (state.state != REMOTE_STATE_STOMP_PARAMETER && state.state != REMOTE_STATE_RIG_ASSIGN && saveUpDown == 0) {
+			if (kemper->state.mode == MODE_PERFORM) {
+				kemper->setPerformance(kemper->state.performance + 1);
+			}
+			else if (kemper->state.mode == MODE_BROWSE) {
+				state.currentPage = (byte)min(kemper->state.mode == MODE_PERFORM ? 125 : 25, state.currentPage + 1);
+			}
+		}
+		saveUpDown = max(saveUpDown - 1, 0);
+	}
+
 	if (state.state == REMOTE_STATE_TEMPO_DETECTION)
 		state.state = REMOTE_STATE_NORMAL;
 
@@ -556,11 +575,17 @@ void KemperRemote::updateLeds() {
 		leds[l++] = expPedals[0].mode == ExpressionPedalModes[i] && expPedals[0].isCalibrated()?0x7f:0;
 		leds[l++] = expPedals[0].mode == ExpressionPedalModes[i] && expPedals[0].isCalibrated()?0x7f:0;
 	}
-
 }
 
 void KemperRemote::save() {
+	/* //@ersin - add save here
 	EEPROM.put( 0, stompAssignment );
 	EEPROM.put( sizeof(stompAssignment), stompAssignmentPerform );
 	EEPROM.put( sizeof(stompAssignment)+sizeof(stompAssignmentPerform), rigMap);
+	*/
+	EEPROM.put((currentRig / SWITCH_RIG_COUNT)*sizeof(stompAssignment), stompAssignment);
+	EEPROM.put(BROWSE_PAGE_COUNT*sizeof(stompAssignment) + (kemper->state.performance)*sizeof(stompAssignmentPerform), stompAssignmentPerform);
+	EEPROM.put(sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT, rigMap);
+	state.isSaved = true;
+	saveUpDown = 2;
 }

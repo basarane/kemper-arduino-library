@@ -21,6 +21,8 @@ BEGIN_KEMPER_NAMESPACE
 #define SWITCH_DOWN 13
 #define SWITCH_COUNT 14
 
+#define BROWSE_PAGE_COUNT (ceil((float)RIG_COUNT/SWITCH_RIG_COUNT))
+
 #define REMOTE_STATE_NORMAL 1
 #define REMOTE_STATE_STOMP_ASSIGN 2
 #define REMOTE_STATE_RIG_ASSIGN 3
@@ -56,12 +58,13 @@ class KemperRemote
 {
 private:
 	byte currentRig;
-	byte stompAssignment[RIG_COUNT][SWITCH_STOMP_COUNT];
-	byte stompAssignmentPerform[RIG_COUNT][PERFORM_SLOT_COUNT][SWITCH_STOMP_COUNT];
+	byte stompAssignment[SWITCH_RIG_COUNT][SWITCH_STOMP_COUNT];
+	byte stompAssignmentPerform[PERFORM_SLOT_COUNT][SWITCH_STOMP_COUNT];
 
 	int currentSwitch;
 	bool switchStates[SWITCH_COUNT];
 	unsigned long switchDownStart;
+	byte saveUpDown;
 	bool initialStompStates[KEMPER_STOMP_COUNT];
 	bool changedStomps[KEMPER_STOMP_COUNT];
 	byte rigAssignRig;
