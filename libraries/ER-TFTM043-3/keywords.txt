@@ -1,0 +1,136 @@
+
+#######################################
+# Syntax Coloring Map for RA8875
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+RA8875	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+displayOn	KEYWORD2
+sleep	KEYWORD2
+brightness	KEYWORD2
+changeMode	KEYWORD2
+setActiveWindow	KEYWORD2
+setForegroundColor	KEYWORD2
+setBackgroundColor	KEYWORD2
+setTrasparentColor	KEYWORD2
+showCursor	KEYWORD2
+setCursorBlinkRate	KEYWORD2
+setIntFontCoding	KEYWORD2
+setXY	KEYWORD2
+pushPixels	KEYWORD2
+fillRect	KEYWORD2
+drawPixel	KEYWORD2
+drawFastVLine	KEYWORD2
+drawFastHLine	KEYWORD2
+fillScreen	KEYWORD2
+drawLine	KEYWORD2
+drawRect	KEYWORD2
+fillRect	KEYWORD2
+drawCircle	KEYWORD2
+fillCircle	KEYWORD2
+drawTriangle	KEYWORD2
+fillTriangle	KEYWORD2
+drawEllipse	KEYWORD2
+fillEllipse	KEYWORD2
+drawCurve	KEYWORD2
+fillCurve	KEYWORD2
+drawRoundRect	KEYWORD2
+fillRoundRect	KEYWORD2
+touchBegin	KEYWORD2
+touchEnable	KEYWORD2
+touchDetect	KEYWORD2
+touchReadRaw	KEYWORD2
+touchReadPixel	KEYWORD2
+touchCalibrated	KEYWORD2
+readStatus	KEYWORD2
+begin	KEYWORD2
+setCursor	KEYWORD2
+setTextColor	KEYWORD2
+setFontSize	KEYWORD2
+setFontScale	KEYWORD2
+setFontSpacing	KEYWORD2
+setExternalFontRom	KEYWORD2
+setExtFontFamily	KEYWORD2
+setFontFullAlign	KEYWORD2
+setFontRotate	KEYWORD2
+setFontInterline	KEYWORD2
+uploadUserChar	KEYWORD2
+showUserChar	KEYWORD2
+setGraphicCursor	KEYWORD2
+showGraphicCursor	KEYWORD2
+getCursor	KEYWORD2
+width	KEYWORD2
+height	KEYWORD2
+setScrollWindow	KEYWORD2
+scroll	KEYWORD2
+drawFlashImage	KEYWORD2
+useLayers	KEYWORD2
+scanDirection	KEYWORD2
+writeTo	KEYWORD2
+layerEffect	KEYWORD2
+layerTransparency	KEYWORD2
+writeCommand	KEYWORD2
+writeData16	KEYWORD2
+setX	KEYWORD2
+setY	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+RA8875_320x240	LITERAL1
+RA8875_480x272	LITERAL1
+RA8875_800x480	LITERAL1
+RA8875_640x480	LITERAL1
+Adafruit_480x272	LITERAL1
+Adafruit_800x480	LITERAL1
+GRAPHIC	LITERAL1
+TEXT	LITERAL1
+INT	LITERAL1
+EXT LITERAL1
+ISO_IEC_8859_1	LITERAL1
+ISO_IEC_8859_2	LITERAL1
+ISO_IEC_8859_3	LITERAL1
+ISO_IEC_8859_4	LITERAL1
+GT21L16T1W	LITERAL1
+GT21H16T1W	LITERAL1
+GT23L16U2W	LITERAL1
+GT30H24T3Y	LITERAL1
+GT23L24T3Y	LITERAL1
+GT23L24M1Z	LITERAL1
+GT23L32S4W	LITERAL1
+GT30H32S4W	LITERAL1
+ER3303_1	LITERAL1
+GB2312	LITERAL1
+GB12345	LITERAL1
+BIG5	LITERAL1
+UNICODE	LITERAL1
+ASCII	LITERAL1
+UNIJIS	LITERAL1
+JIS0208	LITERAL1
+LATIN	LITERAL1
+STANDARD	LITERAL1
+ARIAL	LITERAL1
+ROMAN	LITERAL1
+BOLD	LITERAL1
+LAYER1	LITERAL1
+LAYER2	LITERAL1
+TRANSPARENT	LITERAL1
+LIGHTEN	LITERAL1
+OR	LITERAL1
+AND	LITERAL1
+FLOATING	LITERAL1
+L1	LITERAL1
+L2	LITERAL1
+CGRAM	LITERAL1
+PATTERN	LITERAL1
+CURSOR	LITERAL1
+NEEDS_SET_MODULE	LITERAL1

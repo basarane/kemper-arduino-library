@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E54C8EE7-2D72-4414-819A-D944E7397C97}</ProjectGuid>
+    <RootNamespace>TestKemperWin</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildAfterTargets>ImpLib</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\KemperRemoteDIYWin\mocks;D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\KemperRemoteDIYWin;D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\libraries\MIDI;D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\libraries\Kemper</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) ..\..\..\node</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>.\mocks;.\;..\libraries\MIDI;..\libraries\Kemper</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <CallingConvention>Cdecl</CallingConvention>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) ..\..\..\node</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libraries\Kemper\AbstractDisplay.cpp" />
+    <ClCompile Include="..\libraries\Kemper\AbstractKemper.cpp" />
+    <ClCompile Include="..\libraries\Kemper\ExpressionPedal.cpp" />
+    <ClCompile Include="..\libraries\Kemper\Kemper.cpp" />
+    <ClCompile Include="..\libraries\Kemper\KemperRemote.cpp" />
+    <ClCompile Include="..\libraries\Kemper\KemperRemoteDisplay.cpp" />
+    <ClCompile Include="..\libraries\Kemper\VirtualDisplaySerializer.cpp" />
+    <ClCompile Include="..\libraries\Kemper\Stomp.cpp" />
+    <ClCompile Include="..\libraries\Kemper\Utils.cpp" />
+    <ClCompile Include="..\libraries\Kemper\VirtualDisplay.cpp" />
+    <ClCompile Include="KemperRemoteDIYWin.cpp" />
+    <ClCompile Include="MidiWrapper.cpp" />
+    <ClCompile Include="mocks\Arduino.cpp" />
+    <ClCompile Include="mocks\EEPROM.cpp" />
+    <ClCompile Include="mocks\KemperMock.cpp" />
+    <ClCompile Include="mocks\wstring.cpp" />
+    <ClCompile Include="RtMidi.cpp" />
+    <ClCompile Include="SerialDisplaySerializer.cpp" />
+    <ClCompile Include="WindowsSerial.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\libraries\Kemper\AbstractDisplay.h" />
+    <ClInclude Include="..\libraries\Kemper\AbstractDisplaySerializer.h" />
+    <ClInclude Include="..\libraries\Kemper\AbstractKemper.h" />
+    <ClInclude Include="..\libraries\Kemper\ExpressionPedal.h" />
+    <ClInclude Include="..\libraries\Kemper\Kemper.h" />
+    <ClInclude Include="..\libraries\Kemper\KemperRemote.h" />
+    <ClInclude Include="..\libraries\Kemper\KemperRemoteDisplay.h" />
+    <ClInclude Include="..\libraries\Kemper\Kemper_namespace.h" />
+    <ClInclude Include="..\libraries\Kemper\VirtualDisplaySerializer.h" />
+    <ClInclude Include="..\libraries\Kemper\Stomp.h" />
+    <ClInclude Include="..\libraries\Kemper\Utils.h" />
+    <ClInclude Include="..\libraries\Kemper\VirtualDisplay.h" />
+    <ClInclude Include="inttypes.h" />
+    <ClInclude Include="KemperRemoteDIYWin.h" />
+    <ClInclude Include="MidiWrapper.h" />
+    <ClInclude Include="mocks\Arduino.h" />
+    <ClInclude Include="mocks\KemperMock.h" />
+    <ClInclude Include="mocks\TypesMock.h" />
+    <ClInclude Include="mocks\wstring.h" />
+    <ClInclude Include="RtMidi.h" />
+    <ClInclude Include="SerialDisplaySerializer.h" />
+    <ClInclude Include="WindowsSerial.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
