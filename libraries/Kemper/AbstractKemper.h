@@ -71,6 +71,7 @@ class AbstractKemper
 
 		void loadPartialParam(int stompIdx);
 		void movePartialParam(int paramOffset, int optionOffset);
+		void setPartialParamValue(float value);
 		virtual void getStompParameter(int stompIdx, int paramNumber) = 0;
 
 		virtual void read() = 0;

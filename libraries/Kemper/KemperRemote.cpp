@@ -75,6 +75,7 @@ void KemperRemote::read() {
 	ledUpdate = millis();
 	for (int i=0;i<EXPRESSION_PEDAL_COUNT;i++) {
 		expPedals[i].read();
+		//Serial.println(expPedals[i].value);
 		static unsigned long lastCalibrateDebug = 0;
 		static unsigned long pedalFirstNonZeroTimes[EXPRESSION_PEDAL_COUNT];
 		static unsigned long pedalFirstZeroTimes[EXPRESSION_PEDAL_COUNT];
@@ -105,6 +106,13 @@ void KemperRemote::read() {
 		}
 		if (state.state == REMOTE_STATE_EXPRESSION_CALIBRATE) {
 			expPedals[i].calibrate();
+		}
+		if (state.state == REMOTE_STATE_STOMP_PARAMETER && expPedals[i].isCalibrated() && i==0) { //only first exp pedal
+			unsigned int lastExpValue = 0;
+			if (abs(expPedals[i].calibratedValue() - lastExpValue) > 3) { // eliminate some noise
+				float t = (float)expPedals[i].calibratedValue() / 1023;
+				kemper->setPartialParamValue(t);
+			}
 		}
 	}
 	static int lastKemperMode = -1;

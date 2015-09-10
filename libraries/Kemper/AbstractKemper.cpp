@@ -59,3 +59,15 @@ void AbstractKemper::movePartialParam(int paramOffset, int optionOffset) {
 	if (curParamVal!=parameter.currentParam)
 		state.parameterState++;
 }
+
+void AbstractKemper::setPartialParamValue(float value) {
+	int optionValue = 0;
+	if (parameter.totalOptionCount > 0) {
+		optionValue = floor(value * (parameter.totalOptionCount-0.001));
+	} else {
+		optionValue = floor(value * ((1<<14)-1));
+	}
+	if (optionValue != parameter.currentOption) {
+		setStompParam(parameter.stompIdx, parameter.params[parameter.currentParam - parameter.startParamIndex].number, optionValue);
+	}
+}

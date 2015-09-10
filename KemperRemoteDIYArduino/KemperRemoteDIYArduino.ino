@@ -103,7 +103,7 @@ void loop()
 	}
 
 
-#ifndef KEMPER_DEBUG
+#if !defined(KEMPER_DEBUG) && defined(ENABLE_VIRTUAL_DISPLAY)
 	if (millis() - ledTime > 50) {
 		Serial.write(0xF0);
 		for (int i=0;i<LED_COUNT*3;i++) {
@@ -148,6 +148,7 @@ if (millis() - tlcLedTime > 50) {
 #endif
 	display2.draw();
 
+#if defined(ENABLE_VIRTUAL_DISPLAY)
 	static unsigned long memoryDebugTime = 0;
 	static unsigned int perIdx = 0;
 	if (millis() - memoryDebugTime > 5000 && true) { 
@@ -156,6 +157,6 @@ if (millis() - tlcLedTime > 50) {
 		debug((int)(millis() / 1000));
 		memoryDebugTime = millis();
 	}
-
+#endif
 }
 

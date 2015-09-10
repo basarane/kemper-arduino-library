@@ -214,3 +214,6 @@ ModelManifest.xml
 # Arduino files
 *.cpp.d
 *.cpp.o
+
+# Test projects
+Test*/
