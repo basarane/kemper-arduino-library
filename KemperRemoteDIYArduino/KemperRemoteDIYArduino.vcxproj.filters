@@ -13,6 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="_core">
+      <UniqueIdentifier>{3409af0e-7506-46f3-8894-76f9c4e56f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries">
+      <UniqueIdentifier>{02ae620d-3b2f-4d66-9d08-91d9cb7dbed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\EEPROM">
+      <UniqueIdentifier>{835ec15f-22f8-47f5-8012-f4f8ed2f87b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\ER-TFTM043-3">
+      <UniqueIdentifier>{2659c47b-c973-4dcf-bebe-1b3911f1ef1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\Kemper">
+      <UniqueIdentifier>{8e03cf11-ce5e-439e-8d26-dd17f1374014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\MemoryFree">
+      <UniqueIdentifier>{d11ff295-e094-4be9-8bb7-ba8b8daf88ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\MIDI">
+      <UniqueIdentifier>{009cb19a-f082-44b0-980d-daade90df90c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\MultiButton">
+      <UniqueIdentifier>{9b256829-b8b7-4371-8bd0-de166e06971b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\SPI">
+      <UniqueIdentifier>{df916a33-1f62-48a5-9825-e9ce711aba2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_libraries\Tlc5940">
+      <UniqueIdentifier>{d2f1d115-2fdc-45c0-9bfa-a533c3a885f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.KemperRemoteDIYArduino.vsarduino.h">
@@ -57,8 +87,244 @@
     <ClInclude Include="..\libraries\Kemper\VirtualDisplaySerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Arduino.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\binary.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Client.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial_private.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\IPAddress.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\new.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Print.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Printable.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Server.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Stream.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Udp.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBAPI.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBCore.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBDesc.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WCharacter.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_private.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WString.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega\pins_arduino.h">
+      <Filter>_core</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\EEPROM.h">
+      <Filter>_libraries\EEPROM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\ER-TFTM043-3\RA8875.h">
+      <Filter>_libraries\ER-TFTM043-3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MemoryFree\MemoryFree.h">
+      <Filter>_libraries\MemoryFree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MIDI\MIDI.h">
+      <Filter>_libraries\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MIDI\midi_Defs.h">
+      <Filter>_libraries\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MIDI\midi_Message.h">
+      <Filter>_libraries\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MIDI\midi_Namespace.h">
+      <Filter>_libraries\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MIDI\midi_Settings.h">
+      <Filter>_libraries\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\MultiButton\MultiButton.h">
+      <Filter>_libraries\MultiButton</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\SPI.h">
+      <Filter>_libraries\SPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\Tlc5940.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\tlc_animations.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\tlc_config.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\tlc_fades.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\tlc_progmem_utils.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\tlc_servos.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libraries\Tlc5940\tlc_shifts.h">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="KemperRemoteDIYArduino.ino" />
+    <None Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_pulse.S">
+      <Filter>_core</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\abi.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\CDC.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial0.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial1.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial2.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HardwareSerial3.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\HID.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\hooks.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\IPAddress.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\main.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\new.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Print.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Stream.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\Tone.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\USBCore.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WInterrupts.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_analog.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_digital.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_pulse.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_shift.c">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WMath.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WString.cpp">
+      <Filter>_core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\ER-TFTM043-3\RA8875.cpp">
+      <Filter>_libraries\ER-TFTM043-3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\AbstractDisplay.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\AbstractKemper.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\Display_ER_RA8875.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\ExpressionPedal.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\Kemper.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\KemperRemote.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\KemperRemoteDisplay.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\Stomp.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\Utils.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\VirtualDisplay.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Kemper\VirtualDisplaySerializer.cpp">
+      <Filter>_libraries\Kemper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\MemoryFree\MemoryFree.cpp">
+      <Filter>_libraries\MemoryFree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\MIDI\MIDI.cpp">
+      <Filter>_libraries\MIDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\MultiButton\MultiButton.cpp">
+      <Filter>_libraries\MultiButton</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\SPI.cpp">
+      <Filter>_libraries\SPI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libraries\Tlc5940\Tlc5940.cpp">
+      <Filter>_libraries\Tlc5940</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-
+#include <VirtualDisplaySerializer.h>
+#include <VirtualDisplay.h>
 #include <SPI.h>
 #include <RA8875.h>
 #include <MemoryFree.h>
