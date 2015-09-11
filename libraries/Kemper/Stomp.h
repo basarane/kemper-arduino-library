@@ -86,6 +86,7 @@ struct PartialParameter
 
 	StompInfo* stompInfo;
 	int stompIdx;
+	int stompType;
 	KemperParam params[NUMBER_OF_PARAMS_IN_LIST];
 	KemperParamOption options[NUMBER_OF_PARAMS_IN_LIST];
 };
@@ -678,6 +679,7 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 bool loadStompInfo(StompInfo *dst, int stompId, int id);
 void loadStompParameters(PartialParameter *parameter, StompInfo *info = 0);
 bool updateStompParameterValue(PartialParameter *parameter, int value);
+int getOptionValue(PartialParameter *parameter, int optionIndex);
 
 void testParam(int a, int b);
 

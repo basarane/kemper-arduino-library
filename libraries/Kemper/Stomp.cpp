@@ -26,8 +26,15 @@ bool KEMPER_NAMESPACE::loadStompInfo(StompInfo *dst, int stompId, int id)
 
 void KEMPER_NAMESPACE::loadStompParameters(PartialParameter *parameter, StompInfo *info /* = 0 */)
 {
-	if (info)
+	if (info) {
 		parameter->stompInfo = info;
+		parameter->stompType = info->type;
+	}
+	if (parameter->stompType != parameter->stompInfo->type) {
+		parameter->currentOption = 0;
+		parameter->currentParam = 0;
+		parameter->stompType = parameter->stompInfo->type;
+	}
 	parameter->paramCount = 0;
 	parameter->totalParamCount = parameter->stompInfo->paramCount;
 	int startParamIndex = max(parameter->currentParam - (NUMBER_OF_PARAMS_IN_LIST-1)/2, 0);
@@ -69,6 +76,19 @@ void KEMPER_NAMESPACE::loadStompParameters(PartialParameter *parameter, StompInf
 	} else {
 		parameter->startOptionIndex = 0;
 		parameter->optionCount = 0;
+	}
+}
+
+int KEMPER_NAMESPACE::getOptionValue(PartialParameter *parameter, int optionIndex) {
+	if (parameter->totalOptionCount && optionIndex<parameter->totalOptionCount && optionIndex>=0) {
+		PGM_KemperParam** params = (PGM_KemperParam**)pgm_read_word_near(&AllStomps[parameter->stompInfo->PGM_index].params);
+		const PGM_KemperParam *psrc = (PGM_KemperParam*)pgm_read_word_near(&params[parameter->currentParam]);
+		KemperParamOption** options = (KemperParamOption**)pgm_read_word_near(&psrc->options);
+		KemperParamOption* option = (KemperParamOption*)pgm_read_word_near(&options[optionIndex]);
+		return (int)pgm_read_word_near(&option->value);
+	}
+	else {
+		return 0;
 	}
 }
 

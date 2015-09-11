@@ -143,11 +143,11 @@ void KemperRemote::read() {
 	checkStompChanges();
 	updateLeds(); 
 
-	static unsigned long wahTime = 0;
-	if (millis() - wahTime > 10 && expPedals[0].isCalibrated() && state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE && expPedals[0].isChanged(8))
+	for (int i = 0; i < EXPRESSION_PEDAL_COUNT;i++)
+	if (expPedals[i].isCalibrated() && state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE && expPedals[i].isChanged(8))
 	{
-		kemper->sendControlChange(expPedals[0].mode, (expPedals[0].calibratedValue())/8);
-		wahTime = millis();
+		if (i!=0 || state.state!=REMOTE_STATE_STOMP_PARAMETER) // first exp. pedal is for parameter update
+			kemper->sendControlChange(expPedals[i].mode, (expPedals[i].calibratedValue())/8);
 	}
 }
 
