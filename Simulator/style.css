@@ -1,0 +1,393 @@
+body {
+  transform: scale(1.08); }
+
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  margin: 10px; }
+
+.Board {
+  position: relative;
+  width: 1240px;
+  height: 652px;
+  margin-left: auto;
+  margin-right: auto;
+  background: url(images/board.jpg) no-repeat top left;
+  background-size: cover; }
+
+.Switch {
+  width: 100px;
+  position: absolute;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none; }
+
+.Switch .Title {
+  margin-left: auto;
+  margin-right: auto;
+  color: #FFF;
+  text-align: center;
+  font-size: 20px; }
+
+.Switch .Button {
+  margin-left: auto;
+  margin-right: auto;
+  background: url(images/switch.png);
+  width: 66px;
+  height: 70px;
+  background-size: cover;
+  cursor: pointer; }
+
+.Switch .Title.Posup {
+  position: absolute;
+  left: 0px;
+  top: -30px;
+  width: 100%; }
+
+.Switch .Title.Posright {
+  position: absolute;
+  left: 110px;
+  top: 22px; }
+
+.Switch.TypeRig {
+  top: 530px; }
+
+.Switch.TypeRig.Lid1 {
+  left: 60px; }
+
+.Switch.TypeRig.Lid2 {
+  left: 310px; }
+
+.Switch.TypeRig.Lid3 {
+  left: 560px; }
+
+.Switch.TypeRig.Lid4 {
+  left: 810px; }
+
+.Switch.TypeRig.Lid5 {
+  left: 1060px; }
+
+.Switch.TypeStomp, .Switch.TypeTap {
+  top: 283px; }
+
+.Switch.TypeStomp.Lid1 {
+  left: 60px; }
+
+.Switch.TypeStomp.Lid2 {
+  left: 310px; }
+
+.Switch.TypeStomp.Lid3 {
+  left: 560px; }
+
+.Switch.TypeStomp.Lid4 {
+  left: 810px; }
+
+.Switch.TypeTap {
+  left: 1060px; }
+
+.Switch.TypeUp, .Switch.TypeDown, .Switch.TypeTuner, .Switch.TypeLooper {
+  top: 75px; }
+
+.Switch.TypeTuner {
+  left: 60px; }
+
+.Switch.TypeLooper {
+  left: 310px; }
+
+.Switch.TypeUp {
+  left: 810px; }
+
+.Switch.TypeDown {
+  left: 1060px; }
+
+.Display {
+  position: absolute;
+  background-color: #FFF;
+  width: 228px;
+  height: 152px;
+  left: 502px;
+  top: 97px;
+  font-size: 8px;
+  overflow: hidden; }
+
+.Arduino .Display {
+  width: 1240px;
+  height: 400px;
+  left: 0px;
+  top: 680px;
+  font-size: 8px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #000;
+  color: #0F0;
+  word-wrap: break-word;
+  margin-bottom: 100px; }
+
+.Arduino .Display pre {
+  background-color: #000;
+  color: #0F0;
+  border: 0px none; }
+
+.Display::-webkit-scrollbar {
+  width: 12px; }
+
+.Display::-webkit-scrollbar-track {
+  background-color: #000000;
+  border-left: 1px solid #111; }
+
+.Display::-webkit-scrollbar-thumb {
+  background-color: #5A5; }
+
+.Display::-webkit-scrollbar-thumb:hover {
+  background-color: #8E8; }
+
+.Led {
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  left: -10px;
+  top: 25px;
+  background: url(images/led_red.png) no-repeat top left; }
+
+.Arduino .Led {
+  background: #A0A0A0;
+  -webkit-filter: none !important;
+  border-radius: 12px; }
+
+.Switch.TypeUp .Led, .Switch.TypeDown .Led, .Switch.TypeTuner .Led {
+  display: none; }
+
+.Switch.TypeLooper .Led {
+  top: 80px;
+  left: 37px; }
+
+.Led, .Empty {
+  -webkit-filter: contrast(0) hue-rotate(0deg) brightness(1.2) saturate(0); }
+
+.White {
+  -webkit-filter: contrast(0) hue-rotate(0deg) brightness(10) saturate(0); }
+
+.Red {
+  -webkit-filter: none; }
+
+.Orange {
+  -webkit-filter: contrast(1.5) hue-rotate(-302deg) brightness(2.2) saturate(1.7); }
+
+.Yellow {
+  -webkit-filter: contrast(3) hue-rotate(-307deg) brightness(5) saturate(1); }
+
+.Cyan {
+  -webkit-filter: contrast(1) hue-rotate(-167deg) brightness(5) saturate(1); }
+
+.Blue {
+  -webkit-filter: contrast(1) hue-rotate(-126deg) brightness(1.3) saturate(1); }
+
+.Purple {
+  -webkit-filter: contrast(1) hue-rotate(-56deg) brightness(1.3) saturate(1); }
+
+.Green {
+  -webkit-filter: contrast(3) hue-rotate(-216deg) brightness(1.7) saturate(1); }
+
+.LightGreen {
+  -webkit-filter: contrast(0.5) hue-rotate(-233deg) brightness(3) saturate(0.3); }
+
+.Led1, .Led2, .Led3, .Led4 {
+  display: none; }
+
+.TypeStomp .Led {
+  display: none; }
+
+.TypeStomp .Led1, .TypeStomp .Led2, .TypeStomp .Led3, .TypeStomp .Led4 {
+  display: block; }
+
+.Switch.TypeTuner .Led1, .Switch.TypeTuner .Led2, .Switch.TypeTuner .Led3 {
+  display: block;
+  top: 80px; }
+
+.Switch.TypeTuner .Led1 {
+  left: 0px; }
+
+.Switch.TypeTuner .Led2 {
+  left: 37px; }
+
+.Switch.TypeTuner .Led3 {
+  left: 75px; }
+
+.Led1, .Led3 {
+  top: 10px; }
+
+.Led2, .Led4 {
+  top: 40px; }
+
+.Led3, .Led4 {
+  left: 85px; }
+
+.LedTitle {
+  position: absolute;
+  left: 30px;
+  top: 2px;
+  color: #FFF;
+  font-weight: bold; }
+
+.LedWah {
+  left: 1051px;
+  top: 164px; }
+
+.LedPitch {
+  left: 1051px;
+  top: 194px; }
+
+.LedVolume {
+  left: 1051px;
+  top: 224px; }
+
+.StompList {
+  font-size: 12px; }
+
+.StompList .Stomp {
+  width: 26px;
+  border: 0px none;
+  margin: 1px;
+  display: inline-block;
+  vertical-align: top;
+  word-break: break-all;
+  height: 80px;
+  position: relative;
+  opacity: 0.3; }
+
+.StompList .Stomp.Active {
+  opacity: 1; }
+
+.StompList .Stomp.Empty {
+  background-color: #DDD;
+  -webkit-filter: none; }
+
+.StompList .Stomp .StompName {
+  display: block;
+  transform: rotate(-90deg) translateX(-54px) translateY(26px);
+  transform-origin: left bottom 0;
+  width: 70px;
+  height: 20px;
+  font-size: 13px;
+  font-family: Arial;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px; }
+
+.StompList .Stomp .StompBg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #F00; }
+
+.StompList .Stomp.TypeBlue .StompName {
+  color: #FFF; }
+
+.RigName {
+  font-size: 28px;
+  text-align: center;
+  line-height: 30px; }
+
+.TempoDetect {
+  font-size: 22px;
+  text-align: center;
+  line-height: 24px;
+  padding-top: 6px; }
+
+.StompAssign {
+  font-size: 20px;
+  text-align: center;
+  background: #F00;
+  color: #FFF;
+  padding: 0px;
+  position: relative;
+  top: -10px;
+  line-height: 31px;
+  padding-bottom: 20px; }
+
+.StompAssign .Info {
+  font-size: 14px;
+  line-height: 14px; }
+
+.RigAssign {
+  font-size: 20px;
+  text-align: center;
+  background: #F00;
+  color: #FFF;
+  padding: 0px;
+  position: absolute;
+  top: 0px;
+  line-height: 31px;
+  padding-bottom: 20px; }
+
+.RigAssign .RigNo {
+  font-size: 24px;
+  line-height: 50px;
+  background-color: #FFF;
+  color: #000;
+  padding-top: 20px;
+  padding-bottom: 15px;
+  height: 73px;
+  line-height: 23px; }
+
+.RigAssign .Info {
+  font-size: 14px;
+  line-height: 14px; }
+
+.RigAssign .RigNoInfo {
+  font-size: 14px;
+  line-height: 12px;
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  color: #000; }
+
+.Tuner {
+  font-size: 28px;
+  position: relative; }
+
+.TunerDisplay {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  left: 0px;
+  top: 0px; }
+
+.TunerHorizon {
+  position: absolute;
+  top: 50%;
+  width: 60%;
+  height: 3px;
+  background-color: #CCC;
+  left: 20%; }
+
+.TunerCenter {
+  position: absolute;
+  top: 20%;
+  width: 3px;
+  height: 60%;
+  background-color: #000;
+  left: calc(50% - 1px); }
+
+.TunerPos {
+  position: absolute;
+  border: 3px solid #000;
+  width: 21px;
+  top: 0px;
+  height: 100%; }
+
+#DisplayCanvas {
+  width: 480px;
+  height: 272px;
+  position: absolute;
+  margin-bottom: 100px;
+  top: 38px;
+  margin-bottom: 100px;
+  left: 367px;
+  transform: scale(0.71);
+  background: #FFF; }

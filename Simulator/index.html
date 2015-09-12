@@ -1,0 +1,44 @@
+<html>
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/knockout-3.3.0.js"></script>
+    <script src="scripts/jquery-1.11.3.min.js"></script>
+    <script src="scripts/site.js"></script>
+
+
+    <style>
+        .content {opacity: 0;transition: opacity 1s ease-in;}
+        .loaded {opacity: 1;}
+        .input-group {margin-bottom: 15px;}
+        .clear-complete {margin-bottom: 15px;}
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="Board Arduino" tabindex="1">
+            <div class="Display"><pre></pre></div>
+            <canvas id="DisplayCanvas" width="480" height="272"></canvas>
+            <div data-bind="foreach: switches">
+                <div data-bind="attr: {'class': 'Switch State0 Type' + tid +' Lid' + lid}">
+                    <div data-bind="text: title, attr: {'class': 'Title Pos' + titlePos}"></div>
+                    <div class="Button"></div>
+                    <div class="Led  "      data-bind="style: {backgroundColor: ledColor(0)}"></div>
+                    <div class="Led Led1 "  data-bind="style: {backgroundColor: ledColor(0)}"></div>
+                    <div class="Led Led2 "  data-bind="style: {backgroundColor: ledColor(1)}"></div>
+                    <div class="Led Led3 "  data-bind="style: {backgroundColor: ledColor(2)}"></div>
+                    <div class="Led Led4 "  data-bind="style: {backgroundColor: ledColor(3)}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
