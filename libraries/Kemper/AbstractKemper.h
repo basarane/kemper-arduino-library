@@ -67,7 +67,8 @@ class AbstractKemper
 
 		KemperState state;
 		PartialParameter parameter;
-		int AllParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
+		//int AllParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
+		int lastStompParam[3];
 
 		void loadPartialParam(int stompIdx);
 		void movePartialParam(int paramOffset, int optionOffset);

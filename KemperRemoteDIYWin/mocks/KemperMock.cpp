@@ -34,7 +34,8 @@ KemperMock::KemperMock() {
 				if (rand()%10<8) {
 					rIdx = rand() % (AllStompsCount - 8);
 					defaultStompStates[t][i][j].active = rand()%10 < 7;
-					defaultStompStates[t][i][j].info = (AllStomps[rIdx]);
+					//defaultStompStates[t][i][j].info = (AllStomps[rIdx]);
+					loadStompInfo(&defaultStompStates[t][i][j].info, j, AllStomps[rIdx].type);
 				}
 				else {
 					defaultStompStates[t][i][j].active = false;
@@ -43,11 +44,13 @@ KemperMock::KemperMock() {
 			}
 			rIdx = (AllStompsCount - 8) + (rand() % 3);
 			defaultStompStates[t][i][6].active = rand()%10<8;
-			defaultStompStates[t][i][6].info = (AllStomps[rIdx]);
+			//defaultStompStates[t][i][6].info = (AllStomps[rIdx]);
+			loadStompInfo(&defaultStompStates[t][i][6].info , 6, AllStomps[rIdx].type);
 
 			rIdx = (AllStompsCount - 5) + (rand() % 5);
 			defaultStompStates[t][i][7].active = rand()%10<8;
-			defaultStompStates[t][i][7].info = (AllStomps[rIdx]);
+			//defaultStompStates[t][i][7].info = (AllStomps[rIdx]);
+			loadStompInfo(&defaultStompStates[t][i][7].info, 7, AllStomps[rIdx].type);
 		}
 	}
 	state.tune = 0x2000;
@@ -136,4 +139,10 @@ void KemperMock::setPerformance(int idx, int slot) {
 }
 
 void KemperMock::sendControlChange(byte data1, byte data2) {
+}
+
+void KemperMock::getStompParameter(int stompIdx, int paramNumber) {
+}
+
+void KemperMock::setStompParam(int stompIdx, byte number, int val) {
 }

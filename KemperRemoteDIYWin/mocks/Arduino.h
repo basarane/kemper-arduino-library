@@ -5,11 +5,14 @@ typedef unsigned char byte;
 
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))
+//#define abs(x) ((x)>0?(x):-(x))
 #define PROGMEM
 
 #define PI 3.1415926535897932384626433832795
 
 #define memcpy_P memcpy
+#define strcpy_P strcpy
+#define pgm_read_word_near(a) (int)(*(a))
 
 #define __FlashStringHelper char
 

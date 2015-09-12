@@ -17,18 +17,28 @@
 
 USING_NAMESPACE_KEMPER
 
-int main() {
+int main(int argc, char**argv) {
 
 	//Sleep(10000);
-	AbstractKemper* kemper;
-	KemperMock kemperMock;
-	Kemper kemperReal;
-	
-	//kemper = &kemperMock;
-	kemperReal.setMidiPorts(0, 1);
-	kemperReal.begin();
-	kemper = &kemperReal;
+	if (argc < 2) {
+		printf("USAGE: KemperRemoteDIYWin.exe <mode> [<midi_in_port>] [<midi_out_port>]\n\n");
+		printf("mode = 0: Kemper Mock\n");
+		printf("mode = 1: Kemper MIDI\n");
+		exit(1);
+	}
+	int mode = atoi(argv[1]);
 
+	AbstractKemper* kemper;
+
+	if (mode == 0) {
+		KemperMock kemperMock;
+		kemper = &kemperMock;
+	} else {
+		Kemper kemperReal;
+		kemperReal.setMidiPorts(0, 1);
+		kemperReal.begin();
+		kemper = &kemperReal;
+	}
 	kemper->state.mode = MODE_BROWSE;
 
 	//kemper->setRig(2);

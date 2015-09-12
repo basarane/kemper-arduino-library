@@ -314,6 +314,15 @@ void Kemper::onSysEx(byte* buffer, unsigned int size) {
 							state.parameterState++;
 						}
 					}
+					if (stompId == lastStompParam[0] && number == lastStompParam[1]) {
+						//Serial.print("Parameter received: ");
+						//Serial.print(stompId);
+						//Serial.print(" ");
+						//Serial.print(number);
+						//Serial.print(" ");
+						//Serial.println(value);
+						lastStompParam[2] = value;
+					}
 				}
 				if (page == 4) {
 					if (number == 0)
@@ -400,12 +409,6 @@ void Kemper::syncState() {
 		//setRig(0);
 		getState();
 		firstRunTime = 0;
-	}
-
-	static unsigned long lastParamTime = 0;
-	if (millis() - lastParamTime>25 && parameter.isActive) {
-		getStompParameter(parameter.stompIdx, parameter.params[parameter.currentParam-parameter.startParamIndex].number);
-		lastParamTime = millis();
 	}
 
 	if (millis() - lastDelay > 200) {

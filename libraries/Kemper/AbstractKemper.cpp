@@ -20,12 +20,14 @@ AbstractKemper::AbstractKemper() {
 	state.performanceNames[3][0] = 0;
 	state.performanceNames[4][0] = 0;
 	state.performanceNames[5][0] = 0;
+	memset(lastStompParam, -1, sizeof(lastStompParam));
 }
 
 void AbstractKemper::loadPartialParam(int stompIdx) {
 	parameter.isActive = true;
 	parameter.currentParam = 0;
 	parameter.currentOption = 0; //@ersin - burasi kemper'den gelecek
+	parameter.stompIdx = stompIdx;
 	loadStompParameters(&parameter, &state.stomps[stompIdx].info);
 	state.parameterState++;
 }

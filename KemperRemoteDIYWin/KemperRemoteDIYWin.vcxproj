@@ -41,18 +41,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildAfterTargets>ImpLib</CustomBuildAfterTargets>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\KemperRemoteDIYWin\mocks;D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\KemperRemoteDIYWin;D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\libraries\MIDI;D:\Dropbox\Personal\Ersin\Music\Kemper\MyFootController\arduino\src\libraries\Kemper</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\mocks;.\;..\libraries\Kemper;..\libraries\MIDI</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)$(TargetName)$(TargetExt) ..\..\..\node</Command>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) ..\Simulator</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

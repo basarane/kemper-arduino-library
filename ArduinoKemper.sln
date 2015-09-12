@@ -7,36 +7,51 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KemperRemoteDIYArduino", "K
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KemperRemoteDIYWin", "KemperRemoteDIYWin\KemperRemoteDIYWin.vcxproj", "{E54C8EE7-2D72-4414-819A-D944E7397C97}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Simulator", "Simulator", "{AD265E03-D9CD-4852-9967-6EE0FE554C00}"
+	ProjectSection(SolutionItems) = preProject
+		Simulator\app.js = Simulator\app.js
+		Simulator\index.html = Simulator\index.html
+		Simulator\README.md = Simulator\README.md
+		Simulator\scripts\site.js = Simulator\scripts\site.js
+		Simulator\style.css = Simulator\style.css
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|Win32.Build.0 = Debug|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|x64.ActiveCfg = Debug|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Debug|x86.ActiveCfg = Debug|Win32
+		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|Any CPU.ActiveCfg = Release|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|Win32.ActiveCfg = Release|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|Win32.Build.0 = Release|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|x64.ActiveCfg = Release|Win32
 		{A25CAAE7-36A7-40A4-9B9F-86F2267B307A}.Release|x86.ActiveCfg = Release|Win32
+		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|Win32.Build.0 = Debug|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|x64.ActiveCfg = Debug|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Debug|x86.ActiveCfg = Debug|Win32
+		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Release|Any CPU.ActiveCfg = Release|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{E54C8EE7-2D72-4414-819A-D944E7397C97}.Release|Win32.ActiveCfg = Release|Win32

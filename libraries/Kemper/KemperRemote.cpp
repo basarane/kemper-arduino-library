@@ -66,13 +66,143 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 
 	state.isSaved = true;
 	expPedals[0].begin(3);
+
+	memset(parameterBuffer, -1, sizeof(parameterBuffer));
+	nextParameters = parameterBuffer;
+	currentParameters = 0;
 }
 
 void KemperRemote::read() {
+	if (state.state == REMOTE_STATE_STOMP_PARAMETER_LOAD || state.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
+		int stompIdx = kemper->lastStompParam[0];
+		int paramNumber = kemper->lastStompParam[1];
+		int paramValue = kemper->lastStompParam[2];
+		int(*stompParam)[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
+		stompParam = &oldStompParameters;
+		if (state.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
+			stompParam = &newStompParameters;
+			//Serial.println("Loading NEW stomp parameters");
+		}
+		else {
+			//Serial.println("Loading OLD stomp parameters");
+			if ((*stompParam)[0][0][0] != oldStompParameters[0][0][0])
+				Serial.println("Whoops! Pointers does not work 1");
+			if ((*stompParam)[0][0][1] != oldStompParameters[0][0][1])
+				Serial.println("Whoops! Pointers does not work 2");
+			if ((*stompParam)[0][1][0] != oldStompParameters[0][1][0])
+				Serial.println("Whoops! Pointers does not work 3");
+			if ((*stompParam)[0][1][1] != oldStompParameters[0][1][1])
+				Serial.println("Whoops! Pointers does not work 4");
+		}
+		bool nextParam = false;
+		if (stompIdx >= 0) {
+			if (paramValue >= 0) {
+				nextParam = true;
+				for (int i = 0; i < MAX_KEMPER_PARAM_LENGTH;i++)
+					if ((*stompParam)[stompIdx][i][0] == paramNumber) {
+						(*stompParam)[stompIdx][i][1] = paramValue;
+						Serial.print("Parameter processed: ");
+						Serial.print(stompIdx);
+						Serial.print(" ");
+						Serial.print(paramNumber);
+						Serial.print(" ");
+						Serial.println(paramValue);
+						break;
+					}
+			}
+		} 
+		else
+			nextParam = true;
+		if (nextParam) {
+			bool paramFound = false;
+			for (int i = 0; i < KEMPER_STOMP_COUNT && !paramFound; i++) {
+				StompInfo *info = &kemper->state.stomps[i].info;
+				for (int j = 0; j < info->paramCount; j++) {
+					if ((*stompParam)[i][j][0] >= 0 && (*stompParam)[i][j][1] < 0) {
+						paramFound = true;
+						kemper->lastStompParam[0] = i;
+						kemper->lastStompParam[1] = (*stompParam)[i][j][0];
+						kemper->lastStompParam[2] = -1;
+						kemper->getStompParameter(i, (*stompParam)[i][j][0]);
+						Serial.print("Request parameter: ");
+						Serial.print(kemper->lastStompParam[0]);
+						Serial.print(" ");
+						Serial.println(kemper->lastStompParam[1]);
+						break;
+					}
+				}
+			}
+			if (!paramFound) {
+				Serial.println("All parameter loaded");
+				kemper->lastStompParam[0] = -1;
+				kemper->lastStompParam[1] = -1;
+				kemper->lastStompParam[2] = -1;
+				if (state.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
+					Serial.println("Changed parameters");
+					byte changeCount = 0;
+					for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
+						for (int j = 0; j < MAX_KEMPER_PARAM_LENGTH; j++) {
+							if (oldStompParameters[i][j][1] >= 0 && oldStompParameters[i][j][1] != newStompParameters[i][j][1]) {
+								changeCount++;
+								Serial.print("Parameter changed: ");
+								Serial.print(i);
+								Serial.print(" ");
+								Serial.print(j);
+								Serial.print(" ");
+								Serial.print(oldStompParameters[i][j][1]);
+								Serial.print(" => ");
+								Serial.println(newStompParameters[i][j][1]);
+							}
+						}
+					}
+					if (changeCount * 6 + 3 > PARAMETER_BUFFER_SIZE - (nextParameters - parameterBuffer)) {
+						Serial.println("Buffer is full cannot save parameters");
+					}
+					else
+					{
+						currentParameters = nextParameters;
+						if (kemper->state.mode == MODE_PERFORM) {
+							*nextParameters++ = kemper->state.performance;
+							*nextParameters++ = kemper->state.slot;
+						}
+						else {
+							*nextParameters++ = 0xFF;
+							*nextParameters++ = kemper->state.currentRig;
+						}
+						*nextParameters++ = changeCount;
+						for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
+							for (int j = 0; j < MAX_KEMPER_PARAM_LENGTH; j++) {
+								if (oldStompParameters[i][j][1] >= 0 && oldStompParameters[i][j][1] != newStompParameters[i][j][1]) {
+									*nextParameters++ = i;
+									*nextParameters++ = oldStompParameters[i][j][0];
+									*nextParameters++ = oldStompParameters[i][j][1] & 0xFF;
+									*nextParameters++ = oldStompParameters[i][j][1] >> 8;
+									*nextParameters++ = newStompParameters[i][j][1] & 0xFF;
+									*nextParameters++ = newStompParameters[i][j][1] >> 8;
+								}
+							}
+						}
+					}
+					state.state = REMOTE_STATE_NORMAL;
+				} 
+				else
+					state.state = REMOTE_STATE_STOMP_PARAMETER;
+			}
+		}
+	}
+
+
 	static unsigned long ledUpdate = 0;
 	if (millis() - ledUpdate < 10)
 		return;
 	ledUpdate = millis();
+
+	static unsigned long lastParamTime = 0;
+	if (millis() - lastParamTime>25 && kemper->parameter.isActive && state.state!=REMOTE_STATE_STOMP_PARAMETER_LOAD) {
+		kemper->getStompParameter(kemper->parameter.stompIdx, kemper->parameter.params[kemper->parameter.currentParam - kemper->parameter.startParamIndex].number);
+		lastParamTime = millis();
+	}
+
 	for (int i=0;i<EXPRESSION_PEDAL_COUNT;i++) {
 		expPedals[i].read();
 		//Serial.println(expPedals[i].value);
@@ -109,10 +239,28 @@ void KemperRemote::read() {
 		}
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER && expPedals[i].isCalibrated() && i==0) { //only first exp pedal
 			static unsigned int lastExpValue = 0;
-			if (abs(expPedals[i].calibratedValue() - lastExpValue) > 10) { // eliminate some noise
+			if (abs((int)(expPedals[i].calibratedValue() - lastExpValue)) > 10) { // eliminate some noise
 				lastExpValue = expPedals[i].calibratedValue();
 				float t = (float)expPedals[i].calibratedValue() / 1023;
 				kemper->setPartialParamValue(t);
+			}
+		}
+		static unsigned long lastParamSent = 0;
+		if ((state.state == REMOTE_STATE_NORMAL || state.state == REMOTE_STATE_LOOPER) && currentParameters!=0 && i==0 && millis() - lastParamSent > 50) {
+			lastParamSent = millis();
+			byte* p;
+			p = (currentParameters + 2);
+			byte count = *p++;
+			float t = (float)expPedals[i].calibratedValue() / 1023;
+			for (int i = 0; i < count; i++) {
+				byte stompId = *p++;
+				byte paramNumber = *p++;
+				int value1 = *p | ((*(p+1)) << 8);
+				p += 2;
+				int value2 = *p | ((*(p+1)) << 8);
+				p += 2;
+				int value = (1 - t)*value1 + t*value2;
+				kemper->setStompParam(stompId, paramNumber, value);
 			}
 		}
 	}
@@ -146,7 +294,7 @@ void KemperRemote::read() {
 	for (int i = 0; i < EXPRESSION_PEDAL_COUNT;i++)
 	if (expPedals[i].isCalibrated() && state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE && expPedals[i].isChanged(8))
 	{
-		if (i!=0 || state.state!=REMOTE_STATE_STOMP_PARAMETER) // first exp. pedal is for parameter update
+		if (i!=0 || state.state!=REMOTE_STATE_STOMP_PARAMETER && currentParameters==0) // first exp. pedal is for parameter update
 			kemper->sendControlChange(expPedals[i].mode, (expPedals[i].calibratedValue())/8);
 	}
 }
@@ -188,20 +336,60 @@ void KemperRemote::refreshStompAssignment() {
 
 void KemperRemote::onStompDown(int switchIdx) {
 	byte assignment = currentStompAssignment[switchIdx];
-	for (int i=0;i<KEMPER_STOMP_COUNT;i++) {
+	for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
 		if (assignment & 1) {
-			kemper->toggleStomp(i);
+			if (state.state != REMOTE_STATE_STOMP_PARAMETER)
+				kemper->toggleStomp(i);
+			else {
+				if (kemper->parameter.stompIdx != i) {
+					kemper->loadPartialParam(i);
+					break;
+				}
+			}
 		}
 		assignment = assignment >> 1;
 	}
 }
 
 void KemperRemote::onRigDown(int switchIdx) {
+	if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
+		state.state = REMOTE_STATE_STOMP_PARAMETER_POST_LOAD;
+		Serial.println("REMOTE_STATE_STOMP_PARAMETER_POST_LOAD");
+		for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
+			StompInfo *info = &kemper->state.stomps[i].info;
+			if (info->type > 0)
+			{
+				PGM_KemperParam** params = (PGM_KemperParam**)pgm_read_word_near(&AllStomps[info->PGM_index].params);
+				for (int j = 0; j < info->paramCount; j++) {
+					PGM_KemperParam *param = (PGM_KemperParam*)pgm_read_word_near(&params[j]);
+					newStompParameters[i][j][0] = pgm_read_word_near(&param->number);
+					Serial.print("newStompParam[i][j][0]: ");
+					Serial.print(i);
+					Serial.print(" ");
+					Serial.print(j);
+					Serial.print(" ");
+					Serial.print(oldStompParameters[i][j][0]);
+					Serial.print(" ");
+					Serial.println(oldStompParameters[i][j][1]);
+				}
+			}
+		}
+		return;
+	}
+	bool isChanged = false;
 	if (state.state!=REMOTE_STATE_LOOPER)
-		if (kemper->state.mode == MODE_BROWSE)
+	{
+		if (kemper->state.mode == MODE_BROWSE) {
+			isChanged = kemper->state.currentRig != rigMap[state.currentPage * SWITCH_RIG_COUNT + switchIdx];
 			kemper->setRig(rigMap[state.currentPage * SWITCH_RIG_COUNT + switchIdx]);
-		else
+		}
+		else {
+			isChanged = kemper->state.slot != switchIdx;
 			kemper->setPerformance(kemper->state.performance, switchIdx);
+		}
+	}
+	if (isChanged && state.state == REMOTE_STATE_STOMP_PARAMETER)
+		state.state = REMOTE_STATE_NORMAL;
 }
 
 void KemperRemote::onRigUp(int switchIdx) {
@@ -329,20 +517,49 @@ void KemperRemote::onSwitchDown(int sw) {
 		}
 	}
 
-	if (millis() - switchDownStart<500 && sw>=SWITCH_STOMP_START && sw<SWITCH_STOMP_START + SWITCH_STOMP_COUNT) { 
-		byte assignment = currentStompAssignment[sw - SWITCH_STOMP_START];
-		bool found = false;
+	if (millis() - switchDownStart < 500 && sw >= SWITCH_RIG_START && sw < SWITCH_RIG_START+ SWITCH_RIG_COUNT) {
 
-		for (int i=0;i<KEMPER_STOMP_COUNT;i++) {
-			if (assignment & 1) {
-				kemper->loadPartialParam(i);
-				found = true;
-				break;
+		if (state.state != REMOTE_STATE_STOMP_PARAMETER && state.state != REMOTE_STATE_STOMP_PARAMETER_LOAD)
+		{
+			state.state = REMOTE_STATE_STOMP_PARAMETER_LOAD;
+
+			bool found = false;
+			for (int j = 0; j < SWITCH_STOMP_COUNT && !found; j++) {
+				byte assignment = currentStompAssignment[j];
+
+				for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
+					if (assignment & 1) {
+						kemper->loadPartialParam(i);
+						found = true;
+						break;
+					}
+					assignment = assignment >> 1;
+				}
 			}
-			assignment = assignment >> 1;
+			memset(oldStompParameters, -1, sizeof(oldStompParameters));
+			memset(newStompParameters, -1, sizeof(newStompParameters));
+			for (int i = 0; i < KEMPER_STOMP_COUNT;i++) {
+				StompInfo *info = &kemper->state.stomps[i].info;
+				if (info->type>0)
+				{
+					PGM_KemperParam** params = (PGM_KemperParam**)pgm_read_word_near(&AllStomps[info->PGM_index].params);
+					for (int j = 0; j < info->paramCount; j++) {
+						PGM_KemperParam *param = (PGM_KemperParam*)pgm_read_word_near(&params[j]);
+						oldStompParameters[i][j][0] = pgm_read_word_near(&param->number);
+						Serial.print("olsStompParam[i][j][0]: ");
+						Serial.print(i);
+						Serial.print(" ");
+						Serial.print(j);
+						Serial.print(" ");
+						Serial.print(oldStompParameters[i][j][0]);
+						Serial.print(" ");
+						Serial.println(oldStompParameters[i][j][1]);
+					}
+				}
+			}
 		}
-		if (found) {
-			state.state = REMOTE_STATE_STOMP_PARAMETER;
+		else {
+			state.state = REMOTE_STATE_NORMAL;
 		}
 	}
 
@@ -521,6 +738,8 @@ void KemperRemote::updateLeds() {
 		} else {
 			 rigActive = kemper->state.currentRig == rigMap[state.currentPage * SWITCH_RIG_COUNT + i];
 		}
+		if (state.state == REMOTE_STATE_STOMP_PARAMETER && millis() % 500 < 250)
+			rigActive = false;
 		leds[l++] = rigActive?0x7f:0;
 		leds[l++] = rigActive?0x7f:0;
 		leds[l++] = rigActive?0x7f:0;
@@ -531,9 +750,10 @@ void KemperRemote::updateLeds() {
 		int k = 0;
 		for (byte j=0;j<KEMPER_STOMP_COUNT && k<2;j++) {
 			if ((assignment & 1 && kemper->state.stomps[j].info.type>0)) { //
-				leds[l++] = kemper->state.stomps[j].info.color.r >> 1;
-				leds[l++] = kemper->state.stomps[j].info.color.g >> 1;
-				leds[l++] = kemper->state.stomps[j].info.color.b >> 1; 
+				bool isOff = state.state == REMOTE_STATE_STOMP_PARAMETER && kemper->parameter.stompIdx == j && millis() % 500<250;
+				leds[l++] = isOff ? 0 : (kemper->state.stomps[j].info.color.r >> 1);
+				leds[l++] = isOff ? 0 : (kemper->state.stomps[j].info.color.g >> 1);
+				leds[l++] = isOff ? 0 : (kemper->state.stomps[j].info.color.b >> 1);
 				leds[l++] = kemper->state.stomps[j].active?0x7f:0;
 				leds[l++] = kemper->state.stomps[j].active?0x7f:0;
 				leds[l++] = kemper->state.stomps[j].active?0x7f:0;
@@ -555,7 +775,7 @@ void KemperRemote::updateLeds() {
 		float range = 1600;
 		float width = 1400;
 		float v1 = ((mid - range/2) - kemper->state.tune) / (width/2);
-		float v2 = abs((int)kemper->state.tune - mid) / (range);
+		float v2 = abs((int)(kemper->state.tune - mid)) / (range);
 		float v3 = (kemper->state.tune - (mid + range/2)) / (width/2);
 		v1 = min(max(v1, 0), 1);
 		v2 = min(max(2-v2, 0), 1);

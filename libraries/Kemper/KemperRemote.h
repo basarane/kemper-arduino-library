@@ -9,7 +9,8 @@
 
 BEGIN_KEMPER_NAMESPACE
 
-	
+#define PARAMETER_BUFFER_SIZE 1024
+
 #define SWITCH_RIG_START 0
 #define SWITCH_STOMP_START 5
 #define SWITCH_STOMP_COUNT 4
@@ -30,6 +31,8 @@ BEGIN_KEMPER_NAMESPACE
 #define REMOTE_STATE_TEMPO_DETECTION 5
 #define REMOTE_STATE_EXPRESSION_CALIBRATE 6
 #define REMOTE_STATE_STOMP_PARAMETER 7
+#define REMOTE_STATE_STOMP_PARAMETER_LOAD 8
+#define REMOTE_STATE_STOMP_PARAMETER_POST_LOAD 9
 
 #define LOOPER_STATE_NONE     0
 #define LOOPER_STATE_RECORD   1
@@ -70,6 +73,12 @@ private:
 	byte rigAssignRig;
 
 	byte rigMap[RIG_COUNT];
+
+	int oldStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
+	int newStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
+	byte parameterBuffer[PARAMETER_BUFFER_SIZE];
+	byte *currentParameters;
+	byte *nextParameters;
 
 	void refreshStompAssignment();
 	void checkSwitchDownLong();

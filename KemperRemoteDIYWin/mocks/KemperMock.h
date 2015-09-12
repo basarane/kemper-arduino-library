@@ -55,6 +55,9 @@ class KemperMock : public AbstractKemper
 		void setPerformance(int idx, int slot = 0);
 		void setRig(byte rig); 
 
+		void getStompParameter(int stompIdx, int paramNumber);
+		void setStompParam(int stompIdx, byte number, int val);
+
 };
 
 
