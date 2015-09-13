@@ -28,7 +28,7 @@ if (testConsole) {
     });
     
     setInterval(function () {
-        //testConsole.stdin.write(new Buffer([0]));
+        testConsole.stdin.write(new Buffer([0]));
         //console.log(testConsole.stdin);
         //console.log("This is heartbeat");
     }, 30);
