@@ -281,23 +281,6 @@ void KemperRemote::updateCurrentParameter(byte perf, byte slot) {
 			break;
 		p = p + 3 + *(p + 2) * 6;
 	}
-	/*
-	Serial.print("updateCurrentParameter: ");
-	Serial.print(perf);
-	Serial.print(" ");
-	Serial.print(slot);
-	Serial.print(" ");
-	Serial.print((int)p);
-	Serial.print(" ");
-	Serial.print((int)parameterBuffer);
-	Serial.print(" ");
-	Serial.println((int)currentParameters);
-	for (int i = 0; i < nextParameters - parameterBuffer; i++)
-	{
-		Serial.print(*(parameterBuffer + i), HEX);
-		Serial.print(" ");
-	}
-	*/
 }
 
 byte KemperRemote::getRigIndex(byte rig) {
