@@ -30,12 +30,14 @@ int rigNo = 1;
 #define TUNER_OK 3
 #define TUNER_HIGH 4
 
-//#define ENABLE_VIRTUAL_DISPLAY
+#define ENABLE_VIRTUAL_DISPLAY
 
 USING_NAMESPACE_KEMPER
 
 Kemper kemper;
 KemperRemote kemperRemote(&kemper);
+
+byte lastLeds[LED_COUNT * 3];
 
 #ifdef ENABLE_VIRTUAL_DISPLAY
 VirtualDisplaySerializer displaySerializer(&Serial);
@@ -74,7 +76,7 @@ void loop()
 	static unsigned long reportTime = 0;
 	static unsigned long ledTime = 0;
 	static unsigned long tlcLedTime = 0;
-	
+
 	kemper.read();
 	kemperRemote.read();
 
@@ -91,12 +93,13 @@ void loop()
 	}
 
 	buttons.update();
-	for (int i=0;i<buttons.buttonCount;i++) {
-		if (buttons.values[i]!=lastValues[i]) {
+	for (int i = 0; i < buttons.buttonCount; i++) {
+		if (buttons.values[i] != lastValues[i]) {
 			lastValues[i] = buttons.values[i];
 			if (buttons.values[i]) {
 				kemperRemote.onSwitchDown(i);
-			} else {
+			}
+			else {
 				kemperRemote.onSwitchUp(i);
 			}
 		}
@@ -105,12 +108,23 @@ void loop()
 
 #if !defined(KEMPER_DEBUG) && defined(ENABLE_VIRTUAL_DISPLAY)
 	if (millis() - ledTime > 50) {
-		Serial.write(0xF0);
-		for (int i=0;i<LED_COUNT*3;i++) {
-			Serial.write(kemperRemote.leds[i]);
+		bool isChanged = false;
+		for (int i = 0; i < LED_COUNT * 3; i++)
+		{
+			if (kemperRemote.leds[i] != lastLeds[i]) {
+				isChanged = true;
+				lastLeds[i] = kemperRemote.leds[i];
+			}
 		}
-		Serial.write(0xFF);
-		Serial.flush();
+		if (isChanged)
+		{
+			Serial.write(0xF0);
+			for (int i = 0; i < LED_COUNT * 3; i++) {
+				Serial.write(kemperRemote.leds[i]);
+			}
+			Serial.write(0xFF);
+			Serial.flush();
+		}
 		ledTime = millis();
 	}
 #endif
