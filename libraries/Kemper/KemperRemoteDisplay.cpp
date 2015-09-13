@@ -40,8 +40,13 @@ void KemperRemoteDisplay::draw() {
 				saveTime = millis();
 			}
 			bool showSave = millis() - saveTime < 2000 && saveTime>0;
-			bool updateStomps = (lastKemperRemoteState.state == REMOTE_STATE_RIG_ASSIGN && kemperRemote->state.state != REMOTE_STATE_RIG_ASSIGN ) 
-					|| (lastKemperRemoteState.state == REMOTE_STATE_EXPRESSION_CALIBRATE && kemperRemote->state.state != REMOTE_STATE_EXPRESSION_CALIBRATE) 
+			bool updateStomps = (lastKemperRemoteState.state == REMOTE_STATE_RIG_ASSIGN && kemperRemote->state.state != REMOTE_STATE_RIG_ASSIGN)
+					|| (lastKemperRemoteState.state == REMOTE_STATE_EXPRESSION_CALIBRATE && kemperRemote->state.state != REMOTE_STATE_EXPRESSION_CALIBRATE)
+					|| (
+						(lastKemperRemoteState.state == REMOTE_STATE_STOMP_PARAMETER || lastKemperRemoteState.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD)
+						&& (lastKemperRemoteState.state != REMOTE_STATE_STOMP_PARAMETER && lastKemperRemoteState.state != REMOTE_STATE_STOMP_PARAMETER_POST_LOAD)
+						)
+					|| lastKemperRemoteState.currentParameters != kemperRemote->state.currentParameters
 					|| (lastKemperState.mode == MODE_TUNER && kemper->state.mode != MODE_TUNER) || lastShowSave != showSave
 					|| (lastKemperState.mode != MODE_BROWSE && kemper->state.mode == MODE_BROWSE)
 					|| (lastKemperState.mode != MODE_PERFORM && kemper->state.mode == MODE_PERFORM)
@@ -88,6 +93,19 @@ void KemperRemoteDisplay::draw() {
 							// new horizontal text layout
 							display->fillRoundRect(x+1, y, sw-2, sh-2, 8, getColor(sColor.r, sColor.g, sColor.b));
 							display->drawText(x+1, y, sw-2, sh-2, TextAlignCenter, TextAlignMiddle, 24, stomp.info.name, strlen(stomp.info.name), color);
+
+							if (kemperRemote->state.currentParameters) {
+								byte *p = kemperRemote->state.currentParameters + 2;
+								byte count = *p;
+								p++;
+								bool markIt = false;
+								for (int j = 0; j < count; j++) {
+									if (*(p + j * 6) == i)
+										markIt = true;
+								}
+								if (markIt)
+									display->fillRoundRect(x + sw- (sh - 15) / 2 - 15, y + (sh-15)/2, 15, 15, 4, getColor(0, 0, 0));
+							}
 
 						} else {
 							display->fillRoundRect(x+1, y, sw-2, sh-2, 8, getColor(220, 220, 220));

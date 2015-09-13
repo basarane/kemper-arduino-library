@@ -58,6 +58,7 @@ struct KemperRemoteState
 	byte currentSlot;
 	bool isSaved;
 	int parameterState;
+	byte* currentParameters;
 };
 
 
@@ -81,7 +82,6 @@ private:
 	int oldStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 	int newStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 	byte parameterBuffer[PARAMETER_BUFFER_SIZE];
-	byte *currentParameters;
 	byte *nextParameters;
 	void updateCurrentParameter(byte perf, byte slot);
 

@@ -69,7 +69,7 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 
 	memset(parameterBuffer, -1, sizeof(parameterBuffer));
 	nextParameters = parameterBuffer;
-	currentParameters = 0;
+	state.currentParameters = 0;
 }
 
 void KemperRemote::read() {
@@ -130,19 +130,19 @@ void KemperRemote::read() {
 					}
 					else
 					{
-						if (currentParameters) { // the rig already has stomp parameters #7
-							byte* p = currentParameters;
+						if (state.currentParameters) { // the rig already has stomp parameters #7
+							byte* p = state.currentParameters;
 							p += *(p + 2) * 6 + 3; // move to next position
 							while (p<parameterBuffer + PARAMETER_BUFFER_SIZE && (*p!=0xff || *(p+1)!=0xff)) {
 								int blockSize = *(p + 2) * 6 + 3;
-								memmove(currentParameters, p, blockSize);
-								currentParameters += blockSize;
+								memmove(state.currentParameters, p, blockSize);
+								state.currentParameters += blockSize;
 								p += blockSize; // move to next position
 							}
-							memset(currentParameters, -1, PARAMETER_BUFFER_SIZE - (currentParameters - parameterBuffer));
-							nextParameters = currentParameters;
+							memset(state.currentParameters, -1, PARAMETER_BUFFER_SIZE - (state.currentParameters - parameterBuffer));
+							nextParameters = state.currentParameters;
 						}
-						currentParameters = nextParameters;
+						state.currentParameters = nextParameters;
 						if (kemper->state.mode == MODE_PERFORM) {
 							*nextParameters++ = kemper->state.performance;
 							*nextParameters++ = kemper->state.slot;
@@ -227,10 +227,10 @@ void KemperRemote::read() {
 			}
 		}
 		static unsigned long lastParamSent = 0;
-		if ((state.state == REMOTE_STATE_NORMAL || state.state == REMOTE_STATE_LOOPER) && currentParameters!=0 && i==0 && millis() - lastParamSent > 50) {
+		if ((state.state == REMOTE_STATE_NORMAL || state.state == REMOTE_STATE_LOOPER) && state.currentParameters!=0 && i==0 && millis() - lastParamSent > 50) {
 			lastParamSent = millis();
 			byte* p;
-			p = (currentParameters + 2);
+			p = (state.currentParameters + 2);
 			byte count = *p++;
 			float t = (float)expPedals[i].calibratedValue() / 1023;
 			for (int i = 0; i < count; i++) {
@@ -277,18 +277,18 @@ void KemperRemote::read() {
 	for (int i = 0; i < EXPRESSION_PEDAL_COUNT;i++)
 	if (expPedals[i].isCalibrated() && state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE && expPedals[i].isChanged(8))
 	{
-		if (i!=0 || state.state!=REMOTE_STATE_STOMP_PARAMETER && currentParameters==0) // first exp. pedal is for parameter update
+		if (i!=0 || state.state!=REMOTE_STATE_STOMP_PARAMETER && state.currentParameters==0) // first exp. pedal is for parameter update
 			kemper->sendControlChange(expPedals[i].mode, (expPedals[i].calibratedValue())/8);
 	}
 }
 
 void KemperRemote::updateCurrentParameter(byte perf, byte slot) {
 	byte* p = parameterBuffer;
-	currentParameters = 0;
+	state.currentParameters = 0;
 	while (p<parameterBuffer + PARAMETER_BUFFER_SIZE)
 	{
 		if (*p == perf && *(p + 1) == slot) {
-			currentParameters = p;
+			state.currentParameters = p;
 			break;
 		}
 		if (*p == 0xff && *(p + 1) == 0xff)

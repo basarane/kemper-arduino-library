@@ -8,9 +8,9 @@ var testConsole = null;
 
 //serialPort = new SerialPort("COM12", {baudrate: 115200});
 //serialPort = new SerialPort("COM14", {baudrate: 115200});
-//serialPort = new SerialPort("COM14", {baudrate: 921600});
+serialPort = new SerialPort("COM14", {baudrate: 921600});
 //testConsole = spawn('TestKemperWin.exe', [], {encoding: 'binary', maxBuffer: 0});
-testConsole = spawn('KemperRemoteDIYWin.exe', ["0"], { encoding: 'binary', maxBuffer: 0 });
+//testConsole = spawn('KemperRemoteDIYWin.exe', ["0"], { encoding: 'binary', maxBuffer: 0 });
 
 
 if (testConsole) {
