@@ -315,12 +315,6 @@ void Kemper::onSysEx(byte* buffer, unsigned int size) {
 						}
 					}
 					if (stompId == lastStompParam[0] && number == lastStompParam[1]) {
-						//Serial.print("Parameter received: ");
-						//Serial.print(stompId);
-						//Serial.print(" ");
-						//Serial.print(number);
-						//Serial.print(" ");
-						//Serial.println(value);
 						lastStompParam[2] = value;
 					}
 				}

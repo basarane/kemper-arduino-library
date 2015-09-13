@@ -81,18 +81,6 @@ void KemperRemote::read() {
 		stompParam = &oldStompParameters;
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
 			stompParam = &newStompParameters;
-			//Serial.println("Loading NEW stomp parameters");
-		}
-		else {
-			//Serial.println("Loading OLD stomp parameters");
-			if ((*stompParam)[0][0][0] != oldStompParameters[0][0][0])
-				Serial.println("Whoops! Pointers does not work 1");
-			if ((*stompParam)[0][0][1] != oldStompParameters[0][0][1])
-				Serial.println("Whoops! Pointers does not work 2");
-			if ((*stompParam)[0][1][0] != oldStompParameters[0][1][0])
-				Serial.println("Whoops! Pointers does not work 3");
-			if ((*stompParam)[0][1][1] != oldStompParameters[0][1][1])
-				Serial.println("Whoops! Pointers does not work 4");
 		}
 		bool nextParam = false;
 		if (stompIdx >= 0) {
@@ -101,12 +89,6 @@ void KemperRemote::read() {
 				for (int i = 0; i < MAX_KEMPER_PARAM_LENGTH;i++)
 					if ((*stompParam)[stompIdx][i][0] == paramNumber) {
 						(*stompParam)[stompIdx][i][1] = paramValue;
-						Serial.print("Parameter processed: ");
-						Serial.print(stompIdx);
-						Serial.print(" ");
-						Serial.print(paramNumber);
-						Serial.print(" ");
-						Serial.println(paramValue);
 						break;
 					}
 			}
@@ -124,39 +106,25 @@ void KemperRemote::read() {
 						kemper->lastStompParam[1] = (*stompParam)[i][j][0];
 						kemper->lastStompParam[2] = -1;
 						kemper->getStompParameter(i, (*stompParam)[i][j][0]);
-						Serial.print("Request parameter: ");
-						Serial.print(kemper->lastStompParam[0]);
-						Serial.print(" ");
-						Serial.println(kemper->lastStompParam[1]);
 						break;
 					}
 				}
 			}
 			if (!paramFound) {
-				Serial.println("All parameter loaded");
 				kemper->lastStompParam[0] = -1;
 				kemper->lastStompParam[1] = -1;
 				kemper->lastStompParam[2] = -1;
 				if (state.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
-					Serial.println("Changed parameters");
 					byte changeCount = 0;
 					for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
 						for (int j = 0; j < MAX_KEMPER_PARAM_LENGTH; j++) {
 							if (oldStompParameters[i][j][1] >= 0 && oldStompParameters[i][j][1] != newStompParameters[i][j][1]) {
 								changeCount++;
-								Serial.print("Parameter changed: ");
-								Serial.print(i);
-								Serial.print(" ");
-								Serial.print(j);
-								Serial.print(" ");
-								Serial.print(oldStompParameters[i][j][1]);
-								Serial.print(" => ");
-								Serial.println(newStompParameters[i][j][1]);
 							}
 						}
 					}
 					if (changeCount * 6 + 3 > PARAMETER_BUFFER_SIZE - (nextParameters - parameterBuffer)) {
-						Serial.println("Buffer is full cannot save parameters");
+						debug("Buffer is full cannot save parameters");
 					}
 					else
 					{
@@ -205,7 +173,6 @@ void KemperRemote::read() {
 
 	for (int i=0;i<EXPRESSION_PEDAL_COUNT;i++) {
 		expPedals[i].read();
-		//Serial.println(expPedals[i].value);
 		static unsigned long lastCalibrateDebug = 0;
 		static unsigned long pedalFirstNonZeroTimes[EXPRESSION_PEDAL_COUNT];
 		static unsigned long pedalFirstZeroTimes[EXPRESSION_PEDAL_COUNT];
@@ -354,7 +321,6 @@ void KemperRemote::onStompDown(int switchIdx) {
 void KemperRemote::onRigDown(int switchIdx) {
 	if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
 		state.state = REMOTE_STATE_STOMP_PARAMETER_POST_LOAD;
-		Serial.println("REMOTE_STATE_STOMP_PARAMETER_POST_LOAD");
 		for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
 			StompInfo *info = &kemper->state.stomps[i].info;
 			if (info->type > 0)
@@ -363,14 +329,6 @@ void KemperRemote::onRigDown(int switchIdx) {
 				for (int j = 0; j < info->paramCount; j++) {
 					PGM_KemperParam *param = (PGM_KemperParam*)pgm_read_word_near(&params[j]);
 					newStompParameters[i][j][0] = pgm_read_word_near(&param->number);
-					Serial.print("newStompParam[i][j][0]: ");
-					Serial.print(i);
-					Serial.print(" ");
-					Serial.print(j);
-					Serial.print(" ");
-					Serial.print(oldStompParameters[i][j][0]);
-					Serial.print(" ");
-					Serial.println(oldStompParameters[i][j][1]);
 				}
 			}
 		}
@@ -546,14 +504,6 @@ void KemperRemote::onSwitchDown(int sw) {
 					for (int j = 0; j < info->paramCount; j++) {
 						PGM_KemperParam *param = (PGM_KemperParam*)pgm_read_word_near(&params[j]);
 						oldStompParameters[i][j][0] = pgm_read_word_near(&param->number);
-						Serial.print("olsStompParam[i][j][0]: ");
-						Serial.print(i);
-						Serial.print(" ");
-						Serial.print(j);
-						Serial.print(" ");
-						Serial.print(oldStompParameters[i][j][0]);
-						Serial.print(" ");
-						Serial.println(oldStompParameters[i][j][1]);
 					}
 				}
 			}

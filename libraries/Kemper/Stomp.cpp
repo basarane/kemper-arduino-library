@@ -42,6 +42,13 @@ void KEMPER_NAMESPACE::loadStompParameters(PartialParameter *parameter, StompInf
 
 	PGM_KemperParam** params = (PGM_KemperParam**)pgm_read_word_near(&AllStomps[parameter->stompInfo->PGM_index].params);
 
+	if (!params) {
+		parameter->paramCount = 0;
+		parameter->optionCount = 0;
+		parameter->totalOptionCount = 0;
+		return;
+	}
+
 	for (int j=0;j<min(min(parameter->stompInfo->paramCount-startParamIndex, NUMBER_OF_PARAMS_IN_LIST), parameter->totalParamCount-startParamIndex);j++) {
 		PGM_KemperParam *param = (PGM_KemperParam*) pgm_read_word_near(&params[startParamIndex+j]);
 

@@ -28,7 +28,7 @@
             <div data-bind="foreach: switches">
                 <div data-bind="attr: {'class': 'Switch State0 Type' + tid +' Lid' + lid}">
                     <div data-bind="text: title, attr: {'class': 'Title Pos' + titlePos}"></div>
-                    <div class="Button"></div>
+                    <div class="Button"     data-bind="event: {mousedown: $parent.onSwitchDown, mouseup: $parent.onSwitchUp}"></div>
                     <div class="Led  "      data-bind="style: {backgroundColor: ledColor(0)}"></div>
                     <div class="Led Led1 "  data-bind="style: {backgroundColor: ledColor(0)}"></div>
                     <div class="Led Led2 "  data-bind="style: {backgroundColor: ledColor(1)}"></div>

@@ -1,8 +1,19 @@
+var ctx;
+var canvas;
+
 $(document).ready(function () {
     ko.applyBindings(model);
+    canvas = document.getElementById("DisplayCanvas");
+    ctx = canvas.getContext("2d");
 });
 
 var model = {
+    onSwitchDown: function (sw) {
+        KemperArduino.switchDown(sw.switchId);
+    },
+    onSwitchUp: function (sw) {
+        KemperArduino.switchUp(sw.switchId);
+    }
 }
 model.switches = ko.observableArray([
     createSwitch("1",       1,  1, 0, "up",     "Rig", [0]),
@@ -19,21 +30,6 @@ model.switches = ko.observableArray([
     createSwitch("Looper",  12, 1, 0, "up",     "Looper", [25]),
     createSwitch("Up",      13, 1, 0, "up",     "Up", []),
     createSwitch("Down",    14, 2, 0, "up",     "Down", []),
-/*
-        { title: "1",       switchId: 1,    lid: 1, state: 0, titlePos: "up",       tid: "Rig",     leds: ko.computed(getLeds, model), ledIds: [0]},
-        { title: "2",       switchId: 2,    lid: 2, state: 0, titlePos: "up",       tid: "Rig",     leds: ko.computed(getLeds, model), ledIds: [1]},
-        { title: "3",       switchId: 3,    lid: 3, state: 0, titlePos: "up",       tid: "Rig",     leds: ko.computed(getLeds, model), ledIds: [2]},
-        { title: "4",       switchId: 4,    lid: 4, state: 0, titlePos: "up",       tid: "Rig",     leds: ko.computed(getLeds, model), ledIds: [3]},
-        { title: "5",       switchId: 5,    lid: 5, state: 0, titlePos: "up",       tid: "Rig",     leds: ko.computed(getLeds, model), ledIds: [4]},
-        { title: "I",       switchId: 6,    lid: 1, state: 0, titlePos: "right",    tid: "Stomp",   leds: ko.computed(getLeds, model), ledIds: [5,6,7,8]},
-        { title: "II",      switchId: 7,    lid: 2, state: 0, titlePos: "right",    tid: "Stomp",   leds: ko.computed(getLeds, model), ledIds: [9,10,11,12]},
-        { title: "III",     switchId: 8,    lid: 3, state: 0, titlePos: "right",    tid: "Stomp",   leds: ko.computed(getLeds, model), ledIds: [13,14,15,16]},
-        { title: "IIII",    switchId: 9,    lid: 4, state: 0, titlePos: "right",    tid: "Stomp",   leds: ko.computed(getLeds, model), ledIds: [17,18,19,20]},
-        { title: "Tap",     switchId: 10,   lid: 1, state: 0, titlePos: "right",    tid: "Tap",     leds: ko.computed(getLeds, model), ledIds: [21]},
-        { title: "Tuner",   switchId: 11,   lid: 1, state: 0, titlePos: "up",       tid: "Tuner",   leds: ko.computed(getLeds, model), ledIds: [22,23,24]},
-        { title: "Looper",  switchId: 12,   lid: 1, state: 0, titlePos: "up",       tid: "Looper",  leds: ko.computed(getLeds, model), ledIds: [25]},
-        { title: "Up",      switchId: 13,   lid: 1, state: 0, titlePos: "up",       tid: "Up",      },
-        { title: "Down",    switchId: 14,   lid: 2, state: 0, titlePos: "up",       tid: "Down",    }, */
 ]);
 
 function createSwitch(title, switchId, lid, state, titlePos, tid, ledIds) {
@@ -53,7 +49,7 @@ function createSwitch(title, switchId, lid, state, titlePos, tid, ledIds) {
             if (item.ledIds && (item.ledIds[id] || item.ledIds[id] === 0) && item.ledData)
             {
                 var led = item.ledData[item.ledIds[id]];
-                if (item.ledData)
+                if (item.ledData && (led.r > 0 || led.g > 0 || led.b>0))
                     return "rgb("+led.r+", "+led.g+", "+led.b+")";
             }
             return "rgb(127, 127, 127)";
@@ -63,9 +59,6 @@ function createSwitch(title, switchId, lid, state, titlePos, tid, ledIds) {
 }
 
 KemperArduino = {
-    onSetLeds: null,
-    onDebug: null,
-    onDisplay: null,
     socket: null,
     initialize: function () {
         var self = this;
@@ -83,8 +76,7 @@ KemperArduino = {
             debug(data.text)
         });
         this.socket.on('display', function (data) {
-            if (self.onDisplay)
-                self.onDisplay(data.data);
+            ProcessDisplayData(data.data);
         });
     },
     switchDown: function (idx) {
@@ -95,14 +87,144 @@ KemperArduino = {
     },
 };
 
-setTimeout(function () {
-    KemperArduino.switchDown(2);
-    setTimeout(function () {
-        KemperArduino.switchUp(2);
-    }, 300);
-}, 1000);
+function ProcessDisplayData(data) {
+    function getColor(a) {
+        return {
+            //css: "rgb(" + ((a>>11)<<3) + "," + (((a>>5)&0x3f)<<2) + "," + ((a&0x1f)<<3) + ")"
+            css: "rgb(" + ((a>>10)<<4) + "," + (((a>>5)&0x1f)<<3) + "," + ((a&0x1f)<<3) + ")"
+        };
+    }
+        
+    if (data[0] == 1) //drawRect
+    {
+        if (data[7]) {
+            ctx.fillStyle = getColor(data[6]).css;
+            if (data[5]) 
+                roundRect(ctx, data[1], data[2], data[3] - data[1], data[4]-data[2], data[5], data[7], !data[7]);
+            else
+                ctx.fillRect(data[1], data[2], data[3] - data[1], data[4]-data[2]);
+        } else {
+            ctx.lineWidth="0";
+            ctx.strokeStyle=getColor(data[6]).css;
+            if (data[5]) 
+                roundRect(ctx, data[1], data[2], data[3] - data[1], data[4]-data[2], data[5], data[7], !data[7]);
+            else {
+                ctx.beginPath();
+                ctx.rect(data[1], data[2], data[3] - data[1], data[4]-data[2]);
+                ctx.stroke();
+            }
+        }
+    } else if (data[0] == 2) { // drawText 
+        ctx.font=(data[7]) + "px Verdana";
+        ctx.fillStyle = getColor(data[8]).css;
+        ctx.textBaseline = "hanging";
+        ctx.textAlign = "left";
+        var text = "";
+        for (var i=0;i<data[9];i++)
+            text += String.fromCharCode(data[10+i]);
+        //console.log(text);
+            
+        textArr = text.split(" ");
+        var w = data[3];
+        var h = data[4];
+        var horAlign = data[5];
+        var verAlign = data[6];
+
+        if (w == 0 || h == 0)
+        {
+            drawText(data[1], data[2], text);
+        }
+        else 
+        {
+            var curX = 0;
+            var curY = 0;
+            var words = [];
+            var wordH = data[7];
+            var lineWidths = [0];
+            for (var i=0;i<textArr.length;i++) {
+                var word = textArr[i];
+                var wordW = ctx.measureText(word).width;
+                if (wordW + curX > w && curX > 0) {
+                    curX = 0;
+                    curY += wordH * 1.2; // pt vs px
+                    lineWidths.push(0);
+                }
+                words.push({x: curX, y: curY, word: word, line: lineWidths.length-1});
+                curX += wordW;
+                lineWidths[lineWidths.length-1] = curX;
+                curX += wordH * 0.3; // letter spacing
+            }
+            if (verAlign == 1)
+                curY = (h - lineWidths.length*wordH*1.2 + wordH*0.25)/2;
+            else if  (verAlign == 2)
+                curY = (h - lineWidths.length*wordH*1.2 + wordH*0.25);
+            else
+                curY = 0;
+            curY += data[2];
+            for (var i=0;i<lineWidths.length;i++) {
+                if (horAlign == 1)
+                    curX = (w - lineWidths[i])/2;
+                else if  (horAlign == 2)
+                    curX = (w - lineWidths[i]);
+                else
+                    curX = 0;
+                curX += data[1];
+                for (var j=0;j<words.length;j++) {
+                    if (words[j].line == i) {
+                        drawText(curX + words[j].x, curY + words[j].y, words[j].word);
+                    }
+                }
+                    
+            }
+        }
+        function drawText(x, y, text) {
+            ctx.save();
+            ctx.translate(x, y);
+            //ctx.rotate(Math.PI * data[9] / 18000);
+            ctx.fillText(text, 0, 0);
+            ctx.restore();
+        }
+        function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+            if (typeof stroke == "undefined" ) {
+                stroke = true;
+            }
+            if (typeof radius === "undefined") {
+                radius = 5;
+            }
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            if (stroke) {
+                ctx.stroke();
+            }
+            if (fill) {
+                ctx.fill();
+            }        
+        }
+            
+    } else if (data[0] == 3) //fillTriangle
+    {
+        var path = new Path2D();
+        path.moveTo(data[1], data[2]);
+        path.lineTo(data[3], data[4]);
+        path.lineTo(data[5], data[6]);
+        ctx.fillStyle = getColor(data[7]).css;
+        ctx.fill(path);
+    }
+
+}
 
 KemperArduino.initialize();
+
+
 
 function debug(str) {
 }
