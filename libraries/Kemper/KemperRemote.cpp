@@ -236,6 +236,7 @@ void KemperRemote::read() {
 	{
 		if (rigMap[currentRig] != kemper->state.currentRig || lastKemperMode!=MODE_BROWSE) {
 			currentRig = getRigIndex(kemper->state.currentRig);
+			updateCurrentParameter(0xFF, kemper->state.currentRig);
 			EEPROM.get((currentRig/SWITCH_RIG_COUNT)*sizeof(stompAssignment), stompAssignment);
 			memcpy(currentStompAssignment, stompAssignment[currentRig%SWITCH_RIG_COUNT], SWITCH_STOMP_COUNT);
 		}
@@ -247,6 +248,7 @@ void KemperRemote::read() {
 		if (state.currentPerformance != kemper->state.performance || state.currentSlot != kemper->state.slot || lastKemperMode!=MODE_PERFORM) {
 			state.currentPerformance = kemper->state.performance;
 			state.currentSlot = kemper->state.slot;
+			updateCurrentParameter(state.currentPerformance, state.currentSlot);
 			memcpy(currentStompAssignment, stompAssignmentPerform[state.currentSlot], SWITCH_STOMP_COUNT);
 		}
 	}
@@ -264,6 +266,38 @@ void KemperRemote::read() {
 		if (i!=0 || state.state!=REMOTE_STATE_STOMP_PARAMETER && currentParameters==0) // first exp. pedal is for parameter update
 			kemper->sendControlChange(expPedals[i].mode, (expPedals[i].calibratedValue())/8);
 	}
+}
+
+void KemperRemote::updateCurrentParameter(byte perf, byte slot) {
+	byte* p = parameterBuffer;
+	currentParameters = 0;
+	while (p<parameterBuffer + PARAMETER_BUFFER_SIZE)
+	{
+		if (*p == perf && *(p + 1) == slot) {
+			currentParameters = p;
+			break;
+		}
+		if (*p == 0xff && *(p + 1) == 0xff)
+			break;
+		p = p + 3 + *(p + 2) * 6;
+	}
+	/*
+	Serial.print("updateCurrentParameter: ");
+	Serial.print(perf);
+	Serial.print(" ");
+	Serial.print(slot);
+	Serial.print(" ");
+	Serial.print((int)p);
+	Serial.print(" ");
+	Serial.print((int)parameterBuffer);
+	Serial.print(" ");
+	Serial.println((int)currentParameters);
+	for (int i = 0; i < nextParameters - parameterBuffer; i++)
+	{
+		Serial.print(*(parameterBuffer + i), HEX);
+		Serial.print(" ");
+	}
+	*/
 }
 
 byte KemperRemote::getRigIndex(byte rig) {
