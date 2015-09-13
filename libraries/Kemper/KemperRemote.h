@@ -83,6 +83,7 @@ private:
 	byte parameterBuffer[PARAMETER_BUFFER_SIZE];
 	byte *currentParameters;
 	byte *nextParameters;
+	void updateCurrentParameter(byte perf, byte slot);
 
 	void refreshStompAssignment();
 	void checkSwitchDownLong();

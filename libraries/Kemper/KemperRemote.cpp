@@ -123,11 +123,25 @@ void KemperRemote::read() {
 							}
 						}
 					}
-					if (changeCount * 6 + 3 > PARAMETER_BUFFER_SIZE - (nextParameters - parameterBuffer)) {
-						debug("Buffer is full cannot save parameters");
+					if (changeCount == 0) {
+						debug("No change detected, canceling parameter mode");
+					} else if (changeCount * 6 + 3 > PARAMETER_BUFFER_SIZE - (nextParameters - parameterBuffer)) {
+						debug("Buffer is full! Cannot save parameters");
 					}
 					else
 					{
+						if (currentParameters) { // the rig already has stomp parameters #7
+							byte* p = currentParameters;
+							p += *(p + 2) * 6 + 3; // move to next position
+							while (p<parameterBuffer + PARAMETER_BUFFER_SIZE && (*p!=0xff || *(p+1)!=0xff)) {
+								int blockSize = *(p + 2) * 6 + 3;
+								memmove(currentParameters, p, blockSize);
+								currentParameters += blockSize;
+								p += blockSize; // move to next position
+							}
+							memset(currentParameters, -1, PARAMETER_BUFFER_SIZE - (currentParameters - parameterBuffer));
+							nextParameters = currentParameters;
+						}
 						currentParameters = nextParameters;
 						if (kemper->state.mode == MODE_PERFORM) {
 							*nextParameters++ = kemper->state.performance;
