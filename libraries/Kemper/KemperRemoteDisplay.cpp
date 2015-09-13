@@ -99,20 +99,23 @@ void KemperRemoteDisplay::draw() {
 		}
 
 		bool updateCurrentPage = kemperRemote->state.currentPage != lastKemperRemoteState.currentPage || forceShow;
-		bool parameterChanged = 
-			   (kemperRemote->state.state == REMOTE_STATE_STOMP_PARAMETER && lastKemperRemoteState.state != REMOTE_STATE_STOMP_PARAMETER)
-			|| (kemperRemote->state.state != REMOTE_STATE_STOMP_PARAMETER && lastKemperRemoteState.state == REMOTE_STATE_STOMP_PARAMETER);
+		bool parameterChanged =
+			(kemperRemote->state.state == REMOTE_STATE_STOMP_PARAMETER && lastKemperRemoteState.state != REMOTE_STATE_STOMP_PARAMETER);
 		bool bottomChanged = (kemperRemote->state.state != REMOTE_STATE_STOMP_ASSIGN && lastKemperRemoteState.state == REMOTE_STATE_STOMP_ASSIGN)
 					|| (kemperRemote->state.state != REMOTE_STATE_TEMPO_DETECTION && lastKemperRemoteState.state == REMOTE_STATE_TEMPO_DETECTION)
 					|| (kemper->state.mode == MODE_PERFORM && lastKemperState.mode != MODE_PERFORM)
 					|| (kemper->state.mode == MODE_BROWSE && lastKemperState.mode != MODE_BROWSE)
+					|| (kemperRemote->state.state != REMOTE_STATE_STOMP_PARAMETER && lastKemperRemoteState.state == REMOTE_STATE_STOMP_PARAMETER)
 					|| parameterChanged
 					|| forceShow;
-		parameterChanged = parameterChanged || (kemperRemote->state.state == REMOTE_STATE_STOMP_PARAMETER && kemper->state.parameterState!=lastKemperState.parameterState);
+		parameterChanged = parameterChanged || (kemperRemote->state.state == REMOTE_STATE_STOMP_PARAMETER && (kemper->state.parameterState!=lastKemperState.parameterState || kemperRemote->state.parameterState!=lastKemperRemoteState.parameterState));
 
 		if (bottomChanged) {
 			display->fillRect(0, height/2, width-1, height/2-1, getColor(255,255,255));
 		}
+		if (kemperRemote->state.state!=REMOTE_STATE_STOMP_PARAMETER && display->supportsLayers)
+			display->layerEffect(1);
+
 		if (kemperRemote->state.state == REMOTE_STATE_STOMP_ASSIGN && lastKemperRemoteState.state != REMOTE_STATE_STOMP_ASSIGN) {
 			display->fillRect(0, height/2, width-1, height/2-1, getColor(255,0,0));
 			char* stompAssignText = "STOMP PARAMETER";
@@ -123,9 +126,10 @@ void KemperRemoteDisplay::draw() {
 			int ph = 20;
 			for (int i=0;i<5;i++) {
 				bool selected = kemper->parameter.currentParam - kemper->parameter.startParamIndex == i;
-				display->fillRoundRect(10, height/2 + 10 + ph*i, 220, ph, 5, selected?getColor(180,180,255):getColor(255,255,255));
+				
+				display->fillRoundRect(10, height/2 + 10 + ph*i, 220, ph, 5, selected?(kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_VALUE?getColor(180,180,255): getColor(0, 0, 255)):getColor(255,255,255));
 				if (i<kemper->parameter.paramCount)
-					display->drawText(10, height/2 + 10 + ph*i, 220, ph, TextAlignCenter, TextAlignMiddle, 16, kemper->parameter.params[i].name, strlen(kemper->parameter.params[i].name), 0);
+					display->drawText(10, height/2 + 10 + ph*i, 220, ph, TextAlignCenter, TextAlignMiddle, 16, kemper->parameter.params[i].name, strlen(kemper->parameter.params[i].name), !selected || kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_VALUE?0:getColor(255,255,255));
 			}
 
 
@@ -138,9 +142,9 @@ void KemperRemoteDisplay::draw() {
 
 				for (int i=0;i<NUMBER_OF_OPTIONS_IN_LIST;i++) {
 					bool selected = kemper->parameter.currentOption - kemper->parameter.startOptionIndex == i;
-					display->fillRoundRect(250, height/2 + 10 + ph*i, 220, ph, 5, selected?getColor(180,180,255):getColor(255,255,255));
+					display->fillRoundRect(250, height/2 + 10 + ph*i, 220, ph, 5, selected? (kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_PARAMETER ? getColor(180, 180, 255) : getColor(0, 0, 255)) :getColor(255,255,255));
 					if (i<kemper->parameter.optionCount)
-						display->drawText(260, height/2 + 10 + ph*i, 220, ph, TextAlignCenter, TextAlignMiddle, 16, kemper->parameter.options[i].name, strlen(kemper->parameter.options[i].name), 0);
+						display->drawText(260, height/2 + 10 + ph*i, 220, ph, TextAlignCenter, TextAlignMiddle, 16, kemper->parameter.options[i].name, strlen(kemper->parameter.options[i].name), !selected||kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_PARAMETER ? 0 : getColor(255, 255, 255));
 				}
 			} else {
 				int x0 = 250;
@@ -157,7 +161,7 @@ void KemperRemoteDisplay::draw() {
 				float val = (float)kemper->parameter.currentValue / maxVal;
 				int wdist = max(1, w*val);
 				int hdist = max(1, h*val);
-				display->fillTriangle(x0, y0, x0+wdist, y0, (long)x0+wdist, y0-hdist, 0);
+				display->fillTriangle(x0, y0, x0+wdist, y0, (long)x0+wdist, y0-hdist, kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_PARAMETER?0:getColor(0,0,255));
 				if (display->supportsLayers)
 				{
 					display->layerEffect(writeToLayer==0?2:1);

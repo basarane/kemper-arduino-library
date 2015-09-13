@@ -204,7 +204,7 @@ void KemperRemote::read() {
 		if (state.state == REMOTE_STATE_EXPRESSION_CALIBRATE) {
 			expPedals[i].calibrate();
 		}
-		if (state.state == REMOTE_STATE_STOMP_PARAMETER && expPedals[i].isCalibrated() && i==0) { //only first exp pedal
+		if (state.state == REMOTE_STATE_STOMP_PARAMETER && state.parameterState!=REMOTE_PARAMETER_STATE_PARAMETER && expPedals[i].isCalibrated() && i==0) { //only first exp pedal
 			static unsigned int lastExpValue = 0;
 			if (abs((int)(expPedals[i].calibratedValue() - lastExpValue)) > 10) { // eliminate some noise
 				lastExpValue = expPedals[i].calibratedValue();
@@ -536,7 +536,7 @@ void KemperRemote::onSwitchDown(int sw) {
 
 	if (sw == SWITCH_UP) {
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
-			kemper->movePartialParam(!state.parameterState?-1:0, state.parameterState?-1:0);
+			kemper->movePartialParam(state.parameterState!=REMOTE_PARAMETER_STATE_VALUE?-1:0, state.parameterState == REMOTE_PARAMETER_STATE_VALUE ?-1:0);
 		} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
 			if (rigAssignRig>0)
 				kemper->setRig(--rigAssignRig);
@@ -544,7 +544,7 @@ void KemperRemote::onSwitchDown(int sw) {
 	}
 	if (sw == SWITCH_DOWN) {
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
-			kemper->movePartialParam(!state.parameterState?1:0, state.parameterState?1:0);
+			kemper->movePartialParam(state.parameterState!=REMOTE_PARAMETER_STATE_VALUE?1:0, state.parameterState == REMOTE_PARAMETER_STATE_VALUE ?1:0);
 		} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
 			if (rigAssignRig<RIG_COUNT-2)
 				kemper->setRig(++rigAssignRig);
@@ -577,7 +577,7 @@ void KemperRemote::onSwitchDown(int sw) {
 		if (!kemper->parameter.isActive)
 			kemper->tapOn();
 		else 
-			state.parameterState = 1-state.parameterState;
+			state.parameterState = (state.parameterState+1)%3;
 	}
 
 }
@@ -683,12 +683,12 @@ void KemperRemote::updateLeds() {
 			rigActive = i == kemper->state.slot;
 		} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
 			rigActive = i == rigAssignSwitch - SWITCH_RIG_START;
-			if (millis()%1000<500) // blink
+			if (!kemper->state.tempoLed) // blink //millis()%1000<500
 				rigActive = false;
 		} else {
 			 rigActive = kemper->state.currentRig == rigMap[state.currentPage * SWITCH_RIG_COUNT + i];
 		}
-		if (state.state == REMOTE_STATE_STOMP_PARAMETER && millis() % 500 < 250)
+		if (state.state == REMOTE_STATE_STOMP_PARAMETER && !kemper->state.tempoLed) //millis() % 500 < 250
 			rigActive = false;
 		leds[l++] = rigActive?0x7f:0;
 		leds[l++] = rigActive?0x7f:0;
@@ -700,7 +700,7 @@ void KemperRemote::updateLeds() {
 		int k = 0;
 		for (byte j=0;j<KEMPER_STOMP_COUNT && k<2;j++) {
 			if ((assignment & 1 && kemper->state.stomps[j].info.type>0)) { //
-				bool isOff = state.state == REMOTE_STATE_STOMP_PARAMETER && kemper->parameter.stompIdx == j && millis() % 500<250;
+				bool isOff = state.state == REMOTE_STATE_STOMP_PARAMETER && kemper->parameter.stompIdx == j && !kemper->state.tempoLed; // millis() % 500 < 250;
 				leds[l++] = isOff ? 0 : (kemper->state.stomps[j].info.color.r >> 1);
 				leds[l++] = isOff ? 0 : (kemper->state.stomps[j].info.color.g >> 1);
 				leds[l++] = isOff ? 0 : (kemper->state.stomps[j].info.color.b >> 1);
