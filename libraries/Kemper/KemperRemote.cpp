@@ -36,7 +36,11 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	for (int j=0;j<SWITCH_STOMP_COUNT;j++)
 		currentStompAssignment[j] = 0;
 
-	EEPROM.get(sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT, rigMap);
+	int eCur = sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT;
+	EEPROM.get(eCur, rigMap);
+	eCur += sizeof(rigMap);
+	memset(parameterBuffer, -1, sizeof(parameterBuffer));
+	EEPROM.get(eCur, parameterBuffer);
 
 	/*
 	//@ersin - add EEPROM save
@@ -67,8 +71,14 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	state.isSaved = true;
 	expPedals[0].begin(3);
 
-	memset(parameterBuffer, -1, sizeof(parameterBuffer));
-	nextParameters = parameterBuffer;
+	byte *p = parameterBuffer;
+	while (p < parameterBuffer + PARAMETER_BUFFER_SIZE) {
+		if (*p != 0xff || *(p + 1) != 0xff)
+			p += *(p + 2) * 6 + 3;
+		else 
+			break;
+	}
+	nextParameters = p;
 	state.currentParameters = 0;
 }
 
@@ -147,6 +157,7 @@ void KemperRemote::read() {
 					}
 					else
 					{
+						state.isSaved = false;
 						if (state.currentParameters) { // the rig already has stomp parameters #7
 							byte* p = state.currentParameters;
 							p += *(p + 2) * 6 + 3; // move to next position
@@ -816,7 +827,10 @@ void KemperRemote::save() {
 	*/
 	EEPROM.put((currentRig / SWITCH_RIG_COUNT)*sizeof(stompAssignment), stompAssignment);
 	EEPROM.put(BROWSE_PAGE_COUNT*sizeof(stompAssignment) + (kemper->state.performance)*sizeof(stompAssignmentPerform), stompAssignmentPerform);
-	EEPROM.put(sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT, rigMap);
+	int eCur = sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT;
+	EEPROM.put(eCur, rigMap);
+	eCur += sizeof(rigMap);
+	EEPROM.put(eCur, parameterBuffer);
 	state.isSaved = true;
 	saveUpDown = 2;
 }

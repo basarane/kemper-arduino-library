@@ -23,6 +23,11 @@ private:
 public:
 	EEPROMClass() {
 		memset(eepromBuffer, -1, sizeof(eepromBuffer));
+		FILE *file = fopen("eeprom.bin", "rb");
+		if (file) {
+			fread(eepromBuffer, sizeof(eepromBuffer), 1, file);
+			fclose(file);
+		}
 	}
 
 	template< typename T > T &get(int idx, T &t) {
@@ -36,6 +41,11 @@ public:
 		const uint8_t *ptr = (const uint8_t*)&t;
 		int len = sizeof(T);
 		memcpy(eepromBuffer + idx, ptr, len);
+
+		FILE *file = fopen("eeprom.bin", "wb");
+		fwrite(eepromBuffer, sizeof(eepromBuffer), 1, file);
+		fclose(file);
+
 		return t;
 	}
 };

@@ -116,6 +116,7 @@
     <ClInclude Include="KemperRemoteDIYWin.h" />
     <ClInclude Include="MidiWrapper.h" />
     <ClInclude Include="mocks\Arduino.h" />
+    <ClInclude Include="mocks\EEPROM.h" />
     <ClInclude Include="mocks\KemperMock.h" />
     <ClInclude Include="mocks\TypesMock.h" />
     <ClInclude Include="mocks\wstring.h" />

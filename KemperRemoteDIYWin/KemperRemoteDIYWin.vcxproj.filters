@@ -138,5 +138,8 @@
     <ClInclude Include="RtMidi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mocks\EEPROM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
