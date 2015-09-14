@@ -79,6 +79,8 @@ void KemperRemote::read() {
 		int paramValue = kemper->lastStompParam[2];
 		int(*stompParam)[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 		stompParam = &oldStompParameters;
+		static unsigned long debugTime = 0;
+
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
 			stompParam = &newStompParameters;
 		}
@@ -89,12 +91,22 @@ void KemperRemote::read() {
 				for (int i = 0; i < MAX_KEMPER_PARAM_LENGTH;i++)
 					if ((*stompParam)[stompIdx][i][0] == paramNumber) {
 						(*stompParam)[stompIdx][i][1] = paramValue;
+						debug(F("Param received"));
 						break;
 					}
 			}
 		} 
 		else
 			nextParam = true;
+		if (millis() - debugTime > 2000 || nextParam) {
+			debug(F("ParameterState"));
+			debug(state.state);
+			debug(F("Get parameter value"));
+			debug(stompIdx);
+			debug(paramNumber);
+			debug(paramValue);
+			debugTime = millis();
+		}
 		if (nextParam) {
 			bool paramFound = false;
 			for (int i = 0; i < KEMPER_STOMP_COUNT && !paramFound; i++) {
@@ -105,12 +117,17 @@ void KemperRemote::read() {
 						kemper->lastStompParam[0] = i;
 						kemper->lastStompParam[1] = (*stompParam)[i][j][0];
 						kemper->lastStompParam[2] = -1;
+						debug(F("Request next stomp parameter"));
+						debug(i);
+						debug((*stompParam)[i][j][0]);
 						kemper->getStompParameter(i, (*stompParam)[i][j][0]);
 						break;
 					}
 				}
 			}
 			if (!paramFound) {
+				debug(F("No remaining parameter"));
+
 				kemper->lastStompParam[0] = -1;
 				kemper->lastStompParam[1] = -1;
 				kemper->lastStompParam[2] = -1;
@@ -180,7 +197,7 @@ void KemperRemote::read() {
 	ledUpdate = millis();
 
 	static unsigned long lastParamTime = 0;
-	if (millis() - lastParamTime>25 && kemper->parameter.isActive && state.state!=REMOTE_STATE_STOMP_PARAMETER_LOAD) {
+	if (millis() - lastParamTime>25 && kemper->parameter.isActive && state.state!=REMOTE_STATE_STOMP_PARAMETER_LOAD && state.state != REMOTE_STATE_STOMP_PARAMETER_POST_LOAD) {
 		kemper->getStompParameter(kemper->parameter.stompIdx, kemper->parameter.params[kemper->parameter.currentParam - kemper->parameter.startParamIndex].number);
 		lastParamTime = millis();
 	}
@@ -354,6 +371,7 @@ void KemperRemote::onStompDown(int switchIdx) {
 void KemperRemote::onRigDown(int switchIdx) {
 	if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
 		state.state = REMOTE_STATE_STOMP_PARAMETER_POST_LOAD;
+		memset(newStompParameters, -1, sizeof(newStompParameters));
 		for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
 			StompInfo *info = &kemper->state.stomps[i].info;
 			if (info->type > 0)
@@ -513,6 +531,7 @@ void KemperRemote::onSwitchDown(int sw) {
 		if (state.state != REMOTE_STATE_STOMP_PARAMETER && state.state != REMOTE_STATE_STOMP_PARAMETER_LOAD)
 		{
 			state.state = REMOTE_STATE_STOMP_PARAMETER_LOAD;
+			debug(F("KemperRemoteState: REMOTE_STATE_STOMP_PARAMETER_LOAD"));
 
 			bool found = false;
 			for (int j = 0; j < SWITCH_STOMP_COUNT && !found; j++) {

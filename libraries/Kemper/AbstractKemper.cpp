@@ -40,17 +40,20 @@ void AbstractKemper::movePartialParam(int paramOffset, int optionOffset) {
 	parameter.currentParam = max(parameter.currentParam, 0);
 	parameter.currentParam = min(parameter.currentParam, parameter.totalParamCount-1);
 	
-	if (parameter.totalOptionCount>0) {
-		curOptionVal = parameter.currentOption;
-		curOptionVal += optionOffset;
-		curOptionVal = max(curOptionVal, 0);
-		curOptionVal = min(curOptionVal, parameter.totalOptionCount-1);
-		curOptionVal = getOptionValue(&parameter, curOptionVal);
-	} else {
-		curOptionVal = parameter.currentValue;
-		curOptionVal += optionOffset * (1<<9);
-		curOptionVal = max(curOptionVal, 0);
-		curOptionVal = min(curOptionVal, (1<<14)-1);
+	if (paramOffset==0)
+	{
+		if (parameter.totalOptionCount>0) {
+			curOptionVal = parameter.currentOption;
+			curOptionVal += optionOffset;
+			curOptionVal = max(curOptionVal, 0);
+			curOptionVal = min(curOptionVal, parameter.totalOptionCount-1);
+			curOptionVal = getOptionValue(&parameter, curOptionVal);
+		} else {
+			curOptionVal = parameter.currentValue;
+			curOptionVal += optionOffset * (1<<9);
+			curOptionVal = max(curOptionVal, 0);
+			curOptionVal = min(curOptionVal, (1<<14)-1);
+		}
 	}
 
 	if (curParamVal!=parameter.currentParam) {

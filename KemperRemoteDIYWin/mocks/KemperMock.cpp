@@ -54,6 +54,7 @@ KemperMock::KemperMock() {
 		}
 	}
 
+	memset(defaultStompParameters, 0, sizeof(defaultStompParameters));
 	for (int i = 0; i < sizeof(AllStomps) / sizeof(AllStomps[0]); i++)
 	{
 		if (AllStomps[i].params)
@@ -161,10 +162,15 @@ void KemperMock::sendControlChange(byte data1, byte data2) {
 }
 
 void KemperMock::getStompParameter(int stompIdx, int paramNumber) {
-	lastStompParam[0] = stompIdx;
-	lastStompParam[1] = paramNumber;
-	if (stompIdx>=0 && paramNumber>=0 && stompIdx<8 && paramNumber < 128)
+	if (stompIdx >= 0 && paramNumber >= 0 && stompIdx < 8 && paramNumber < 128) {
 		lastStompParam[2] = defaultStompParameters[stompIdx][paramNumber];
+		if (stompIdx == parameter.stompIdx) {
+			if (updateStompParameterValue(&parameter, defaultStompParameters[stompIdx][paramNumber])) {
+				loadStompParameters(&parameter);
+				state.parameterState++;
+			}
+		}
+	}
 }
 
 void KemperMock::setStompParam(int stompIdx, byte number, int val) {
