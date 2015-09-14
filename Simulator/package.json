@@ -1,0 +1,16 @@
+{
+  "name": "Simulator",
+  "version": "0.0.0",
+  "description": "Arduino Kemper Library Simulator",
+  "main": "app.js",
+  "author": {
+    "name": "Ersin Basaran",
+    "email": "ersin@komputer.com.tr"
+  },
+  "dependencies": {
+    "express": "^4.13.1",
+    "serialport": "^1.7.4",
+    "socket.io": "^1.3.5"
+  },
+  "devDependencies": {}
+}
