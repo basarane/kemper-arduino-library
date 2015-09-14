@@ -124,7 +124,7 @@ void KemperMock::setPerformance(int idx, int slot) {
 	state.performance = idx;
 	state.slot = slot;
 
-	sprintf(state.performanceNames[0], "(%d) PERFORMANCE #%d", (state.performance+1), (state.performance+1));
+	sprintf(state.performanceNames[0], "(%d) PERF. #%d", (state.performance+1), (state.performance+1));
 	sprintf(state.performanceNames[1], "SLOT %d", 1);
 	sprintf(state.performanceNames[2], "SLOT %d", 2);
 	sprintf(state.performanceNames[3], "SLOT %d", 3);
