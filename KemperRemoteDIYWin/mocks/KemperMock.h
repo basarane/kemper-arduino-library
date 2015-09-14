@@ -25,6 +25,7 @@ class KemperMock : public AbstractKemper
 	private:
 		int lastMode;
 		StompState defaultStompStates[2][RIG_COUNT*5][8];
+		int defaultStompParameters[KEMPER_STOMP_COUNT][128];
 
 	public:
 
