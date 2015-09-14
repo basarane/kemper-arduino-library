@@ -8,13 +8,60 @@ $(document).ready(function () {
 });
 
 var model = {
+    switchStates: [],
     onSwitchDown: function (sw) {
         KemperArduino.switchDown(sw.switchId);
     },
     onSwitchUp: function (sw) {
         KemperArduino.switchUp(sw.switchId);
+    },
+    onKeyDown: function (obj, e) {
+        var keyCode = window.event ? e.keyCode : e.which;
+        var idx = keyCode - 49;
+        if (idx>=0 && idx<8) {
+            KemperArduino.switchDown(101 + idx);
+            KemperArduino.switchUp(101 + idx);
+        }
+        var sw = obj.getKeySwitch(keyCode);
+        if (sw >= 0 && !obj.switchStates[sw]) {
+            obj.switchStates[sw] = true;
+            KemperArduino.switchDown(sw + 1);
+        }
+        sw = obj.getExtendedSwitch(keyCode);
+        if (sw>=0 && !obj.switchStates[200 + sw]) {
+            obj.switchStates[200 + sw] = true;
+            KemperArduino.switchDown(sw + 201);
+        }
+        console.log("onKeyDown", keyCode);
+        return true;
+    },
+    onKeyUp: function (obj, e) {
+        var keyCode = window.event ? e.keyCode : e.which;
+        var sw = obj.getKeySwitch(keyCode);
+        if (sw>=0) {
+            obj.switchStates[sw] = false;
+            KemperArduino.switchUp(sw + 1);
+        }
+        sw = obj.getExtendedSwitch(keyCode);
+        if (sw>=0) {
+            obj.switchStates[200 + sw] = false;
+            KemperArduino.switchUp(sw + 201);
+        }
+        return true;
+    },
+    getKeySwitch: function (keyCode) {
+        var keyMap = "QWERTYUIOPASDFGHJKL;";
+        var ch = String.fromCharCode(keyCode);
+        return keyMap.indexOf(ch);
+    },
+    getExtendedSwitch: function (keyCode) {
+        var keyMap = "ZXCVBNM,./";
+        var ch = String.fromCharCode(keyCode);
+        return keyMap.indexOf(ch);
     }
 }
+
+
 model.switches = ko.observableArray([
     createSwitch("1",       1,  1, 0, "up",     "Rig", [0]),
     createSwitch("2",       2,  2, 0, "up",     "Rig", [1]),
