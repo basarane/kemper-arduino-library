@@ -457,7 +457,7 @@ void KemperRemote::checkUpDownScroll() {
 	}
 	if (kemper->state.mode == MODE_PERFORM && millis() - switchDownStart > 500 && millis() - lastUpDownScroll>300) {
 		if (currentSwitch == SWITCH_DOWN &&  !switchStates[SWITCH_UP]) {
-			if (kemper->state.performance<125)
+			if (kemper->state.performance<RIG_COUNT)
 				kemper->setPerformance(kemper->state.performance+1);
 		}
 		if (currentSwitch == SWITCH_UP &&  !switchStates[SWITCH_DOWN]) {
@@ -688,10 +688,10 @@ void KemperRemote::onSwitchUp(int sw) {
 	if (sw == SWITCH_DOWN) {
 		if (state.state != REMOTE_STATE_STOMP_PARAMETER && state.state != REMOTE_STATE_RIG_ASSIGN && saveUpDown == 0) {
 			if (kemper->state.mode == MODE_PERFORM) {
-				kemper->setPerformance(kemper->state.performance + 1);
+				kemper->setPerformance(min(kemper->state.performance + 1, RIG_COUNT - 1));
 			}
 			else if (kemper->state.mode == MODE_BROWSE) {
-				state.currentPage = (byte)min(kemper->state.mode == MODE_PERFORM ? 125 : 25, state.currentPage + 1);
+				state.currentPage = (byte)min(BROWSE_PAGE_COUNT-1, state.currentPage + 1);
 			}
 		}
 		saveUpDown = max(saveUpDown - 1, 0);
