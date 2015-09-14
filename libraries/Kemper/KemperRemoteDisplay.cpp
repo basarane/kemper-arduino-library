@@ -198,8 +198,8 @@ void KemperRemoteDisplay::draw() {
 		} else if (kemper->state.mode == MODE_PERFORM) {
 				if (bottomChanged || strcmp(lastKemperState.performanceNames[0], kemper->state.performanceNames[0])!=0) 
 				{
-					display->fillRect(10, height/2 + 20, width-1, 52, getColor(255,255,255));
-					display->drawText(10, height/2 + 20, width-1, 52, TextAlignCenter, TextAlignMiddle, 34, kemper->state.performanceNames[0], strlen(kemper->state.performanceNames[0]), 0);
+					display->fillRect(10, height/2 + 10, width-1, 72, getColor(255,255,255));
+					display->drawText(10, height/2 + 10, width-1, 72, TextAlignCenter, TextAlignMiddle, 34, kemper->state.performanceNames[0], strlen(kemper->state.performanceNames[0]), 0);
 				}
 				for (int i = 0;i<5;i++)
 				{
