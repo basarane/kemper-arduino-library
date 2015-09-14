@@ -23,7 +23,7 @@
 <body data-bind="event: {keydown: onKeyDown, keyup: onKeyUp, keydownBubble: false, keyupBubble: false}">
     <div class="container">
         <div class="Board Arduino" tabindex="1">
-            <div class="Display"><pre></pre></div>
+            <div id="DebugDisplay"><pre></pre></div>
             <canvas id="DisplayCanvas" width="480" height="272"></canvas>
             <div data-bind="foreach: switches">
                 <div data-bind="attr: {'class': 'Switch State0 Type' + tid +' Lid' + lid}">

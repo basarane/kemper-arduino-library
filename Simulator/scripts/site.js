@@ -274,4 +274,10 @@ KemperArduino.initialize();
 
 
 function debug(str) {
+    var display = document.getElementById("DebugDisplay");
+    var atBottom = display.scrollTop > display.scrollHeight - display.offsetHeight - 10;
+    $(display).find("pre").append("<div>"+str+"</div>");
+    if (atBottom) {
+        display.scrollTop = display.scrollHeight;
+    }
 }

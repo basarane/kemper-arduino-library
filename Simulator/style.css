@@ -102,7 +102,7 @@ input[type='checkbox'] {
 .Switch.TypeDown {
   left: 1060px; }
 
-.Display {
+#DebugDisplay {
   position: absolute;
   background-color: #FFF;
   width: 228px;
@@ -112,7 +112,7 @@ input[type='checkbox'] {
   font-size: 8px;
   overflow: hidden; }
 
-.Arduino .Display {
+.Arduino #DebugDisplay {
   width: 1240px;
   height: 400px;
   left: 0px;
@@ -125,22 +125,22 @@ input[type='checkbox'] {
   word-wrap: break-word;
   margin-bottom: 100px; }
 
-.Arduino .Display pre {
+.Arduino #DebugDisplay pre {
   background-color: #000;
   color: #0F0;
   border: 0px none; }
 
-.Display::-webkit-scrollbar {
+#DebugDisplay::-webkit-scrollbar {
   width: 12px; }
 
-.Display::-webkit-scrollbar-track {
+#DebugDisplay::-webkit-scrollbar-track {
   background-color: #000000;
   border-left: 1px solid #111; }
 
-.Display::-webkit-scrollbar-thumb {
+#DebugDisplay::-webkit-scrollbar-thumb {
   background-color: #5A5; }
 
-.Display::-webkit-scrollbar-thumb:hover {
+#DebugDisplay::-webkit-scrollbar-thumb:hover {
   background-color: #8E8; }
 
 .Led {
