@@ -200,6 +200,12 @@ void Kemper::sendSysEx(byte command, byte page, byte number)
 	midiOutput.sendSysEx(sizeof(message), message, true);
 }
 
+/* // if you want to show name of the board on kemper
+void Kemper::initialConnect() {
+	byte message[] = { 0xf0, 0x00, 0x20, 0x33, 0x02, 0x7f, 3, 0x00, 0x7f, 0x7f, 'M', 'y', ' ', 'b', 'o', 'a', 'r', 'd', ' ', ' ', 0xf7 };
+	midiOutput.sendSysEx(sizeof(message), message, true);
+}
+*/
 void Kemper::sendSysExExtended(byte command, unsigned int page, unsigned int number)
 {
 	byte message[] = {0xf0, 0x00, 0x20, 0x33, 0x02, 0x7f, command, 0x00, page>>12, (page>>5) & 0x7f, ((page&0x1f)<<2) | (number>>14), (number>>7) & 0x7f, number & 0x7f, 0xf7};
@@ -213,7 +219,8 @@ void Kemper::sendSysExExtended(byte command, byte b1, byte b2, byte b3, byte b4,
 }
 
 void Kemper::onActiveSensing() {
-	senseReceived = true;
+	state.senseReceived = true;
+	lastSenseTime = millis();
 }
 
 void Kemper::toggleStomp(byte idx) {
@@ -353,22 +360,25 @@ void Kemper::onSysEx(byte* buffer, unsigned int size) {
 				state.rigName[min(messageLength-1-10, 19)] = 0;
 				break;
 			case 7:
-				int i=0;
+				{
+					int i=0;
 				
-				int slotId = (int)data[12];
-				if (slotId>=0 && slotId<=5)
-				{
-					for (i=13;i<messageLength-2; i++) {
-						state.performanceNames[slotId][i-13] = (char)data[i];
+					int slotId = (int)data[12];
+					if (slotId>=0 && slotId<=5)
+					{
+						for (i=13;i<messageLength-2; i++) {
+							state.performanceNames[slotId][i-13] = (char)data[i];
+						}
+						state.performanceNames[slotId][i-13] = 0;
 					}
-					state.performanceNames[slotId][i-13] = 0;
+					else 
+					{
+						debug(F("Error in performance name slotId: "));
+						debug(slotId);
+						debug2(F("\n\nError in performance name slotId: "));
+					}
 				}
-				else 
-				{
-					debug(F("Error in performance name slotId: "));
-					debug(slotId);
-					debug2(F("\n\nError in performance name slotId: "));
-				}
+				break;
 		}
 	}
 }
@@ -383,7 +393,7 @@ void Kemper::onProgramChangeStatic(byte channel, byte number) {
 	instance->onProgramChange(channel, number);
 }
 void Kemper::onActiveSensingStatic() {
-	//instance->onActiveSensing();
+	instance->onActiveSensing();
 }
 
 void Kemper::syncState() {
@@ -394,6 +404,10 @@ void Kemper::syncState() {
 	static unsigned long lastTempo = 0;
 	static unsigned long lastTuner = 0;
 	static unsigned long lastMode = 0;
+
+	if (millis() - lastSenseTime > 2500) {
+		state.senseReceived = false;
+	}
 
 	if (millis() - lastTimeStream > 5000) { 
 		sendStream();

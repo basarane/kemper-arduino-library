@@ -14,34 +14,34 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="_core">
-      <UniqueIdentifier>{f8840a57-b9c6-49a2-b1a2-cc1f32287059}</UniqueIdentifier>
+      <UniqueIdentifier>{43bee938-ccaa-4a18-b52d-d833f18acdaa}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries">
-      <UniqueIdentifier>{b49254e6-7809-4a8f-be1b-73e91061a692}</UniqueIdentifier>
+      <UniqueIdentifier>{bb154cdf-08a4-480c-817e-b13633ad2332}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\EEPROM">
-      <UniqueIdentifier>{346df27d-8bc2-4b36-b228-b84da3070dcf}</UniqueIdentifier>
+      <UniqueIdentifier>{d08af6ea-ac82-4da1-b065-c95d3ccefc29}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\ER-TFTM043-3">
-      <UniqueIdentifier>{6cff0f5e-da1d-4c94-95c9-6a7c7c04edca}</UniqueIdentifier>
+      <UniqueIdentifier>{0aee61aa-2c3c-48d5-a2ce-408965c5e5fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\Kemper">
-      <UniqueIdentifier>{2c00dea4-893b-495d-8d6a-92d3ac0c9628}</UniqueIdentifier>
+      <UniqueIdentifier>{6eeeb1c7-3c9c-4606-be2a-3ea0994f26ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\MemoryFree">
-      <UniqueIdentifier>{90195a41-82e2-4fb7-9640-35f93dddf8eb}</UniqueIdentifier>
+      <UniqueIdentifier>{6983c1b8-6ef4-4bc1-9b27-886875dd834a}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\MIDI">
-      <UniqueIdentifier>{0c8a9979-0451-4328-a34c-6a466f9fb522}</UniqueIdentifier>
+      <UniqueIdentifier>{c891cd0c-3cc0-436f-8da3-6146d67860e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\MultiButton">
-      <UniqueIdentifier>{7dfe9d97-8022-43ce-a0f2-bd1f3376a785}</UniqueIdentifier>
+      <UniqueIdentifier>{1652d6e1-329b-476e-8563-3f7655eba41e}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\SPI">
-      <UniqueIdentifier>{55a59f7a-8388-4e85-92e8-0c6b724499ce}</UniqueIdentifier>
+      <UniqueIdentifier>{b915bda3-d5a8-4bb1-9df2-9442fab8e86f}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\Tlc5940">
-      <UniqueIdentifier>{3884cc79-ec6d-4b5a-a576-2347dacdd81d}</UniqueIdentifier>
+      <UniqueIdentifier>{6c9a6765-fd3a-4771-8b3c-4697b7a5301a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,96 +150,60 @@
     <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\EEPROM.h">
       <Filter>_libraries\EEPROM</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\ER-TFTM043-3\RA8875.h">
+    <ClInclude Include="..\libraries\ER-TFTM043-3\RA8875.h">
       <Filter>_libraries\ER-TFTM043-3</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\AbstractDisplay.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\AbstractDisplaySerializer.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\AbstractKemper.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\Display_ER_RA8875.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\ExpressionPedal.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\Kemper.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\KemperRemote.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\KemperRemoteDisplay.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\Kemper_namespace.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\Stomp.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\Utils.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\VirtualDisplay.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Kemper\VirtualDisplaySerializer.h">
-      <Filter>_libraries\Kemper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MemoryFree\MemoryFree.h">
+    <ClInclude Include="..\libraries\MemoryFree\MemoryFree.h">
       <Filter>_libraries\MemoryFree</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MIDI\MIDI.h">
+    <ClInclude Include="..\libraries\MIDI\MIDI.h">
       <Filter>_libraries\MIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MIDI\midi_Defs.h">
+    <ClInclude Include="..\libraries\MIDI\midi_Defs.h">
       <Filter>_libraries\MIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MIDI\midi_Message.h">
+    <ClInclude Include="..\libraries\MIDI\midi_Message.h">
       <Filter>_libraries\MIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MIDI\midi_Namespace.h">
+    <ClInclude Include="..\libraries\MIDI\midi_Namespace.h">
       <Filter>_libraries\MIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MIDI\midi_Settings.h">
+    <ClInclude Include="..\libraries\MIDI\midi_Settings.h">
       <Filter>_libraries\MIDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\MultiButton\MultiButton.h">
+    <ClInclude Include="..\libraries\MultiButton\MultiButton.h">
       <Filter>_libraries\MultiButton</Filter>
     </ClInclude>
     <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\SPI.h">
       <Filter>_libraries\SPI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\Tlc5940.h">
+    <ClInclude Include="..\libraries\Tlc5940\Tlc5940.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\tlc_animations.h">
+    <ClInclude Include="..\libraries\Tlc5940\tlc_animations.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\tlc_config.h">
+    <ClInclude Include="..\libraries\Tlc5940\tlc_config.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\tlc_fades.h">
+    <ClInclude Include="..\libraries\Tlc5940\tlc_fades.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\tlc_progmem_utils.h">
+    <ClInclude Include="..\libraries\Tlc5940\tlc_progmem_utils.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\tlc_servos.h">
+    <ClInclude Include="..\libraries\Tlc5940\tlc_servos.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\Tlc5940\tlc_shifts.h">
+    <ClInclude Include="..\libraries\Tlc5940\tlc_shifts.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="KemperRemoteDIYArduino.ino" />
+    <None Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_pulse.S">
+      <Filter>_core</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\abi.cpp">
@@ -314,55 +278,55 @@
     <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\WString.cpp">
       <Filter>_core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\ER-TFTM043-3\RA8875.cpp">
+    <ClCompile Include="..\libraries\ER-TFTM043-3\RA8875.cpp">
       <Filter>_libraries\ER-TFTM043-3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\AbstractDisplay.cpp">
+    <ClCompile Include="..\libraries\Kemper\AbstractDisplay.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\AbstractKemper.cpp">
+    <ClCompile Include="..\libraries\Kemper\AbstractKemper.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\Display_ER_RA8875.cpp">
+    <ClCompile Include="..\libraries\Kemper\Display_ER_RA8875.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\ExpressionPedal.cpp">
+    <ClCompile Include="..\libraries\Kemper\ExpressionPedal.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\Kemper.cpp">
+    <ClCompile Include="..\libraries\Kemper\Kemper.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\KemperRemote.cpp">
+    <ClCompile Include="..\libraries\Kemper\KemperRemote.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\KemperRemoteDisplay.cpp">
+    <ClCompile Include="..\libraries\Kemper\KemperRemoteDisplay.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\Stomp.cpp">
+    <ClCompile Include="..\libraries\Kemper\Stomp.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\Utils.cpp">
+    <ClCompile Include="..\libraries\Kemper\Utils.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\VirtualDisplay.cpp">
+    <ClCompile Include="..\libraries\Kemper\VirtualDisplay.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Kemper\VirtualDisplaySerializer.cpp">
+    <ClCompile Include="..\libraries\Kemper\VirtualDisplaySerializer.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\MemoryFree\MemoryFree.cpp">
+    <ClCompile Include="..\libraries\MemoryFree\MemoryFree.cpp">
       <Filter>_libraries\MemoryFree</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\MIDI\MIDI.cpp">
+    <ClCompile Include="..\libraries\MIDI\MIDI.cpp">
       <Filter>_libraries\MIDI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\MultiButton\MultiButton.cpp">
+    <ClCompile Include="..\libraries\MultiButton\MultiButton.cpp">
       <Filter>_libraries\MultiButton</Filter>
     </ClCompile>
     <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\SPI.cpp">
       <Filter>_libraries\SPI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\Tlc5940\Tlc5940.cpp">
+    <ClCompile Include="..\libraries\Tlc5940\Tlc5940.cpp">
       <Filter>_libraries\Tlc5940</Filter>
     </ClCompile>
   </ItemGroup>

@@ -19,12 +19,7 @@
 
 #include "Tlc5940.h"
 
-//void setup()
-//{
-//}
-//void loop()
-//{
-//}
+#define ENABLE_VIRTUAL_DISPLAY
 
 MultiButton buttons;
 
@@ -38,8 +33,6 @@ int rigNo = 1;
 #define TUNER_OK 3
 #define TUNER_HIGH 4
 
-//#define ENABLE_VIRTUAL_DISPLAY
-
 USING_NAMESPACE_KEMPER
 
 Kemper kemper;
@@ -52,31 +45,25 @@ VirtualDisplaySerializer displaySerializer(&Serial);
 VirtualDisplay displayProvider(&displaySerializer, 480, 272);
 KemperRemoteDisplay display(&kemper, &kemperRemote, &displayProvider);
 #endif
-/*
-VirtualDisplaySerializer displaySerializer2(&Serial3);
-VirtualDisplay displayProvider2(&displaySerializer2, 480, 272);
-KemperRemoteDisplay display2(&kemper, &kemperRemote, &displayProvider2);
-*/
+
 Display_ER_RA8875 displayProvider2(480, 272);
 KemperRemoteDisplay display2(&kemper, &kemperRemote, &displayProvider2);
 
 void setup()
 {
 	pinMode(LED, OUTPUT);
-	/*
-	for (int i=0;i<SWITCH_COUNT;i++)
-		pinMode(switchPins[i], INPUT); //INPUT_PULLUP
-	*/
 	Serial.begin(921600);
-	//Serial3.begin(921600);
 	kemper.begin();
 
 	displayProvider2.begin();
+	
+#if !defined(KEMPER_DEBUG) && defined(ENABLE_VIRTUAL_DISPLAY)
+	display.welcome();
+#endif
+	display2.welcome();
+
 	buttons.attach(14, 4, 5, 6, 7);
-
 	Tlc.init();
-
-	//kemper.setRig(0);
 }
 
 void loop()
@@ -180,11 +167,10 @@ if (millis() - tlcLedTime > 50) {
 	tlcLedTime = millis();
 }
 
-
 #if !defined(KEMPER_DEBUG) && defined(ENABLE_VIRTUAL_DISPLAY)
-	display.draw();
+display.draw();
 #endif
-	display2.draw();
+display2.draw();
 
 #if defined(ENABLE_VIRTUAL_DISPLAY)
 	static unsigned long memoryDebugTime = 0;

@@ -8,9 +8,18 @@ var testConsole = null;
 
 //serialPort = new SerialPort("COM12", {baudrate: 115200});
 //serialPort = new SerialPort("COM14", {baudrate: 115200});
-//serialPort = new SerialPort("COM14", {baudrate: 921600});
 //testConsole = spawn('TestKemperWin.exe', [], {encoding: 'binary', maxBuffer: 0});
-testConsole = spawn('KemperRemoteDIYWin.exe', ["0"], { encoding: 'binary', maxBuffer: 0 });
+
+
+var comPort = "";
+if (process.argv.length >= 3) {
+    comPort = process.argv[2];
+}
+
+if (comPort)
+    serialPort = new SerialPort(comPort, { baudrate: 921600 });
+else
+    testConsole = spawn('KemperRemoteDIYWin.exe', ["0"], { encoding: 'binary', maxBuffer: 0 });
 
 
 if (testConsole) {
@@ -189,7 +198,8 @@ setInterval(function () {
             testConsole.stdin.write(new Buffer(item));
         }
     } else {
-        testConsole.stdin.write(new Buffer([5, 5, 5]));
+        if (testConsole)
+            testConsole.stdin.write(new Buffer([5, 5, 5]));
     }
 }, 50)
 

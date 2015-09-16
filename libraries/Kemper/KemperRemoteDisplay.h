@@ -27,6 +27,7 @@ public:
 	unsigned int writeToLayer;
 	int firstRun;
 
+	void welcome();
 	void draw();
 };
 

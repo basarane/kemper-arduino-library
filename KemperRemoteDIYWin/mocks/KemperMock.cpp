@@ -20,6 +20,9 @@ KemperMock::KemperMock() {
 	state.performance = 0;
 	state.slot = 0;
 
+	state.senseReceived = true;
+	state.actReceived = true;
+
 	//srand (time(NULL));
 	srand (0);
 

@@ -54,6 +54,7 @@ struct KemperState
 	byte program;
 	byte performance;
 	byte slot;
+	bool senseReceived;
 
 	unsigned int parameterState;
 

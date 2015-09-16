@@ -26,7 +26,7 @@ class Kemper : public AbstractKemper
 		//char lineBuffer[512];
 		const byte* data;
 
-		byte senseReceived;
+		unsigned long lastSenseTime;
 
 	public:
 		Kemper();
