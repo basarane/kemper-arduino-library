@@ -74,7 +74,7 @@ void AbstractKemper::setPartialParamValue(float value) {
 	} else {
 		optionValue = floor(value * ((1<<14)-1));
 	}
-	if (optionValue != parameter.currentOption) {
+	if ((parameter.totalOptionCount>0 && optionValue != parameter.currentOption) || (parameter.totalOptionCount==0 && optionValue!=parameter.currentValue)) {
 		setStompParam(parameter.stompIdx, parameter.params[parameter.currentParam - parameter.startParamIndex].number, optionValue);
 	}
 }

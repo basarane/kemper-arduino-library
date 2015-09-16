@@ -174,6 +174,8 @@ void KemperMock::getStompParameter(int stompIdx, int paramNumber) {
 }
 
 void KemperMock::setStompParam(int stompIdx, byte number, int val) {
-	if (stompIdx >= 0 && number >= 0 && stompIdx<8 && number < 128)
+	if (stompIdx >= 0 && number >= 0 && stompIdx < 8 && number < 128) {
 		defaultStompParameters[stompIdx][number] = val;
+		state.parameterState++;
+	}
 }

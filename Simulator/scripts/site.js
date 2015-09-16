@@ -1,10 +1,19 @@
 var ctx;
 var canvas;
 
+function is_touch_device() {
+    return (('ontouchstart' in window)
+         || (navigator.MaxTouchPoints > 0)
+         || (navigator.msMaxTouchPoints > 0));
+}
+
+var isTouch = is_touch_device();
+
 $(document).ready(function () {
     ko.applyBindings(model);
     canvas = document.getElementById("DisplayCanvas");
     ctx = canvas.getContext("2d");
+    $("body").addClass("Touch");
 });
 
 var model = {
@@ -118,7 +127,7 @@ KemperArduino = {
     socket: null,
     initialize: function () {
         var self = this;
-        this.socket = io('http://localhost');
+        this.socket = io('http://' + location.hostname + (location.port!=80?":"+location.port:""));
         this.socket.on('connect', function () {
         });
         this.socket.on('setLeds', function (data) {
@@ -296,28 +305,54 @@ function debug(str) {
     }
 }
 
+var orientationReceived = false;
+var lastSend = 0;
+
+window.addEventListener("deviceorientation", function (event) {
+    if (!orientationReceived && event && event.alpha) {
+        orientationReceived = true;
+    }
+    if (!lastSend || ((new Date()) - lastSend >= 100)) {
+        //debug(event.alpha + " " + event.beta + " " + event.gamma);
+        var expId = model.curExpPedal();
+        var newVal = (event.beta + 30) / 75;
+        sendExpValue(expId, 1-newVal);
+        lastSend = new Date();
+    }
+}, true);
+
+
 var pageX = 0;
 var lastVal = 0;
 setInterval(function () {
+    if (orientationReceived)
+        return;
     var expId = model.curExpPedal();
     if (expId > 0) {
         var $cont = $(".ExpressionPedalsValueContainer");
         var o = $cont.offset();
         var newVal = (pageX-o.left) / $cont.width();
-        newVal = Math.min(1, newVal);
-        newVal = Math.max(0, newVal);
-        newVal = Math.floor(newVal * 255)
-        if (newVal == 13) // cariage return is problematic using getc
-            newVal = 14;
-        if (newVal == 26) // substitude character is problematic using getc
-            newVal = 27;
-        if (newVal != lastVal) {
-            lastVal = newVal;
-            model.curExpPedalValue(newVal / 255);
-            KemperArduino.expPedal(expId - 1, newVal);
-        }
+        sendExpValue(expId, newVal);
     }
 }, 100);
+
+function sendExpValue(expId, newVal) {
+    newVal = Math.min(1, newVal);
+    newVal = Math.max(0, newVal);
+    newVal = Math.floor(newVal * 255)
+    if (newVal == 0)
+        newVal = 1;
+
+    if (newVal == 13) // cariage return is problematic using getc
+        newVal = 14;
+    if (newVal == 26) // substitude character is problematic using getc
+        newVal = 27;
+    if (newVal != lastVal) {
+        lastVal = newVal;
+        model.curExpPedalValue(newVal / 255);
+        KemperArduino.expPedal(expId - 1, newVal);
+    }
+}
 
 $( document ).on( "mousemove", function( event ) {
     pageX = event.pageX;

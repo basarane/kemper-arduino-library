@@ -173,7 +173,7 @@ void KemperRemoteDisplay::draw() {
 				{
 					display->writeTo(writeToLayer);
 				}
-				display->fillRect(x0,height/2+10, w, height/2-20, getColor(255,255,255));
+				display->fillRect(x0,height/2+10, w, height/2-33, getColor(255,255,255));
 				
 				long maxVal = ((1<<14)-1);
 				float val = (float)kemper->parameter.currentValue / maxVal;
