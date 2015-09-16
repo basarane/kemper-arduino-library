@@ -16,7 +16,6 @@ var model = {
     },
     onExpClick: function (x, e) {
         var expId = $(e.target).attr("data-exp-id");
-        console.log(expId, x.curExpPedal());
         if (x.curExpPedal() != expId)
             x.curExpPedal(expId);
         else
@@ -42,7 +41,7 @@ var model = {
             obj.switchStates[200 + sw] = true;
             KemperArduino.switchDown(sw + 201);
         }
-        console.log("onKeyDown", keyCode);
+        //console.log("onKeyDown", keyCode);
         return true;
     },
     onKeyUp: function (obj, e) {
@@ -145,6 +144,9 @@ KemperArduino = {
     expPedal: function (expId, expValue) {
         this.socket.emit("expPedal", { expId: expId, expValue: expValue });
     },
+    testMessage: function (p1, p2, p3) {
+        this.socket.emit("testMessage", { p1: p1, p2: p2, p3: p3});
+    },
 };
 
 function ProcessDisplayData(data) {
@@ -182,7 +184,6 @@ function ProcessDisplayData(data) {
         var text = "";
         for (var i=0;i<data[9];i++)
             text += String.fromCharCode(data[10+i]);
-        //console.log(text);
             
         textArr = text.split(" ");
         var w = data[3];
@@ -306,11 +307,14 @@ setInterval(function () {
         newVal = Math.min(1, newVal);
         newVal = Math.max(0, newVal);
         newVal = Math.floor(newVal * 255)
+        if (newVal == 13) // cariage return is problematic using getc
+            newVal = 14;
+        if (newVal == 26) // substitude character is problematic using getc
+            newVal = 27;
         if (newVal != lastVal) {
-            console.log(lastVal, newVal);
             lastVal = newVal;
             model.curExpPedalValue(newVal / 255);
-            KemperArduino.expPedal(expId - 1, newVal<<2);
+            KemperArduino.expPedal(expId - 1, newVal);
         }
     }
 }, 100);

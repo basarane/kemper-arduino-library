@@ -27,11 +27,6 @@ if (testConsole) {
         console.log('child process exited with code ' + code);
     });
     
-    setInterval(function () {
-        testConsole.stdin.write(new Buffer([0]));
-        //console.log(testConsole.stdin);
-        //console.log("This is heartbeat");
-    }, 30);
 }
 var buffer = null;
 
@@ -155,38 +150,48 @@ app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
 });
 
+var lastExp = new Date();
+var sendBuffer = [];
 io.on('connection', function (socket) {
     sock = socket;
     socket.on('switchDown', function (data) {
-        if (serialPort)
-            serialPort.write([1, data.idx, 1], function (err, results) {
-            //console.log('switchDown err ' + err);
-            //console.log('results ' + results);
-            });
-        if (testConsole) {
-            console.log("switchDown");
-            testConsole.stdin.write(new Buffer([1, data.idx, 1]));
-        }
+        sendBuffer.push([1, data.idx, 1]);
     });
     socket.on('switchUp', function (data) {
-        if (serialPort)
-            serialPort.write(new Buffer([1, data.idx, 0]), function (err, results) {
-            });
-        if (testConsole) {
-            testConsole.stdin.write(new Buffer([1, data.idx, 0]));
-            console.log("switchUp");
-        }
+        sendBuffer.push([1, data.idx, 0]);
     });
     socket.on('expPedal', function (data) {
-        if (serialPort)
-            serialPort.write(new Buffer([2, data.expId + 1, data.expValue >> 2]), function (err, results) {
-            });
-        if (testConsole) {
-            console.log(data.expValue >> 2);
-            testConsole.stdin.write(new Buffer([2, data.expId+1, data.expValue >> 2]));
-        }
+        for (var i = sendBuffer.length - 1; i >= 0; i--)
+            if (sendBuffer[i][0] == 2 && sendBuffer[i][1] == data.expId + 1) {
+                sendBuffer.splice(i, 1);
+                console.log("found duplicate, remove");
+            }
+        sendBuffer.push([2, data.expId + 1, data.expValue]);
+    });
+    socket.on('testMessage', function (data) {
+        for (var i = sendBuffer.length - 1; i >= 0; i--)
+            if (sendBuffer[i][0] == data.p1 && sendBuffer[i][1] == data.p2) {
+                sendBuffer.splice(i, 1);
+                console.log("found duplicate test, remove");
+            }
+        sendBuffer.push([data.p1, data.p2, data.p3]);
     });
 });
+
+setInterval(function () {
+    if (sendBuffer.length>0)
+    {
+        var item = sendBuffer.splice(0, 1)[0];
+        if (serialPort)
+            serialPort.write(item, function (err, results) {
+            });
+        if (testConsole) {
+            testConsole.stdin.write(new Buffer(item));
+        }
+    } else {
+        testConsole.stdin.write(new Buffer([5, 5, 5]));
+    }
+}, 50)
 
 process.on('SIGINT', function () {
     console.warn("Caught interrupt signal");
