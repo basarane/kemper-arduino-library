@@ -3,7 +3,7 @@
 
 USING_NAMESPACE_KEMPER
 
-int KEMPER_NAMESPACE::ExpressionPedalModes[] = {CC_WAH, CC_PITCH, CC_VOLUME, EXPRESSION_PEDAL_MODE_PARAMETER};
+int KEMPER_NAMESPACE::ExpressionPedalModes[] = {EXPRESSION_PEDAL_MODE_PARAMETER, CC_WAH, CC_PITCH, CC_VOLUME};
 
 KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	kemper = _kemper;
@@ -268,6 +268,8 @@ void KemperRemote::read() {
 			}
 		}
 	}
+
+	bool shouldUpdateExpPedalModes = false;
 	static int lastKemperMode = -1;
 	if (kemper->state.mode == MODE_BROWSE)
 	{
@@ -275,6 +277,7 @@ void KemperRemote::read() {
 			byte oldRig = currentRig;
 			currentRig = getRigIndex(kemper->state.currentRig);
 			updateCurrentParameter(0xFF, kemper->state.currentRig);
+			shouldUpdateExpPedalModes = true;
 			if (oldRig/SWITCH_RIG_COUNT!=currentRig/SWITCH_RIG_COUNT) // page changed
 				EEPROM.get((currentRig/SWITCH_RIG_COUNT)*sizeof(stompAssignment), stompAssignment);
 			memcpy(currentStompAssignment, stompAssignment[currentRig%SWITCH_RIG_COUNT], SWITCH_STOMP_COUNT);
@@ -288,9 +291,21 @@ void KemperRemote::read() {
 			state.currentPerformance = kemper->state.performance;
 			state.currentSlot = kemper->state.slot;
 			updateCurrentParameter(state.currentPerformance, state.currentSlot);
+			shouldUpdateExpPedalModes = true;
 			memcpy(currentStompAssignment, stompAssignmentPerform[state.currentSlot], SWITCH_STOMP_COUNT);
 		}
 	}
+
+	for (int i = 0; i < KEMPER_STOMP_COUNT; i++)
+	{
+		if (lastStompTypes[i] != kemper->state.stomps[i].info.type) {
+			shouldUpdateExpPedalModes = true;
+			lastStompTypes[i] = kemper->state.stomps[i].info.type;
+		}
+	}
+
+	if (shouldUpdateExpPedalModes)
+		updateExpPedalModes();
 
 	lastKemperMode = kemper->state.mode;
 	refreshStompAssignment();
@@ -545,37 +560,9 @@ void KemperRemote::onSwitchDown(int sw) {
 	}
 
 	if (millis() - switchDownStart<500 && sw == SWITCH_LOOPER) { 
-		if (expPedals[0].isCalibrated())
-		{
-			// looper double click - change expression pedal mode
-			int modeCount = sizeof(ExpressionPedalModes)/sizeof(ExpressionPedalModes[0]);
-			bool wahExists = false;
-			bool pitchExits = false; // @ersin - update this values
-			for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
-				if (kemper->state.stomps[i].info.type>0) {
-					wahExists = kemper->state.stomps[i].info.isExpWah;
-					pitchExits = kemper->state.stomps[i].info.isExpPitch;
-				}
-			}
-
-			for (int i=0;i<modeCount;i++) {
-				if (ExpressionPedalModes[i] == expPedals[0].mode) {
-					int j = 0;
-					while (++j < modeCount) {
-						int newMode = ExpressionPedalModes[(i + j) % modeCount];
-						if (newMode == EXPRESSION_PEDAL_MODE_PARAMETER && state.currentParameters
-							|| newMode == CC_WAH && wahExists
-							|| newMode == CC_PITCH && pitchExits
-							|| newMode == CC_VOLUME) {
-							expPedals[0].mode = newMode;
-							state.expPedalState++;
-							switchDownStart = 0;
-							return;
-						}
-					}
-				}
-			}
-		}
+		// looper double click - change expression pedal mode
+		if (changeExpPedalMode())
+			return;
 	}
 
 	if (millis() - switchDownStart < 500 && sw >= SWITCH_RIG_START && sw < SWITCH_RIG_START+ SWITCH_RIG_COUNT) {
@@ -776,6 +763,71 @@ void KemperRemote::onSwitchUp(int sw) {
 
 	currentSwitch = -1;
 	switchStates[sw] = false;
+}
+
+void KemperRemote::updateExpPedalModes() {
+	int modeCount = sizeof(ExpressionPedalModes) / sizeof(ExpressionPedalModes[0]);
+	bool wahExists = false;
+	bool pitchExits = false; // @ersin - update this values
+	for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
+		if (kemper->state.stomps[i].info.type>0) {
+			wahExists = wahExists || kemper->state.stomps[i].info.isExpWah;
+			pitchExits = pitchExits || kemper->state.stomps[i].info.isExpPitch;
+		}
+	}
+
+	int j = 0;
+	for (int i = 0; i<EXPRESSION_PEDAL_COUNT; i++) {
+		if (expPedals[i].isCalibrated()) {
+			while (j < modeCount) {
+				int newMode = ExpressionPedalModes[j];
+				j++;
+				if ((newMode == EXPRESSION_PEDAL_MODE_PARAMETER && state.currentParameters)
+					|| newMode == CC_WAH && wahExists
+					|| newMode == CC_PITCH && pitchExits
+					|| newMode == CC_VOLUME) {
+					expPedals[i].mode = newMode;
+					state.expPedalState++;
+					break;
+				}
+			}
+		}
+	}
+
+}
+
+bool KemperRemote::changeExpPedalMode() {
+	if (expPedals[0].isCalibrated())
+	{
+		int modeCount = sizeof(ExpressionPedalModes) / sizeof(ExpressionPedalModes[0]);
+		bool wahExists = false;
+		bool pitchExits = false; // @ersin - update this values
+		for (int i = 0; i < KEMPER_STOMP_COUNT; i++) {
+			if (kemper->state.stomps[i].info.type>0) {
+				wahExists = wahExists || kemper->state.stomps[i].info.isExpWah;
+				pitchExits = pitchExits || kemper->state.stomps[i].info.isExpPitch;
+			}
+		}
+
+		for (int i = 0; i<modeCount; i++) {
+			if (ExpressionPedalModes[i] == expPedals[0].mode) {
+				int j = 0;
+				while (++j < modeCount) {
+					int newMode = ExpressionPedalModes[(i + j) % modeCount];
+					if ((newMode == EXPRESSION_PEDAL_MODE_PARAMETER && state.currentParameters)
+						|| newMode == CC_WAH && wahExists
+						|| newMode == CC_PITCH && pitchExits
+						|| newMode == CC_VOLUME) {
+						expPedals[0].mode = newMode;
+						state.expPedalState++;
+						switchDownStart = 0;
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
 }
 
 void KemperRemote::updateLeds() {

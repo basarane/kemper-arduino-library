@@ -87,6 +87,8 @@ private:
 
 	byte rigMap[RIG_COUNT];
 
+	int lastStompTypes[KEMPER_STOMP_COUNT];
+
 	int oldStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 	int newStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 	byte parameterBuffer[PARAMETER_BUFFER_SIZE];
@@ -98,6 +100,9 @@ private:
 	void checkUpDownScroll();
 	void checkStompChanges();
 	void updateLeds();
+
+	bool changeExpPedalMode();
+	void updateExpPedalModes();
 public:
 
 	ExpressionPedal expPedals[EXPRESSION_PEDAL_COUNT];

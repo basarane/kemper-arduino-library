@@ -21,7 +21,6 @@ KemperMock::KemperMock() {
 	state.slot = 0;
 
 	state.senseReceived = true;
-	state.actReceived = true;
 
 	//srand (time(NULL));
 	srand (0);
