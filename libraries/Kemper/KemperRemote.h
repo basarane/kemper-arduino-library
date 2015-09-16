@@ -9,6 +9,11 @@
 
 BEGIN_KEMPER_NAMESPACE
 
+#define EXPRESSION_PEDAL_1_PIN 3
+#define EXPRESSION_PEDAL_2_PIN 3
+#define EXPRESSION_PEDAL_3_PIN 3
+#define EXPRESSION_PEDAL_4_PIN 3
+
 #define PARAMETER_BUFFER_SIZE 1024
 
 #define SWITCH_RIG_START 0
@@ -41,13 +46,15 @@ BEGIN_KEMPER_NAMESPACE
 #define LOOPER_STATE_NONE     0
 #define LOOPER_STATE_RECORD   1
 #define LOOPER_STATE_PLAYBACK 2
-#define LED_COUNT 29
+#define LED_COUNT 26
 
 #define PERFORM_SLOT_COUNT 5 
 
-#define EXPRESSION_PEDAL_COUNT 1
+#define EXPRESSION_PEDAL_COUNT 4
 
-extern int ExpressionPedalModes[3];
+#define EXPRESSION_PEDAL_MODE_PARAMETER -1
+
+extern int ExpressionPedalModes[4];
 
 struct KemperRemoteState
 {
@@ -59,6 +66,7 @@ struct KemperRemoteState
 	bool isSaved;
 	int parameterState;
 	byte* currentParameters;
+	unsigned long expPedalState;
 };
 
 

@@ -21,6 +21,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{A9E3C58E-E
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{A7CB9971-9729-40FC-9467-1DCA5E0B39CF}"
+	ProjectSection(SolutionItems) = preProject
+		Simulator\tools\const-convert.js = Simulator\tools\const-convert.js
+		Simulator\tools\consts.js = Simulator\tools\consts.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +72,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A7CB9971-9729-40FC-9467-1DCA5E0B39CF} = {AD265E03-D9CD-4852-9967-6EE0FE554C00}
 	EndGlobalSection
 EndGlobal

@@ -217,3 +217,5 @@ ModelManifest.xml
 
 # Test projects
 Test*/
+/Simulator/eeprom.bin
+/Simulator/eeprom - Copy.bin

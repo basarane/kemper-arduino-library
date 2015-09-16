@@ -13,6 +13,7 @@ typedef unsigned char byte;
 #define memcpy_P memcpy
 #define strcpy_P strcpy
 #define pgm_read_word_near(a) (int)(*(a))
+#define pgm_read_byte_near(a) (byte)(*(a))
 
 #define __FlashStringHelper char
 

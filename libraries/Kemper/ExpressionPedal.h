@@ -12,15 +12,17 @@ BEGIN_KEMPER_NAMESPACE
 #define EXPRESSION_PEDAL_HISTORY_LENGTH 10
 #define EXPRESSION_PEDAL_CALIBRATE_MARGIN 10
 
+#define EXPRESSION_MODE_STR(m) ((m)==CC_VOLUME?"Volume":((m)==CC_WAH?"Wah":((m)==CC_PITCH?"Pitch":((m)==EXPRESSION_PEDAL_MODE_PARAMETER?"Param":("")))))
+
 class ExpressionPedal
 {
 private:
 	int lastValues[EXPRESSION_PEDAL_HISTORY_LENGTH];
 	int lastValuesIndex;
 	int lastCheckedValue;
-	int linearMap(float raw);
 	unsigned long lastRead;
 public:
+	int simValue;
 	int read();
 	void begin(int pin);
 	int value;

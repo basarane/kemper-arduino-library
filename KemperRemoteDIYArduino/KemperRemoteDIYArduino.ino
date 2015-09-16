@@ -12,11 +12,19 @@
 #include <Kemper.h>
 #include <KemperRemote.h>
 #include <KemperRemoteDisplay.h>
+#include <ExpressionPedal.h>
 #include "Display_ER_RA8875.h"
 #include <Utils.h>
 #include "MultiButton.h"
 
 #include "Tlc5940.h"
+
+//void setup()
+//{
+//}
+//void loop()
+//{
+//}
 
 MultiButton buttons;
 
@@ -38,7 +46,7 @@ Kemper kemper;
 KemperRemote kemperRemote(&kemper);
 
 byte lastLeds[LED_COUNT * 3];
-
+ 
 #ifdef ENABLE_VIRTUAL_DISPLAY
 VirtualDisplaySerializer displaySerializer(&Serial);
 VirtualDisplay displayProvider(&displaySerializer, 480, 272);
@@ -81,15 +89,31 @@ void loop()
 	kemperRemote.read();
 
 	if (Serial.available()) {
-		int sw = Serial.read() - 1;
-		while (!Serial.available()) {
-		}
-		int pressed = Serial.read();
+		int mode = Serial.read();
+		if (mode == 1) { // button press
+			while (!Serial.available()) {
+			}
+			int sw = Serial.read() - 1;
+			while (!Serial.available()) {
+			}
+			int pressed = Serial.read();
 
-		if (pressed)
-			kemperRemote.onSwitchDown(sw);
-		else
-			kemperRemote.onSwitchUp(sw);
+			if (pressed)
+				kemperRemote.onSwitchDown(sw);
+			else
+				kemperRemote.onSwitchUp(sw);
+		}
+		if (mode == 2) { // expression pedal
+			while (!Serial.available()) {
+			}
+			int expId = Serial.read();
+			while (!Serial.available()) {
+			}
+			int expValue = Serial.read();
+			if (expId > 0 && expValue >= 0 && expId <= EXPRESSION_PEDAL_COUNT) {
+				kemperRemote.expPedals[expId - 1].simValue = expValue<<2;
+			}
+		}
 	}
 
 	buttons.update();

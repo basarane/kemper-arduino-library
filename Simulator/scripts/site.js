@@ -9,9 +9,19 @@ $(document).ready(function () {
 
 var model = {
     switchStates: [],
+    curExpPedal: ko.observable(0),
+    curExpPedalValue: ko.observable(0),
     onSwitchDown: function (sw) {
         KemperArduino.switchDown(sw.switchId);
     },
+    onExpClick: function (x, e) {
+        var expId = $(e.target).attr("data-exp-id");
+        console.log(expId, x.curExpPedal());
+        if (x.curExpPedal() != expId)
+            x.curExpPedal(expId);
+        else
+            x.curExpPedal(0);
+    }, 
     onSwitchUp: function (sw) {
         KemperArduino.switchUp(sw.switchId);
     },
@@ -131,6 +141,9 @@ KemperArduino = {
     },
     switchUp: function (idx) {
         this.socket.emit("switchUp", { idx: idx });
+    },
+    expPedal: function (expId, expValue) {
+        this.socket.emit("expPedal", { expId: expId, expValue: expValue });
     },
 };
 
@@ -281,3 +294,27 @@ function debug(str) {
         display.scrollTop = display.scrollHeight;
     }
 }
+
+var pageX = 0;
+var lastVal = 0;
+setInterval(function () {
+    var expId = model.curExpPedal();
+    if (expId > 0) {
+        var $cont = $(".ExpressionPedalsValueContainer");
+        var o = $cont.offset();
+        var newVal = (pageX-o.left) / $cont.width();
+        newVal = Math.min(1, newVal);
+        newVal = Math.max(0, newVal);
+        newVal = Math.floor(newVal * 255)
+        if (newVal != lastVal) {
+            console.log(lastVal, newVal);
+            lastVal = newVal;
+            model.curExpPedalValue(newVal / 255);
+            KemperArduino.expPedal(expId - 1, newVal<<2);
+        }
+    }
+}, 100);
+
+$( document ).on( "mousemove", function( event ) {
+    pageX = event.pageX;
+});

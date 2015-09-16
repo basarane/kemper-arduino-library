@@ -28,6 +28,11 @@ int main(int argc, char**argv) {
 	}
 	int mode = atoi(argv[1]);
 
+	static const int BufferSize = 3;
+	char buffer[BufferSize];
+
+	setvbuf(stdin, buffer, _IONBF, BufferSize);
+
 	AbstractKemper* kemper;
 
 	if (mode == 0) {
@@ -54,8 +59,6 @@ int main(int argc, char**argv) {
 	KemperRemoteDisplay display2(kemper, &kemperRemote, &displayProvider2);
 
 
-	int buffer[10];
-
 	//kemperRemote.read();
 	//kemper.setRig(2);
 	char rigName[20] = "";
@@ -69,42 +72,61 @@ int main(int argc, char**argv) {
 			//debug(rigName);
 		}
 
-		int sw = 0;
-		sw = getc(stdin); //@ersin - test
+		int mode = getc(stdin); 
 
-		if (sw>0) {
-			sw--;
-			int pressed = 1;
-			pressed = getc(stdin);
-
-			if (sw < 100)
-			{
-				if (pressed)
-					kemperRemote.onSwitchDown(sw);
-				else
-					kemperRemote.onSwitchUp(sw); 
-			}
-			else if (sw >= 100 && sw < 200)
-			{
-				if (pressed) {
-					debug("Toggle stomp");
-					debug(sw-100);
-					kemper->toggleStomp(sw - 100);
+		if (mode == 1) {
+			int sw = 0;
+			sw = getc(stdin);
+			if (sw > 0) {
+				sw--;
+				int pressed = 1;
+				pressed = getc(stdin);
+				if (sw < 100)
+				{
+					if (pressed)
+						kemperRemote.onSwitchDown(sw);
+					else
+						kemperRemote.onSwitchUp(sw);
 				}
-			}
-			else if (sw >= 200 && sw < 300)
-			{
-				if (pressed) {
-					if (sw == 200) {
-						if (kemper->state.mode == MODE_BROWSE) {
-							kemper->state.mode = MODE_PERFORM;
-							kemper->setPerformance(kemper->state.performance, kemper->state.slot);
-						}
-						else if (kemper->state.mode == MODE_PERFORM) {
-							kemper->state.mode = MODE_BROWSE;
-							kemper->setRig(kemper->state.currentRig);
+				else if (sw >= 100 && sw < 200)
+				{
+					if (pressed) {
+						debug("Toggle stomp");
+						debug(sw - 100);
+						kemper->toggleStomp(sw - 100);
+					}
+				}
+				else if (sw >= 200 && sw < 300)
+				{
+					if (pressed) {
+						if (sw == 200) {
+							if (kemper->state.mode == MODE_BROWSE) {
+								kemper->state.mode = MODE_PERFORM;
+								kemper->setPerformance(kemper->state.performance, kemper->state.slot);
+							}
+							else if (kemper->state.mode == MODE_PERFORM) {
+								kemper->state.mode = MODE_BROWSE;
+								kemper->setRig(kemper->state.currentRig);
+							}
 						}
 					}
+				}
+			}
+		}
+		else if (mode == 2) {
+			int expId = 0;
+			expId = getc(stdin);
+			debug("Expression pedal");
+			debug(expId);
+
+			if (expId>0 && expId <= EXPRESSION_PEDAL_COUNT)
+			{
+				int expValue = 0;
+				expValue = getc(stdin);
+				debug("Expression value");
+				debug(expValue);
+				if (expValue>0) {
+					kemperRemote.expPedals[expId-1].simValue = expValue<<2;
 				}
 			}
 		}

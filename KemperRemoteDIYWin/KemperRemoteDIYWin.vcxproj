@@ -108,6 +108,7 @@
     <ClInclude Include="..\libraries\Kemper\KemperRemote.h" />
     <ClInclude Include="..\libraries\Kemper\KemperRemoteDisplay.h" />
     <ClInclude Include="..\libraries\Kemper\Kemper_namespace.h" />
+    <ClInclude Include="..\libraries\Kemper\Stomp_consts.h" />
     <ClInclude Include="..\libraries\Kemper\VirtualDisplaySerializer.h" />
     <ClInclude Include="..\libraries\Kemper\Stomp.h" />
     <ClInclude Include="..\libraries\Kemper\Utils.h" />

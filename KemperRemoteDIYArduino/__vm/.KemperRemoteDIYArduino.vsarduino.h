@@ -93,6 +93,7 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <KemperRemoteDisplay.h>
 #include <Kemper_namespace.h>
 #include <Stomp.h>
+#include <Stomp_consts.h>
 #include <Utils.h>
 #include <VirtualDisplay.h>
 #include <VirtualDisplaySerializer.h>

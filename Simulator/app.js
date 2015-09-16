@@ -159,24 +159,31 @@ io.on('connection', function (socket) {
     sock = socket;
     socket.on('switchDown', function (data) {
         if (serialPort)
-            serialPort.write([data.idx, 1], function (err, results) {
+            serialPort.write([1, data.idx, 1], function (err, results) {
             //console.log('switchDown err ' + err);
             //console.log('results ' + results);
             });
         if (testConsole) {
             console.log("switchDown");
-            testConsole.stdin.write(new Buffer([data.idx, 1]));
+            testConsole.stdin.write(new Buffer([1, data.idx, 1]));
         }
     });
     socket.on('switchUp', function (data) {
         if (serialPort)
-            serialPort.write(new Buffer([data.idx, 0]), function (err, results) {
-            //console.log('switchUp err ' + err);
-            //console.log('results ' + results);
+            serialPort.write(new Buffer([1, data.idx, 0]), function (err, results) {
             });
         if (testConsole) {
-            testConsole.stdin.write(new Buffer([data.idx, 0]));
+            testConsole.stdin.write(new Buffer([1, data.idx, 0]));
             console.log("switchUp");
+        }
+    });
+    socket.on('expPedal', function (data) {
+        if (serialPort)
+            serialPort.write(new Buffer([2, data.expId + 1, data.expValue >> 2]), function (err, results) {
+            });
+        if (testConsole) {
+            console.log(data.expValue >> 2);
+            testConsole.stdin.write(new Buffer([2, data.expId+1, data.expValue >> 2]));
         }
     });
 });

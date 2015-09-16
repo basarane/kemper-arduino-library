@@ -37,6 +37,15 @@
                 </div>
             </div>
         </div>
+        <div class="ExpressionPedalsContainer">
+            Exp 1: <a class="ExpressionPedal" href="#" data-exp-id="1" data-bind="click: onExpClick, text: curExpPedal()==1?'On':'Off', css: {on: curExpPedal()==1}"></a> | 
+            Exp 2: <a class="ExpressionPedal" href="#" data-exp-id="2" data-bind="click: onExpClick, text: curExpPedal()==2?'On':'Off', css: {on: curExpPedal()==2}"></a> | 
+            Exp 3: <a class="ExpressionPedal" href="#" data-exp-id="3" data-bind="click: onExpClick, text: curExpPedal()==3?'On':'Off', css: {on: curExpPedal()==3}"></a> | 
+            Exp 4: <a class="ExpressionPedal" href="#" data-exp-id="4" data-bind="click: onExpClick, text: curExpPedal()==4?'On':'Off', css: {on: curExpPedal()==4}"></a> | 
+        </div>
+        <div class="ExpressionPedalsValueContainer">
+            <div class="ExpressionPedalsValue" data-bind="style: {width: curExpPedalValue()*100+'%'}"></div>
+        </div>
     </div>
 
 </body>

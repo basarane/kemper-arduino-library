@@ -1,0 +1,1 @@
+node const-convert.js > ../../libraries/kemper/Stomp_consts.h

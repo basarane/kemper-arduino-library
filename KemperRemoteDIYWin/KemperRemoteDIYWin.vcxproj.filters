@@ -141,5 +141,8 @@
     <ClInclude Include="mocks\EEPROM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\libraries\Kemper\Stomp_consts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

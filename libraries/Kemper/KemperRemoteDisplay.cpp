@@ -191,7 +191,7 @@ void KemperRemoteDisplay::draw() {
 
 		} else if (kemper->state.mode == MODE_BROWSE) {
 			if (bottomChanged || strcmp(lastKemperState.rigName, kemper->state.rigName)) {
-				display->fillRect(0, height/2, width-1, height/2-1, getColor(255,255,255));
+				display->fillRect(0, height/2, width-1, height/2-21, getColor(255,255,255));
 				display->drawText(0, height/2 + 20, width-1, 52, TextAlignCenter, TextAlignMiddle, 34, kemper->state.rigName, strlen(kemper->state.rigName), 0);
 				updateCurrentPage = true;
 			}
@@ -211,17 +211,18 @@ void KemperRemoteDisplay::draw() {
 							color = getColor(255,255,255);
 							bgColor = 0;
 						}
-						display->fillRect(i*width/5, height/2 + 100, width/5-2, 35, bgColor);
-						display->drawText(i*width/5, height/2 + 100, width/5-2, 35, TextAlignCenter, TextAlignMiddle, 12, kemper->state.performanceNames[i+1], strlen(kemper->state.performanceNames[i+1]), color);
+						display->fillRect(i*width/5, height/2 + 80, width/5-2, 35, bgColor);
+						display->drawText(i*width/5, height/2 + 80, width/5-2, 35, TextAlignCenter, TextAlignMiddle, 12, kemper->state.performanceNames[i+1], strlen(kemper->state.performanceNames[i+1]), color);
 					}
 				}
 		}
+
 		if (updateCurrentPage && kemper->state.mode == MODE_BROWSE)
 		{
 			char pageNo[20];
-			display->fillRect(width-168, height-42, 167, 41, getColor(255,0,0));
+			display->fillRect(width-168, height-42, 167, 20, getColor(255,0,0));
 			sprintf(pageNo, "Page: %d", kemperRemote->state.currentPage+1);
-			display->drawText(width-168, height - 42, 167, 41, TextAlignCenter, TextAlignMiddle, 30, pageNo, strlen(pageNo), getColor(255,255,255));
+			display->drawText(width-168, height - 42, 167, 21, TextAlignCenter, TextAlignMiddle, 16, pageNo, strlen(pageNo), getColor(255,255,255));
 		}
 		if (kemperRemote->state.state == REMOTE_STATE_RIG_ASSIGN && lastKemperRemoteState.state != REMOTE_STATE_RIG_ASSIGN) {
 			display->fillRect(0, 0, width-1, height/2, getColor(255,0,0));
@@ -246,6 +247,26 @@ void KemperRemoteDisplay::draw() {
 				display->fillRect(100, height/2 + 70, width-200, 45, getColor(248,140,176));
 				display->drawText(0, height/2 + 65, width-1, 45, TextAlignCenter, TextAlignMiddle, 36, tempo, strlen(tempo), 0);
 				lastTempoTime = millis();
+			}
+		}
+
+		bool expChanged = kemperRemote->state.expPedalState != lastKemperRemoteState.expPedalState;
+
+		if (bottomChanged || (kemperRemote->state.state != REMOTE_STATE_STOMP_ASSIGN && (expChanged || lastKemperRemoteState.state == REMOTE_STATE_STOMP_ASSIGN))) {
+			int expWidth = width / EXPRESSION_PEDAL_COUNT;
+
+			display->fillRect(0, height - 21, width - 1, 20, getColor(0, 0, 255));
+			for (int i = 0; i < EXPRESSION_PEDAL_COUNT; i++)
+			{
+				char txt[20];
+				if (kemperRemote->expPedals[i].isCalibrated()) {
+					sprintf(txt, "Exp %d: %s", (i + 1), EXPRESSION_MODE_STR(kemperRemote->expPedals[i].mode));
+					display->drawText(i*expWidth, height - 21, expWidth, 20, TextAlignLeft, TextAlignMiddle, 12, txt, strlen(txt), getColor(255, 255, 255));
+				}
+				else {
+					sprintf(txt, "Exp %d: Calibrate", (i + 1));
+					display->drawText(i*expWidth, height - 21, expWidth, 20, TextAlignLeft, TextAlignMiddle, 12, txt, strlen(txt), getColor(255, 255, 255));
+				}
 			}
 		}
 		if (kemperRemote->state.state == REMOTE_STATE_EXPRESSION_CALIBRATE) {

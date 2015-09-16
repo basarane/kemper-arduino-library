@@ -18,6 +18,8 @@ bool KEMPER_NAMESPACE::loadStompInfo(StompInfo *dst, int stompId, int id)
 			memcpy_P(&dst->color, &src->color, sizeof(src->color));
 			strcpy_P(dst->name, src->name);
 			dst->paramCount = pgm_read_word_near(&src->paramCount);
+			dst->isExpWah = pgm_read_byte_near(&src->isExpWah);
+			dst->isExpPitch = pgm_read_byte_near(&src->isExpPitch);
 			return true;
 		}
 	}
