@@ -38,19 +38,6 @@ class KemperMock : public AbstractKemper
 		void tapOn(); 
 		void tapOff(); 
 
-		void looperRecordPlayDown();
-		void looperRecordPlayUp();
-		void looperReverseDown();
-		void looperReverseUp();
-		void looperHalfTimeDown();
-		void looperHalfTimeUp();
-		void looperUndoDown();
-		void looperUndoUp();
-		void looperStopEraseDown();
-		void looperStopEraseUp();
-		void looperTriggerDown();
-		void looperTriggerUp();
-
 		void sendControlChange(byte data1, byte data2);
 		void toggleStomp(byte idx); 
 		void setPerformance(int idx, int slot = 0);

@@ -115,40 +115,52 @@ void Kemper::setRig(byte rig) {
 }
 
 void Kemper::looperRecordPlayDown() {
+	AbstractKemper::looperRecordPlayDown();
 	setParam(0x7d, 0x58, 1);
 }
 void Kemper::looperRecordPlayUp() {
+	AbstractKemper::looperRecordPlayUp();
 	setParam(0x7d, 0x58, 0);
 }
 
 void Kemper::looperReverseDown() {
+	AbstractKemper::looperReverseDown();
 	setParam(0x7d, 0x5b, 1);
 }
 void Kemper::looperReverseUp() {
+	AbstractKemper::looperReverseUp();
 	setParam(0x7d, 0x5b, 0);
 }
 void Kemper::looperHalfTimeDown() {
+	AbstractKemper::looperHalfTimeDown();
 	setParam(0x7d, 0x5c, 1);
 }
 void Kemper::looperHalfTimeUp() {
+	AbstractKemper::looperHalfTimeUp();
 	setParam(0x7d, 0x5c, 0);
 }
 void Kemper::looperUndoDown() {
+	AbstractKemper::looperUndoDown();
 	setParam(0x7d, 0x5d, 1);
 }
 void Kemper::looperUndoUp() {
+	AbstractKemper::looperUndoUp();
 	setParam(0x7d, 0x5d, 0);
 }
 void Kemper::looperStopEraseDown() {  // 0x5e
+	AbstractKemper::looperStopEraseDown();
 	setParam(0x7d, 0x59, 1);
 }
 void Kemper::looperStopEraseUp() {
+	AbstractKemper::looperStopEraseUp();
 	setParam(0x7d, 0x59, 0);
 }
 void Kemper::looperTriggerDown() {
+	AbstractKemper::looperTriggerDown();
 	setParam(0x7d, 0x5a, 1);
 }
 void Kemper::looperTriggerUp() {
+	AbstractKemper::looperTriggerUp();
 	setParam(0x7d, 0x5a, 0);
 }
 

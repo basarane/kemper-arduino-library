@@ -21,6 +21,9 @@ AbstractKemper::AbstractKemper() {
 	state.performanceNames[4][0] = 0;
 	state.performanceNames[5][0] = 0;
 	memset(lastStompParam, -1, sizeof(lastStompParam));
+	state.looperState.state = LOOPER_STATE_EMPTY;
+	state.looperState.isHalfTime = false;
+	state.looperState.isReversed = false;
 }
 
 void AbstractKemper::loadPartialParam(int stompIdx) {
@@ -77,4 +80,49 @@ void AbstractKemper::setPartialParamValue(float value) {
 	if ((parameter.totalOptionCount>0 && optionValue != parameter.currentOption) || (parameter.totalOptionCount==0 && optionValue!=parameter.currentValue)) {
 		setStompParam(parameter.stompIdx, parameter.params[parameter.currentParam - parameter.startParamIndex].number, optionValue);
 	}
+}
+
+void AbstractKemper::looperRecordPlayDown() {
+	if (state.looperState.state == LOOPER_STATE_EMPTY)
+		state.looperState.state = LOOPER_STATE_RECORDING;
+	else if (state.looperState.state == LOOPER_STATE_PLAYBACK)
+		state.looperState.state = LOOPER_STATE_OVERDUB;
+	else if (state.looperState.state == LOOPER_STATE_RECORDING || state.looperState.state == LOOPER_STATE_OVERDUB)
+		state.looperState.state = LOOPER_STATE_PLAYBACK;
+	state.looperState.recordPressTime = millis();
+}
+void AbstractKemper::looperRecordPlayUp() {
+	if (state.looperState.state == LOOPER_STATE_RECORDING || state.looperState.state == LOOPER_STATE_OVERDUB) {
+		if (millis() - state.looperState.recordPressTime > 2000) { //@ersin - should decide this value
+			state.looperState.state = LOOPER_STATE_PLAYBACK;
+		}
+	}
+}
+void AbstractKemper::looperReverseDown() {
+	state.looperState.isReversed = !state.looperState.isReversed;
+}
+void AbstractKemper::looperReverseUp() {
+}
+void AbstractKemper::looperHalfTimeDown() {
+	state.looperState.isHalfTime = !state.looperState.isHalfTime;
+}
+void AbstractKemper::looperHalfTimeUp() {
+}
+void AbstractKemper::looperUndoDown() {
+
+}
+void AbstractKemper::looperUndoUp() {
+
+}
+void AbstractKemper::looperStopEraseDown() {
+	// @ersin - check triple tap, and looper states
+}
+void AbstractKemper::looperStopEraseUp() {
+
+}
+void AbstractKemper::looperTriggerDown() {
+
+}
+void AbstractKemper::looperTriggerUp() {
+
 }

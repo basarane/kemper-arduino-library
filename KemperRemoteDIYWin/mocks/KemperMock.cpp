@@ -111,33 +111,6 @@ void KemperMock::setRig(byte rig) {
 	}
 }
 
-void KemperMock::looperRecordPlayDown() {
-}
-void KemperMock::looperRecordPlayUp() {
-}
-
-void KemperMock::looperReverseDown() {
-}
-void KemperMock::looperReverseUp() {
-}
-
-void KemperMock::looperHalfTimeDown() {
-}
-void KemperMock::looperHalfTimeUp() {
-}
-void KemperMock::looperUndoDown() {
-}
-void KemperMock::looperUndoUp() {
-}
-void KemperMock::looperStopEraseDown() {
-}
-void KemperMock::looperStopEraseUp() {
-}
-void KemperMock::looperTriggerDown() {
-}
-void KemperMock::looperTriggerUp() {
-}
-
 void KemperMock::toggleStomp(byte idx) {
 	state.stomps[idx].active = !state.stomps[idx].active;
 }

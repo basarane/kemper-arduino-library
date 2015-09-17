@@ -566,7 +566,7 @@ void KemperRemote::onSwitchDown(int sw) {
 			return;
 	}
 
-	if (millis() - switchDownStart < 500 && sw >= SWITCH_RIG_START && sw < SWITCH_RIG_START+ SWITCH_RIG_COUNT) {
+	if (millis() - switchDownStart < 500 && sw >= SWITCH_RIG_START && sw < SWITCH_RIG_START+ SWITCH_RIG_COUNT && state.state!=REMOTE_STATE_LOOPER) {
 
 		if (state.state != REMOTE_STATE_STOMP_PARAMETER && state.state != REMOTE_STATE_STOMP_PARAMETER_LOAD)
 		{
@@ -834,24 +834,51 @@ bool KemperRemote::changeExpPedalMode() {
 void KemperRemote::updateLeds() {
 		
 	int l = 0;
-	for (byte i = 0;i<SWITCH_RIG_COUNT; i++) {
-		bool rigActive = false;
+
+	if (state.state != REMOTE_STATE_LOOPER)
+	{
+		for (byte i = 0;i<SWITCH_RIG_COUNT; i++) {
+			bool rigActive = false;
 		
-		if (kemper->state.mode == MODE_PERFORM) {
-			rigActive = i == kemper->state.slot;
-		} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
-			rigActive = i == rigAssignSwitch - SWITCH_RIG_START;
-			if (!kemper->state.tempoLed) // blink //millis()%1000<500
+			if (kemper->state.mode == MODE_PERFORM) {
+				rigActive = i == kemper->state.slot;
+			} else if (state.state == REMOTE_STATE_RIG_ASSIGN) {
+				rigActive = i == rigAssignSwitch - SWITCH_RIG_START;
+				if (!kemper->state.tempoLed) // blink //millis()%1000<500
+					rigActive = false;
+			} else {
+				 rigActive = kemper->state.currentRig == rigMap[state.currentPage * SWITCH_RIG_COUNT + i];
+			}
+			if (state.state == REMOTE_STATE_STOMP_PARAMETER && !kemper->state.tempoLed) //millis() % 500 < 250
 				rigActive = false;
-		} else {
-			 rigActive = kemper->state.currentRig == rigMap[state.currentPage * SWITCH_RIG_COUNT + i];
-		}
-		if (state.state == REMOTE_STATE_STOMP_PARAMETER && !kemper->state.tempoLed) //millis() % 500 < 250
-			rigActive = false;
-		leds[l++] = rigActive?0x7f:0;
-		leds[l++] = rigActive?0x7f:0;
-		leds[l++] = rigActive?0x7f:0;
-	} 
+			leds[l++] = rigActive?0x7f:0;
+			leds[l++] = rigActive?0x7f:0;
+			leds[l++] = rigActive?0x7f:0;
+		} 
+	}
+	else {
+		bool recordLed = kemper->state.looperState.state == LOOPER_STATE_PLAYBACK || ((kemper->state.looperState.state == LOOPER_STATE_RECORD || kemper->state.looperState.state == LOOPER_STATE_OVERDUB) && kemper->state.tempoLed);
+		leds[l++] = recordLed ? 0x7f : 0;
+		leds[l++] = recordLed ? 0x7f : 0;
+		leds[l++] = recordLed ? 0x7f : 0;
+
+		leds[l++] = 0;
+		leds[l++] = 0;
+		leds[l++] = 0;
+
+		leds[l++] = 0;
+		leds[l++] = 0;
+		leds[l++] = 0;
+
+		leds[l++] = kemper->state.looperState.isReversed ? 0x7f : 0;
+		leds[l++] = kemper->state.looperState.isReversed ? 0x7f : 0;
+		leds[l++] = kemper->state.looperState.isReversed ? 0x7f : 0;
+
+		leds[l++] = kemper->state.looperState.isHalfTime ? 0x7f : 0;
+		leds[l++] = kemper->state.looperState.isHalfTime ? 0x7f : 0;
+		leds[l++] = kemper->state.looperState.isHalfTime ? 0x7f : 0;
+	}
+
 
 	for (byte i = 0;i<SWITCH_STOMP_COUNT; i++) {
 		byte assignment = currentStompAssignment[i];

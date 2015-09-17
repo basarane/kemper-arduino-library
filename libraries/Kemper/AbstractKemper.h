@@ -38,6 +38,16 @@ const byte CC_REVERB_TIME    = 71;
 const byte CC_GAIN           = 72;
 const byte CC_MONITOR_VOLUME = 73;
 
+
+struct LooperState
+{
+	int state;
+	bool isHalfTime;
+	bool isReversed;
+	unsigned long recordPressTime;
+	unsigned long erasePressTime;
+};
+
 struct KemperState
 {
 	StompState stomps[KEMPER_STOMP_COUNT];
@@ -55,11 +65,18 @@ struct KemperState
 	byte performance;
 	byte slot;
 	bool senseReceived;
+	
+	LooperState looperState;
 
 	unsigned int parameterState;
 
 	char performanceNames[6][20];
 };
+
+#define LOOPER_STATE_EMPTY 0
+#define LOOPER_STATE_RECORDING 1
+#define LOOPER_STATE_PLAYBACK 2
+#define LOOPER_STATE_OVERDUB 3
 
 class AbstractKemper
 {
@@ -83,18 +100,18 @@ class AbstractKemper
 		virtual void tapOn() = 0;
 		virtual void tapOff() = 0;
 
-		virtual void looperRecordPlayDown() = 0;
-		virtual void looperRecordPlayUp() = 0;
-		virtual void looperReverseDown() = 0;
-		virtual void looperReverseUp() = 0;
-		virtual void looperHalfTimeDown() = 0;
-		virtual void looperHalfTimeUp() = 0;
-		virtual void looperUndoDown() = 0;
-		virtual void looperUndoUp() = 0;
-		virtual void looperStopEraseDown() = 0;
-		virtual void looperStopEraseUp() = 0;
-		virtual void looperTriggerDown() = 0;
-		virtual void looperTriggerUp() = 0;
+		virtual void looperRecordPlayDown();
+		virtual void looperRecordPlayUp();
+		virtual void looperReverseDown();
+		virtual void looperReverseUp();
+		virtual void looperHalfTimeDown();
+		virtual void looperHalfTimeUp();
+		virtual void looperUndoDown();
+		virtual void looperUndoUp();
+		virtual void looperStopEraseDown();
+		virtual void looperStopEraseUp();
+		virtual void looperTriggerDown();
+		virtual void looperTriggerUp();
 
 		virtual void sendControlChange(byte data1, byte data2) = 0;
 		virtual void setStompParam(int stompIdx, byte number, int val) = 0;
