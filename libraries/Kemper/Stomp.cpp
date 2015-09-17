@@ -93,6 +93,8 @@ int KEMPER_NAMESPACE::getOptionValue(PartialParameter *parameter, int optionInde
 		PGM_KemperParam** params = (PGM_KemperParam**)pgm_read_word_near(&AllStomps[parameter->stompInfo->PGM_index].params);
 		const PGM_KemperParam *psrc = (PGM_KemperParam*)pgm_read_word_near(&params[parameter->currentParam]);
 		KemperParamOption** options = (KemperParamOption**)pgm_read_word_near(&psrc->options);
+		if (!options)
+			return 0;
 		KemperParamOption* option = (KemperParamOption*)pgm_read_word_near(&options[optionIndex]);
 		return (int)pgm_read_word_near(&option->value);
 	}
@@ -106,7 +108,7 @@ bool KEMPER_NAMESPACE::updateStompParameterValue(PartialParameter *parameter, in
 		PGM_KemperParam** params = (PGM_KemperParam**)pgm_read_word_near(&AllStomps[parameter->stompInfo->PGM_index].params);
 		PGM_KemperParam *param = (PGM_KemperParam*) pgm_read_word_near(&params[parameter->currentParam]);
 		KemperParamOption** options = (KemperParamOption**)pgm_read_word_near(&param->options);
-		for (int i=0;i<parameter->totalOptionCount;i++) {
+		for (int i=0;i<parameter->totalOptionCount && options;i++) {
 			KemperParamOption* option = (KemperParamOption*)pgm_read_word_near(&options[i]);
 			int val = pgm_read_word_near(&option->value);
 			if (val == value) {

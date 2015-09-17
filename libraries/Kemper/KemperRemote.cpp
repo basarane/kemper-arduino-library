@@ -20,6 +20,10 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	state.expPedalState = 0;
 	state.currentPerformance = -1;
 	state.currentSlot = -1;
+	
+	state.currentParameters = 0;
+	state.currentParametersChanged = false;
+
 	saveUpDown = 0;
 
 	for (int i=0;i<RIG_COUNT;i++)
@@ -41,7 +45,8 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	EEPROM.get(eCur, rigMap);
 	eCur += sizeof(rigMap);
 	memset(parameterBuffer, -1, sizeof(parameterBuffer));
-	EEPROM.get(eCur, parameterBuffer);
+	eepromParameterBufferStart = eCur;
+	//EEPROM.get(eCur, parameterBuffer);
 
 	/*
 	//@ersin - add EEPROM save
@@ -84,14 +89,6 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	expPedals[3].begin(EXPRESSION_PEDAL_4_PIN);
 #endif
 
-	byte *p = parameterBuffer;
-	while (p < parameterBuffer + PARAMETER_BUFFER_SIZE) {
-		if (*p != 0xff || *(p + 1) != 0xff)
-			p += *(p + 2) * 6 + 3;
-		else 
-			break;
-	}
-	nextParameters = p;
 	state.currentParameters = 0;
 }
 
@@ -165,31 +162,22 @@ void KemperRemote::read() {
 					}
 					if (changeCount == 0) {
 						debug("No change detected, canceling parameter mode");
-					} else if (changeCount * 6 + 3 > PARAMETER_BUFFER_SIZE - (nextParameters - parameterBuffer)) {
+					} else if (changeCount * 6 + 3 > PARAMETER_BUFFER_SIZE) {
 						debug("Buffer is full! Cannot save parameters");
 					}
 					else
 					{
 						state.isSaved = false;
-						if (state.currentParameters) { // the rig already has stomp parameters #7
-							byte* p = state.currentParameters;
-							p += *(p + 2) * 6 + 3; // move to next position
-							while (p<parameterBuffer + PARAMETER_BUFFER_SIZE && (*p!=0xff || *(p+1)!=0xff)) {
-								int blockSize = *(p + 2) * 6 + 3;
-								memmove(state.currentParameters, p, blockSize);
-								state.currentParameters += blockSize;
-								p += blockSize; // move to next position
-							}
-							memset(state.currentParameters, -1, PARAMETER_BUFFER_SIZE - (state.currentParameters - parameterBuffer));
-							nextParameters = state.currentParameters;
-						}
-						state.currentParameters = nextParameters;
+						state.currentParametersChanged = true;
+						state.currentParameters = parameterBuffer;
+						memset(state.currentParameters, -1, PARAMETER_BUFFER_SIZE);
+						byte* nextParameters = parameterBuffer;
 						if (kemper->state.mode == MODE_PERFORM) {
 							*nextParameters++ = kemper->state.performance;
 							*nextParameters++ = kemper->state.slot;
 						}
 						else {
-							*nextParameters++ = 0xFF;
+							*nextParameters++ = 0xFE;
 							*nextParameters++ = kemper->state.currentRig;
 						}
 						*nextParameters++ = changeCount;
@@ -269,15 +257,15 @@ void KemperRemote::read() {
 		}
 	}
 
-	bool shouldUpdateExpPedalModes = false;
+	bool rigChanged = false;
 	static int lastKemperMode = -1;
 	if (kemper->state.mode == MODE_BROWSE)
 	{
 		if (rigMap[currentRig] != kemper->state.currentRig || lastKemperMode!=MODE_BROWSE) {
 			byte oldRig = currentRig;
 			currentRig = getRigIndex(kemper->state.currentRig);
-			updateCurrentParameter(0xFF, kemper->state.currentRig);
-			shouldUpdateExpPedalModes = true;
+			updateCurrentParameter(0xFE, kemper->state.currentRig);
+			rigChanged = true;
 			if (oldRig/SWITCH_RIG_COUNT!=currentRig/SWITCH_RIG_COUNT) // page changed
 				EEPROM.get((currentRig/SWITCH_RIG_COUNT)*sizeof(stompAssignment), stompAssignment);
 			memcpy(currentStompAssignment, stompAssignment[currentRig%SWITCH_RIG_COUNT], SWITCH_STOMP_COUNT);
@@ -291,11 +279,12 @@ void KemperRemote::read() {
 			state.currentPerformance = kemper->state.performance;
 			state.currentSlot = kemper->state.slot;
 			updateCurrentParameter(state.currentPerformance, state.currentSlot);
-			shouldUpdateExpPedalModes = true;
+			rigChanged = true;
 			memcpy(currentStompAssignment, stompAssignmentPerform[state.currentSlot], SWITCH_STOMP_COUNT);
 		}
 	}
 
+	bool shouldUpdateExpPedalModes = false;
 	for (int i = 0; i < KEMPER_STOMP_COUNT; i++)
 	{
 		if (lastStompTypes[i] != kemper->state.stomps[i].info.type) {
@@ -304,7 +293,7 @@ void KemperRemote::read() {
 		}
 	}
 
-	if (shouldUpdateExpPedalModes)
+	if (rigChanged || shouldUpdateExpPedalModes)
 		updateExpPedalModes();
 
 	lastKemperMode = kemper->state.mode;
@@ -351,16 +340,20 @@ void KemperRemote::read() {
 
 void KemperRemote::updateCurrentParameter(byte perf, byte slot) {
 	byte* p = parameterBuffer;
+	byte b[3];
+	int idx = 0;
 	state.currentParameters = 0;
-	while (p<parameterBuffer + PARAMETER_BUFFER_SIZE)
-	{
-		if (*p == perf && *(p + 1) == slot) {
-			state.currentParameters = p;
+	state.currentParametersChanged = false;
+	while (idx < PARAMETER_BUFFER_ALL_SIZE) {
+		EEPROM.get(eepromParameterBufferStart + idx, b);
+		if (b[0] == perf && b[1] == slot) {
+			state.currentParameters = parameterBuffer;
+			EEPROM.get(eepromParameterBufferStart + idx, parameterBuffer);
 			break;
 		}
-		if (*p == 0xff && *(p + 1) == 0xff)
+		if (b[0] == 0xff)
 			break;
-		p = p + 3 + *(p + 2) * 6;
+		idx = idx + 3 + b[2] * 6;
 	}
 }
 
@@ -934,7 +927,49 @@ void KemperRemote::save() {
 	int eCur = sizeof(stompAssignment)*BROWSE_PAGE_COUNT + sizeof(stompAssignmentPerform)*RIG_COUNT;
 	EEPROM.put(eCur, rigMap);
 	eCur += sizeof(rigMap);
-	EEPROM.put(eCur, parameterBuffer);
+	if (state.currentParameters != 0 && state.currentParametersChanged) { // current rig has stomp parameter mode activated and changed
+		// first find if it exists in EEPROM
+		int newSize = 3 + state.currentParameters[2] * 6;
+
+		int idx = 0;
+		byte* p = state.currentParameters;
+		while (idx < PARAMETER_BUFFER_ALL_SIZE) {
+			byte b[6];
+			EEPROM.get(eCur + idx, b);
+			if (b[0] == p[0] && b[1] == p[1]) {
+				//found parameter check for change
+				//move latter blocks to here (eCur+idx)
+				int curSize = 3 + b[2] * 6;
+				byte tmp[1];
+				while (idx +curSize < PARAMETER_BUFFER_ALL_SIZE) {
+					EEPROM.get(eCur + idx + curSize, tmp);
+					if (tmp[0] == 0xff) {
+						break;
+					}
+					EEPROM.put(eCur + idx, tmp);
+					idx++;
+				}
+				break;
+			}
+			if (b[0] == 0xff)
+				break;
+			idx = idx + 3+b[2]*6;
+		}
+		if (idx + newSize < PARAMETER_BUFFER_ALL_SIZE) {
+			byte b[1];
+			while (p[0] != 0xff) {
+				b[0] = p[0];
+				EEPROM.put(eCur + idx, b);
+				idx = idx + 1;
+				p = p + 1;
+			}
+			b[0] = 0xff;
+			EEPROM.put(eCur + idx, b);
+		}
+		else {
+			debug("No space left to save parameters on EEPROM");
+		}
+	}
 	state.isSaved = true;
 	saveUpDown = 2;
 }

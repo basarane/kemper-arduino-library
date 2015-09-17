@@ -14,7 +14,8 @@ BEGIN_KEMPER_NAMESPACE
 #define EXPRESSION_PEDAL_3_PIN 3
 #define EXPRESSION_PEDAL_4_PIN 3
 
-#define PARAMETER_BUFFER_SIZE 1024
+#define PARAMETER_BUFFER_ALL_SIZE 1024
+#define PARAMETER_BUFFER_SIZE 64
 
 #define SWITCH_RIG_START 0
 #define SWITCH_STOMP_START 5
@@ -66,6 +67,7 @@ struct KemperRemoteState
 	bool isSaved;
 	int parameterState;
 	byte* currentParameters;
+	bool currentParametersChanged;
 	unsigned long expPedalState;
 };
 
@@ -92,7 +94,7 @@ private:
 	int oldStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 	int newStompParameters[KEMPER_STOMP_COUNT][MAX_KEMPER_PARAM_LENGTH][2];
 	byte parameterBuffer[PARAMETER_BUFFER_SIZE];
-	byte *nextParameters;
+	int eepromParameterBufferStart;
 	void updateCurrentParameter(byte perf, byte slot);
 
 	void refreshStompAssignment();
