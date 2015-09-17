@@ -24,6 +24,8 @@ AbstractKemper::AbstractKemper() {
 	state.looperState.state = LOOPER_STATE_EMPTY;
 	state.looperState.isHalfTime = false;
 	state.looperState.isReversed = false;
+	state.looperState.erasePressCount = 0;
+	state.looperState.atLestOneLayer = false;
 }
 
 void AbstractKemper::loadPartialParam(int stompIdx) {
@@ -83,17 +85,22 @@ void AbstractKemper::setPartialParamValue(float value) {
 }
 
 void AbstractKemper::looperRecordPlayDown() {
-	if (state.looperState.state == LOOPER_STATE_EMPTY)
+	state.looperState.erasePressCount = 0;
+	if (state.looperState.state == LOOPER_STATE_EMPTY || state.looperState.state == LOOPER_STATE_ERASED) {
 		state.looperState.state = LOOPER_STATE_RECORDING;
-	else if (state.looperState.state == LOOPER_STATE_PLAYBACK)
+		state.looperState.atLestOneLayer = false;
+	}
+	else if (state.looperState.state == LOOPER_STATE_PLAYBACK) {
 		state.looperState.state = LOOPER_STATE_OVERDUB;
-	else if (state.looperState.state == LOOPER_STATE_RECORDING || state.looperState.state == LOOPER_STATE_OVERDUB)
+		state.looperState.atLestOneLayer = true;
+	}
+	else if (state.looperState.state == LOOPER_STATE_RECORDING || state.looperState.state == LOOPER_STATE_OVERDUB || state.looperState.state == LOOPER_STATE_STOPPED)
 		state.looperState.state = LOOPER_STATE_PLAYBACK;
 	state.looperState.recordPressTime = millis();
 }
 void AbstractKemper::looperRecordPlayUp() {
 	if (state.looperState.state == LOOPER_STATE_RECORDING || state.looperState.state == LOOPER_STATE_OVERDUB) {
-		if (millis() - state.looperState.recordPressTime > 2000) { //@ersin - should decide this value
+		if (millis() - state.looperState.recordPressTime > 500) {
 			state.looperState.state = LOOPER_STATE_PLAYBACK;
 		}
 	}
@@ -109,19 +116,34 @@ void AbstractKemper::looperHalfTimeDown() {
 void AbstractKemper::looperHalfTimeUp() {
 }
 void AbstractKemper::looperUndoDown() {
-
+	state.looperState.erasePressCount = 0;
+	if (state.looperState.state == LOOPER_STATE_ERASED)
+		state.looperState.state = LOOPER_STATE_PLAYBACK;
+	else if (state.looperState.state == LOOPER_STATE_RECORDING)
+		state.looperState.state = LOOPER_STATE_RECORDING_UNDO;
+	else if (state.looperState.state == LOOPER_STATE_RECORDING_UNDO)
+		state.looperState.state = LOOPER_STATE_PLAYBACK;
+	else if (state.looperState.state == LOOPER_STATE_PLAYBACK && !state.looperState.atLestOneLayer)
+		state.looperState.state = LOOPER_STATE_RECORDING_UNDO;
 }
 void AbstractKemper::looperUndoUp() {
 
 }
 void AbstractKemper::looperStopEraseDown() {
-	// @ersin - check triple tap, and looper states
+	state.looperState.erasePressTime = millis();
+	state.looperState.erasePressCount++;
+	if (state.looperState.state != LOOPER_STATE_ERASED && state.looperState.state != LOOPER_STATE_EMPTY)
+		state.looperState.state = LOOPER_STATE_STOPPED;
+	if (state.looperState.erasePressCount >= 3 && state.looperState.state != LOOPER_STATE_EMPTY)
+		state.looperState.state = LOOPER_STATE_ERASED;
 }
 void AbstractKemper::looperStopEraseUp() {
-
+	if (millis() - state.looperState.erasePressTime >= 2000) {
+		state.looperState.state = LOOPER_STATE_ERASED;
+	}
 }
 void AbstractKemper::looperTriggerDown() {
-
+	state.looperState.erasePressCount = 0;
 }
 void AbstractKemper::looperTriggerUp() {
 

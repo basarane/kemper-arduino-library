@@ -44,15 +44,15 @@ KemperMock::KemperMock() {
 					defaultStompStates[t][i][j].info.type = 0;
 				}
 			}
-			rIdx = (AllStompsCount - 8) + (rand() % 3);
+			rIdx = (AllStompsCount - 9) + (rand() % 3);
 			defaultStompStates[t][i][6].active = rand()%10<8;
 			//defaultStompStates[t][i][6].info = (AllStomps[rIdx]);
-			loadStompInfo(&defaultStompStates[t][i][6].info , 6, AllStomps[rIdx].type);
+			loadStompInfo(&defaultStompStates[t][i][6].info , 0, AllStomps[rIdx].type);
 
-			rIdx = (AllStompsCount - 5) + (rand() % 5);
+			rIdx = (AllStompsCount - 6) + (rand() % 5);
 			defaultStompStates[t][i][7].active = rand()%10<8;
 			//defaultStompStates[t][i][7].info = (AllStomps[rIdx]);
-			loadStompInfo(&defaultStompStates[t][i][7].info, 7, AllStomps[rIdx].type);
+			loadStompInfo(&defaultStompStates[t][i][7].info, 0, AllStomps[rIdx].type);
 		}
 	}
 
@@ -137,6 +137,10 @@ void KemperMock::sendControlChange(byte data1, byte data2) {
 }
 
 void KemperMock::getStompParameter(int stompIdx, int paramNumber) {
+	if (paramNumber >= 100 && paramNumber < 120)
+		paramNumber -= 100;
+	if (paramNumber >= 120 && paramNumber < 140)
+		paramNumber -= 120;
 	if (stompIdx >= 0 && paramNumber >= 0 && stompIdx < 8 && paramNumber < 128) {
 		lastStompParam[2] = defaultStompParameters[stompIdx][paramNumber];
 		if (stompIdx == parameter.stompIdx) {
@@ -149,6 +153,10 @@ void KemperMock::getStompParameter(int stompIdx, int paramNumber) {
 }
 
 void KemperMock::setStompParam(int stompIdx, byte number, int val) {
+	if (number >= 100 && number < 120)
+		number -= 100;
+	if (number >= 120 && number < 140)
+		number -= 120;
 	if (stompIdx >= 0 && number >= 0 && stompIdx < 8 && number < 128) {
 		defaultStompParameters[stompIdx][number] = val;
 		state.parameterState++;

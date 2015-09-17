@@ -175,7 +175,7 @@ void KemperRemoteDisplay::draw() {
 					{
 						display->layerEffect(1);
 					}
-					display->fillRect(width/2+1,height/2+10, width/2-5, height/2-20, getColor(255,255,255));
+					display->fillRect(width/2+1,height/2+10, width/2-5, height/2-33, getColor(255,255,255));
 
 					for (int i=0;i<NUMBER_OF_OPTIONS_IN_LIST;i++) {
 						bool selected = kemper->parameter.currentOption - kemper->parameter.startOptionIndex == i;

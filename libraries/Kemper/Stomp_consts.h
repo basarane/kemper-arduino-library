@@ -1,5 +1,15 @@
 
 // Kemper Parameter Option Values
+const KemperParamOption Option_delaytype_0 PROGMEM = {0,""};
+const KemperParamOption Option_delaytype_1 PROGMEM = {1,"Tap Delay"};
+const KemperParamOption Option_delaytype_2 PROGMEM = {2,"Free Delay"};
+const KemperParamOption Option_delaytype_3 PROGMEM = {3,"Analog Delay"};
+const KemperParamOption Option_reverbtype_0 PROGMEM = {0,""};
+const KemperParamOption Option_reverbtype_1 PROGMEM = {1,"Hall"};
+const KemperParamOption Option_reverbtype_2 PROGMEM = {2,"Large Room"};
+const KemperParamOption Option_reverbtype_3 PROGMEM = {3,"Small Room"};
+const KemperParamOption Option_reverbtype_4 PROGMEM = {4,"Ambience"};
+const KemperParamOption Option_reverbtype_5 PROGMEM = {5,"Matchbox"};
 const KemperParamOption Option_wpm_0 PROGMEM = {0,"Off"};
 const KemperParamOption Option_wpm_1 PROGMEM = {1,"Touch"};
 const KemperParamOption Option_wpm_2 PROGMEM = {2,"On"};
@@ -206,6 +216,14 @@ const KemperParamOption Option_t_129 PROGMEM = {129,"Transpose"};
 const KemperParamOption Option_t_130 PROGMEM = {130,"Chromatic Pitch"};
 const KemperParamOption Option_t_131 PROGMEM = {131,"Harmonic Pitch"};
 const KemperParamOption Option_t_132 PROGMEM = {132,"Analog Octaver"};
+const KemperParamOption Option_t_201 PROGMEM = {201,"Tap Delay"};
+const KemperParamOption Option_t_202 PROGMEM = {202,"Free Delay"};
+const KemperParamOption Option_t_203 PROGMEM = {203,"Analog Delay"};
+const KemperParamOption Option_t_211 PROGMEM = {211,"Hall"};
+const KemperParamOption Option_t_212 PROGMEM = {212,"Large Room"};
+const KemperParamOption Option_t_213 PROGMEM = {213,"Small Room"};
+const KemperParamOption Option_t_214 PROGMEM = {214,"Ambience"};
+const KemperParamOption Option_t_215 PROGMEM = {215,"Matchbox"};
 const KemperParamOption Option_delayratio_0 PROGMEM = {0,"1:4"};
 const KemperParamOption Option_delayratio_1 PROGMEM = {1,"2:4"};
 const KemperParamOption Option_delayratio_2 PROGMEM = {2,"3:4"};
@@ -213,10 +231,6 @@ const KemperParamOption Option_delayratio_3 PROGMEM = {3,"4:4"};
 const KemperParamOption Option_delayratio_4 PROGMEM = {4,"4:3"};
 const KemperParamOption Option_delayratio_5 PROGMEM = {5,"4:2"};
 const KemperParamOption Option_delayratio_6 PROGMEM = {6,"4:1"};
-const KemperParamOption Option_delaytype_0 PROGMEM = {0,""};
-const KemperParamOption Option_delaytype_1 PROGMEM = {1,"Tap Delay"};
-const KemperParamOption Option_delaytype_2 PROGMEM = {2,"Free Delay"};
-const KemperParamOption Option_delaytype_3 PROGMEM = {3,"Analog Delay"};
 const KemperParamOption Option_delayclock_0 PROGMEM = {0,"1/32"};
 const KemperParamOption Option_delayclock_1 PROGMEM = {1,"1/16"};
 const KemperParamOption Option_delayclock_2 PROGMEM = {2,"2/16"};
@@ -232,28 +246,22 @@ const KemperParamOption Option_delayclock_11 PROGMEM = {11,"2/12(Triplet)"};
 const KemperParamOption Option_delayclock_12 PROGMEM = {12,"4/12(Triplet)"};
 const KemperParamOption Option_b_0 PROGMEM = {0,"Off"};
 const KemperParamOption Option_b_1 PROGMEM = {1,"On"};
-const KemperParamOption Option_reverbtype_0 PROGMEM = {0,""};
-const KemperParamOption Option_reverbtype_1 PROGMEM = {1,"Hall"};
-const KemperParamOption Option_reverbtype_2 PROGMEM = {2,"Large Room"};
-const KemperParamOption Option_reverbtype_3 PROGMEM = {3,"Small Room"};
-const KemperParamOption Option_reverbtype_4 PROGMEM = {4,"Ambience"};
-const KemperParamOption Option_reverbtype_5 PROGMEM = {5,"Matchbox"};
 
 // Kemper Parameter Option Collections
+const KemperParamOption * const Options_delaytype[] PROGMEM = {&Option_delaytype_0, &Option_delaytype_1, &Option_delaytype_2, &Option_delaytype_3};
+const KemperParamOption * const Options_reverbtype[] PROGMEM = {&Option_reverbtype_0, &Option_reverbtype_1, &Option_reverbtype_2, &Option_reverbtype_3, &Option_reverbtype_4, &Option_reverbtype_5};
 const KemperParamOption * const Options_wpm[] PROGMEM = {&Option_wpm_0, &Option_wpm_1, &Option_wpm_2, &Option_wpm_3, &Option_wpm_4, &Option_wpm_5};
 const KemperParamOption * const Options_pitch[] PROGMEM = {&Option_pitch_28, &Option_pitch_29, &Option_pitch_30, &Option_pitch_31, &Option_pitch_32, &Option_pitch_33, &Option_pitch_34, &Option_pitch_35, &Option_pitch_36, &Option_pitch_37, &Option_pitch_38, &Option_pitch_39, &Option_pitch_40, &Option_pitch_41, &Option_pitch_42, &Option_pitch_43, &Option_pitch_44, &Option_pitch_45, &Option_pitch_46, &Option_pitch_47, &Option_pitch_48, &Option_pitch_49, &Option_pitch_50, &Option_pitch_51, &Option_pitch_52, &Option_pitch_53, &Option_pitch_54, &Option_pitch_55, &Option_pitch_56, &Option_pitch_57, &Option_pitch_58, &Option_pitch_59, &Option_pitch_60, &Option_pitch_61, &Option_pitch_62, &Option_pitch_63, &Option_pitch_64, &Option_pitch_65, &Option_pitch_66, &Option_pitch_67, &Option_pitch_68, &Option_pitch_69, &Option_pitch_70, &Option_pitch_71, &Option_pitch_72, &Option_pitch_73, &Option_pitch_74, &Option_pitch_75, &Option_pitch_76, &Option_pitch_77, &Option_pitch_78, &Option_pitch_79, &Option_pitch_80, &Option_pitch_81, &Option_pitch_82, &Option_pitch_83, &Option_pitch_84, &Option_pitch_85, &Option_pitch_86, &Option_pitch_87, &Option_pitch_88, &Option_pitch_89, &Option_pitch_90, &Option_pitch_91, &Option_pitch_92, &Option_pitch_93, &Option_pitch_94, &Option_pitch_95, &Option_pitch_96, &Option_pitch_97, &Option_pitch_98, &Option_pitch_99, &Option_pitch_100};
 const KemperParamOption * const Options_key[] PROGMEM = {&Option_key_0, &Option_key_1, &Option_key_2, &Option_key_3, &Option_key_4, &Option_key_5, &Option_key_6, &Option_key_7, &Option_key_8, &Option_key_9, &Option_key_10, &Option_key_11};
 const KemperParamOption * const Options_modstages[] PROGMEM = {&Option_modstages_0, &Option_modstages_1, &Option_modstages_2, &Option_modstages_3, &Option_modstages_4, &Option_modstages_5};
 const KemperParamOption * const Options_voiceinterval[] PROGMEM = {&Option_voiceinterval_42, &Option_voiceinterval_43, &Option_voiceinterval_44, &Option_voiceinterval_45, &Option_voiceinterval_46, &Option_voiceinterval_47, &Option_voiceinterval_48, &Option_voiceinterval_49, &Option_voiceinterval_50, &Option_voiceinterval_51, &Option_voiceinterval_52, &Option_voiceinterval_53, &Option_voiceinterval_54, &Option_voiceinterval_55, &Option_voiceinterval_56, &Option_voiceinterval_57, &Option_voiceinterval_58, &Option_voiceinterval_59, &Option_voiceinterval_60, &Option_voiceinterval_61, &Option_voiceinterval_62, &Option_voiceinterval_63, &Option_voiceinterval_64, &Option_voiceinterval_65, &Option_voiceinterval_66, &Option_voiceinterval_67, &Option_voiceinterval_68, &Option_voiceinterval_69, &Option_voiceinterval_70, &Option_voiceinterval_71, &Option_voiceinterval_72, &Option_voiceinterval_73, &Option_voiceinterval_74, &Option_voiceinterval_75, &Option_voiceinterval_76, &Option_voiceinterval_77, &Option_voiceinterval_78, &Option_voiceinterval_79, &Option_voiceinterval_80, &Option_voiceinterval_81, &Option_voiceinterval_82, &Option_voiceinterval_83, &Option_voiceinterval_84, &Option_voiceinterval_85, &Option_voiceinterval_86, &Option_voiceinterval_87, &Option_voiceinterval_88, &Option_voiceinterval_89, &Option_voiceinterval_90, &Option_voiceinterval_91, &Option_voiceinterval_92, &Option_voiceinterval_93, &Option_voiceinterval_94, &Option_voiceinterval_95};
-const KemperParamOption * const Options_t[] PROGMEM = {&Option_t_1, &Option_t_2, &Option_t_3, &Option_t_4, &Option_t_6, &Option_t_7, &Option_t_8, &Option_t_9, &Option_t_10, &Option_t_11, &Option_t_12, &Option_t_13, &Option_t_17, &Option_t_18, &Option_t_19, &Option_t_20, &Option_t_21, &Option_t_33, &Option_t_34, &Option_t_35, &Option_t_36, &Option_t_37, &Option_t_38, &Option_t_39, &Option_t_49, &Option_t_57, &Option_t_58, &Option_t_64, &Option_t_65, &Option_t_66, &Option_t_67, &Option_t_68, &Option_t_69, &Option_t_70, &Option_t_71, &Option_t_81, &Option_t_82, &Option_t_83, &Option_t_89, &Option_t_91, &Option_t_97, &Option_t_98, &Option_t_99, &Option_t_101, &Option_t_113, &Option_t_114, &Option_t_115, &Option_t_116, &Option_t_121, &Option_t_122, &Option_t_123, &Option_t_129, &Option_t_130, &Option_t_131, &Option_t_132};
+const KemperParamOption * const Options_t[] PROGMEM = {&Option_t_1, &Option_t_2, &Option_t_3, &Option_t_4, &Option_t_6, &Option_t_7, &Option_t_8, &Option_t_9, &Option_t_10, &Option_t_11, &Option_t_12, &Option_t_13, &Option_t_17, &Option_t_18, &Option_t_19, &Option_t_20, &Option_t_21, &Option_t_33, &Option_t_34, &Option_t_35, &Option_t_36, &Option_t_37, &Option_t_38, &Option_t_39, &Option_t_49, &Option_t_57, &Option_t_58, &Option_t_64, &Option_t_65, &Option_t_66, &Option_t_67, &Option_t_68, &Option_t_69, &Option_t_70, &Option_t_71, &Option_t_81, &Option_t_82, &Option_t_83, &Option_t_89, &Option_t_91, &Option_t_97, &Option_t_98, &Option_t_99, &Option_t_101, &Option_t_113, &Option_t_114, &Option_t_115, &Option_t_116, &Option_t_121, &Option_t_122, &Option_t_123, &Option_t_129, &Option_t_130, &Option_t_131, &Option_t_132, &Option_t_201, &Option_t_202, &Option_t_203, &Option_t_211, &Option_t_212, &Option_t_213, &Option_t_214, &Option_t_215};
 const KemperParamOption * const Options_delayratio[] PROGMEM = {&Option_delayratio_0, &Option_delayratio_1, &Option_delayratio_2, &Option_delayratio_3, &Option_delayratio_4, &Option_delayratio_5, &Option_delayratio_6};
-const KemperParamOption * const Options_delaytype[] PROGMEM = {&Option_delaytype_0, &Option_delaytype_1, &Option_delaytype_2, &Option_delaytype_3};
 const KemperParamOption * const Options_delayclock[] PROGMEM = {&Option_delayclock_0, &Option_delayclock_1, &Option_delayclock_2, &Option_delayclock_3, &Option_delayclock_4, &Option_delayclock_5, &Option_delayclock_6, &Option_delayclock_7, &Option_delayclock_8, &Option_delayclock_9, &Option_delayclock_10, &Option_delayclock_11, &Option_delayclock_12};
 const KemperParamOption * const Options_b[] PROGMEM = {&Option_b_0, &Option_b_1};
-const KemperParamOption * const Options_reverbtype[] PROGMEM = {&Option_reverbtype_0, &Option_reverbtype_1, &Option_reverbtype_2, &Option_reverbtype_3, &Option_reverbtype_4, &Option_reverbtype_5};
 
 // Kemper Parameters
-const PGM_KemperParam Param_Type PROGMEM =  {0, "Type", 1, 132, 55, Options_t};
+const PGM_KemperParam Param_Type PROGMEM =  {0, "Type", 1, 215, 63, Options_t};
 const PGM_KemperParam Param_On_Off PROGMEM =  {3, "On/Off", 0, 1, 2, Options_b};
 const PGM_KemperParam Param_Mix PROGMEM =  {4, "Mix", 0, 100, 0, 0};
 const PGM_KemperParam Param_Volume PROGMEM =  {6, "Volume", 0, 100, 0, 0};
@@ -312,6 +320,32 @@ const PGM_KemperParam Param_Voice_2_Interval PROGMEM =  {63, "Voice 2 Interval",
 const PGM_KemperParam Param_Key PROGMEM =  {64, "Key", 0, 11, 12, Options_key};
 const PGM_KemperParam Param_Free_Formants PROGMEM =  {65, "Free Formants", 0, 1, 2, Options_b};
 const PGM_KemperParam Param_Formant_Shift PROGMEM =  {66, "Formant Shift", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Type PROGMEM =  {100, "Delay Type", 0, 3, 4, Options_delaytype};
+const PGM_KemperParam Param_Delay_On_Off__cuts_tail_ PROGMEM =  {102, "Delay On/Off (cuts tail)", 0, 1, 2, Options_b};
+const PGM_KemperParam Param_Delay_Mix PROGMEM =  {103, "Delay Mix", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Volume PROGMEM =  {104, "Delay Volume", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Time PROGMEM =  {105, "Delay Time", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Ratio PROGMEM =  {106, "Delay Ratio", 0, 6, 7, Options_delayratio};
+const PGM_KemperParam Param_Delay_Clock_Left PROGMEM =  {107, "Delay Clock Left", 0, 12, 13, Options_delayclock};
+const PGM_KemperParam Param_Delay_Clock_Right PROGMEM =  {108, "Delay Clock Right", 0, 12, 13, Options_delayclock};
+const PGM_KemperParam Param_Delay_Feedback PROGMEM =  {109, "Delay Feedback", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Bandwidth PROGMEM =  {110, "Delay Bandwidth", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Center_Frequency PROGMEM =  {111, "Delay Center Frequency", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_Modulation PROGMEM =  {112, "Delay Modulation", 0, 100, 0, 0};
+const PGM_KemperParam Param_Delay_On_off__keeps_tail_ PROGMEM =  {113, "Delay On/off (keeps tail)", 0, 1, 2, Options_b};
+const PGM_KemperParam Param_Delay_Ducking PROGMEM =  {114, "Delay Ducking", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Type PROGMEM =  {120, "Reverb Type", 0, 5, 6, Options_reverbtype};
+const PGM_KemperParam Param_Reverb_On_off__cuts_tail_ PROGMEM =  {122, "Reverb On/off (cuts tail)", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Mix PROGMEM =  {123, "Reverb Mix", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Volume PROGMEM =  {124, "Reverb Volume", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Del_Rev_Balance PROGMEM =  {125, "Reverb Del/Rev Balance", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Time PROGMEM =  {126, "Reverb Time", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Damping PROGMEM =  {127, "Reverb Damping", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Bandwidth PROGMEM =  {128, "Reverb Bandwidth", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Center_Frequency PROGMEM =  {129, "Reverb Center Frequency", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Pre_delay PROGMEM =  {130, "Reverb Pre-delay", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_On_off__keeps_tail_ PROGMEM =  {131, "Reverb On/off (keeps tail)", 0, 100, 0, 0};
+const PGM_KemperParam Param_Reverb_Ducking PROGMEM =  {132, "Reverb Ducking", 0, 100, 0, 0};
 
 // Kemper Stomp Parameters
 const PGM_KemperParam * const Params_Wah_Wah[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
@@ -368,6 +402,14 @@ const PGM_KemperParam * const Params_Transpose[] PROGMEM = {&Param_Voice_1_Pitch
 const PGM_KemperParam * const Params_Chromatic_Pitch[] PROGMEM = {&Param_Volume, &Param_Ducking, &Param_Voice_Mix, &Param_Voice_1_Pitch, &Param_Voice_2_Pitch, &Param_Detune, &Param_Smooth_Chords, &Param_Pure_Tuning, &Param_Free_Formants, &Param_Formant_Shift};
 const PGM_KemperParam * const Params_Harmonic_Pitch[] PROGMEM = {&Param_Volume, &Param_Ducking, &Param_Voice_Mix, &Param_Pure_Tuning, &Param_Voice_1_Interval, &Param_Voice_2_Interval, &Param_Key, &Param_Free_Formants, &Param_Formant_Shift};
 const PGM_KemperParam * const Params_Analog_Octaver[] PROGMEM = {&Param_Volume, &Param_Modulation_Crossover, &Param_Ducking, &Param_Voice_Mix};
+const PGM_KemperParam * const Params_Tap_Delay[] PROGMEM = {&Param_Delay_Type, &Param_Delay_On_Off__cuts_tail_, &Param_Delay_Mix, &Param_Delay_Volume, &Param_Delay_Time, &Param_Delay_Ratio, &Param_Delay_Clock_Left, &Param_Delay_Clock_Right, &Param_Delay_Feedback, &Param_Delay_Bandwidth, &Param_Delay_Center_Frequency, &Param_Delay_Modulation, &Param_Delay_On_off__keeps_tail_, &Param_Delay_Ducking};
+const PGM_KemperParam * const Params_Free_Delay[] PROGMEM = {&Param_Delay_Type, &Param_Delay_On_Off__cuts_tail_, &Param_Delay_Mix, &Param_Delay_Volume, &Param_Delay_Time, &Param_Delay_Ratio, &Param_Delay_Clock_Left, &Param_Delay_Clock_Right, &Param_Delay_Feedback, &Param_Delay_Bandwidth, &Param_Delay_Center_Frequency, &Param_Delay_Modulation, &Param_Delay_On_off__keeps_tail_, &Param_Delay_Ducking};
+const PGM_KemperParam * const Params_Analog_Delay[] PROGMEM = {&Param_Delay_Type, &Param_Delay_On_Off__cuts_tail_, &Param_Delay_Mix, &Param_Delay_Volume, &Param_Delay_Time, &Param_Delay_Ratio, &Param_Delay_Clock_Left, &Param_Delay_Clock_Right, &Param_Delay_Feedback, &Param_Delay_Bandwidth, &Param_Delay_Center_Frequency, &Param_Delay_Modulation, &Param_Delay_On_off__keeps_tail_, &Param_Delay_Ducking};
+const PGM_KemperParam * const Params_Hall[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
+const PGM_KemperParam * const Params_Large_Room[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
+const PGM_KemperParam * const Params_Small_Room[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
+const PGM_KemperParam * const Params_Ambience[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
+const PGM_KemperParam * const Params_Matchbox[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
 
 // Kemper Stomps
 const PGM_StompInfo AllStomps[] PROGMEM = {
@@ -426,20 +468,20 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 	{130, ColorLightGreen,"Chromatic Pitch", 10, Params_Chromatic_Pitch, 0, 0},
 	{131, ColorLightGreen,"Harmonic Pitch", 9, Params_Harmonic_Pitch, 0, 0},
 	{132, ColorLightGreen,"Analog Octaver", 4, Params_Analog_Octaver, 0, 0},
-	{601, ColorGreen,"Tap Delay"},
-	{602, ColorGreen,"Free Delay"},
-	{603, ColorGreen,"Analog Delay"},
-	{701, ColorGreen,"Hall"},
-	{702, ColorGreen,"Large Room"},
-	{703, ColorGreen,"Small Room"},
-	{704, ColorGreen,"Ambience"},
-	{705, ColorGreen,"Matchbox"}, 
+	{201, ColorGreen,"Tap Delay", 14, Params_Tap_Delay, 0, 0},
+	{202, ColorGreen,"Free Delay", 14, Params_Free_Delay, 0, 0},
+	{203, ColorGreen,"Analog Delay", 14, Params_Analog_Delay, 0, 0},
+	{211, ColorGreen,"Hall", 12, Params_Hall, 0, 0},
+	{212, ColorGreen,"Large Room", 12, Params_Large_Room, 0, 0},
+	{213, ColorGreen,"Small Room", 12, Params_Small_Room, 0, 0},
+	{214, ColorGreen,"Ambience", 12, Params_Ambience, 0, 0},
+	{215, ColorGreen,"Matchbox", 12, Params_Matchbox, 0, 0},
 	{0, ColorNone,"None"},
 };
 
 
 #define MAX_KEMPER_PARAM_OPTION_LENGTH 73
-#define MAX_KEMPER_PARAM_LENGTH 11
+#define MAX_KEMPER_PARAM_LENGTH 14
 
 
 

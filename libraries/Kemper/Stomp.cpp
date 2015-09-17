@@ -7,7 +7,7 @@ USING_NAMESPACE_KEMPER
 
 bool KEMPER_NAMESPACE::loadStompInfo(StompInfo *dst, int stompId, int id)
 {
-	int indexOffset = stompId >= 6?100*stompId:0;
+	int indexOffset = stompId >= 6?200+10*(stompId-6):0;
 	//return false;
 	for (int i=0;i<AllStompsCount;i++) {
 		int tmpId = pgm_read_word_near(&AllStomps[i].type);

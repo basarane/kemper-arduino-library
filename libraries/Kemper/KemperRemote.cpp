@@ -15,8 +15,7 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	switchDownStart = 0;
 	rigAssignRig = -1;
 	rigAssignSwitch = -1;
-	looperState = LOOPER_STATE_NONE;
-
+	
 	state.expPedalState = 0;
 	state.currentPerformance = -1;
 	state.currentSlot = -1;
@@ -857,7 +856,7 @@ void KemperRemote::updateLeds() {
 		} 
 	}
 	else {
-		bool recordLed = kemper->state.looperState.state == LOOPER_STATE_PLAYBACK || ((kemper->state.looperState.state == LOOPER_STATE_RECORD || kemper->state.looperState.state == LOOPER_STATE_OVERDUB) && kemper->state.tempoLed);
+		bool recordLed = kemper->state.looperState.state == LOOPER_STATE_PLAYBACK || ((kemper->state.looperState.state == LOOPER_STATE_RECORDING || kemper->state.looperState.state == LOOPER_STATE_OVERDUB) && kemper->state.tempoLed);
 		leds[l++] = recordLed ? 0x7f : 0;
 		leds[l++] = recordLed ? 0x7f : 0;
 		leds[l++] = recordLed ? 0x7f : 0;

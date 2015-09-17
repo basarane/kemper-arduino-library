@@ -504,10 +504,68 @@ consts.params = {
     }
 }
 
-consts.MaxPage = 125;
 
 consts.types = {
 };
+
+consts.types.delaytype = { options: ["", "Tap Delay", "Free Delay", "Analog Delay"] };
+consts.types.reverbtype = { options: ["", "Hall", "Large Room", "Small Room", "Ambience", "Matchbox"] };
+
+// delay
+for (var a in consts.types.delaytype.options) {
+    if (consts.types.delaytype.options[a]) {
+        var p = [];
+        for (var b in consts.params[74].params) {
+            p.push(100+parseInt(b));
+        }
+        var id = 200 + parseInt(a);
+        consts.stomps[id] =
+        {
+            id: id,
+            name: consts.types.delaytype.options[a],
+            params: p,
+            color: consts.color.green,
+        };
+        //console.log(consts.stomps[id]);
+    }
+}
+for (var b in consts.params[74].params) {
+    var x = consts.params[74].params[b];
+    if (x.indexOf("|") >= 0)
+        x = x.replace("|", "|Delay ");
+    else
+        x = "Delay " + x;
+    consts.stompParams[100 + parseInt(b)] = x;
+    
+}
+
+// reverb
+for (var a in consts.types.reverbtype.options) {
+    if (consts.types.reverbtype.options[a]) {
+        var p = [];
+        for (var b in consts.params[75].params) {
+            p.push(120 + parseInt(b));
+        }
+        var id = 210 + parseInt(a);
+        consts.stomps[id] =
+        {
+            id: id,
+            name: consts.types.reverbtype.options[a],
+            params: p,
+            color: consts.color.green,
+        };
+        //console.log(consts.stomps[id]);
+    }
+}
+for (var b in consts.params[75].params) {
+    var x = consts.params[75].params[b];
+    if (x.indexOf("|") >= 0)
+        x = x.replace("|", "|Reverb ");
+    else
+        x = "Reverb " + x;
+    consts.stompParams[120 + parseInt(b)] = x;
+}
+
 
 consts.types.wpm = {
     options: ["Off", "Touch", "On", "Bypass @ Stop", "Bypass @ Heel", "Bypass @ Toe"]
@@ -543,13 +601,11 @@ for (var a in consts.stomps) {
 
 consts.types.delayratio = {options: ["1:4","2:4","3:4","4:4","4:3","4:2","4:1"]};
 
-consts.types.delaytype = {options: ["","Tap Delay","Free Delay","Analog Delay"]};
 
 consts.types.delayclock = {options: ["1/32","1/16","2/16","3/16","4/16","5/16","6/16","7/16","8/16","1/24(Triplet)","1/12(Triplet)","2/12(Triplet)","4/12(Triplet)"]};
 
 consts.types.b = {options: ["Off", "On"]};
 
-consts.types.reverbtype = {options: ["","Hall","Large Room","Small Room", "Ambience", "Matchbox"]};
 
 for (var a in consts.types) {
     var t = consts.types[a];

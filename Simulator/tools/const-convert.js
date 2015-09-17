@@ -92,14 +92,15 @@ for (var a in consts.stomps) {
     var s = consts.stomps[a];
     console.log("\t{" + a + ", Color" + s.color + ",\"" + s.name + "\", " + s.paramCount + ", " + (paramNames[getVarName(s.name)] ? "Params_" + getVarName(s.name) : 0) + ", " + (s.isExpWah ? 1 : 0) + ", " + (s.isExpPitch ? 1 : 0) + "},");
 }
-console.log("\t{601, ColorGreen,\"Tap Delay\"},");
-console.log("\t{602, ColorGreen,\"Free Delay\"},");
-console.log("\t{603, ColorGreen,\"Analog Delay\"},");
-console.log("\t{701, ColorGreen,\"Hall\"},");
-console.log("\t{702, ColorGreen,\"Large Room\"},");
-console.log("\t{703, ColorGreen,\"Small Room\"},");
-console.log("\t{704, ColorGreen,\"Ambience\"},");
-console.log("\t{705, ColorGreen,\"Matchbox\"}, ");
+/*
+console.log("\t{201, ColorGreen,\"Tap Delay\"},");
+console.log("\t{202, ColorGreen,\"Free Delay\"},");
+console.log("\t{203, ColorGreen,\"Analog Delay\"},");
+console.log("\t{211, ColorGreen,\"Hall\"},");
+console.log("\t{212, ColorGreen,\"Large Room\"},");
+console.log("\t{213, ColorGreen,\"Small Room\"},");
+console.log("\t{214, ColorGreen,\"Ambience\"},");
+console.log("\t{215, ColorGreen,\"Matchbox\"}, "); */
 console.log("\t{0, ColorNone,\"None\"},");
 console.log("};");
 

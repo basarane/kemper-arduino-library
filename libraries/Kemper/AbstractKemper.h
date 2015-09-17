@@ -39,6 +39,14 @@ const byte CC_GAIN           = 72;
 const byte CC_MONITOR_VOLUME = 73;
 
 
+#define LOOPER_STATE_EMPTY 0
+#define LOOPER_STATE_RECORDING 1
+#define LOOPER_STATE_RECORDING_UNDO 2
+#define LOOPER_STATE_PLAYBACK 3
+#define LOOPER_STATE_OVERDUB 4
+#define LOOPER_STATE_STOPPED 5
+#define LOOPER_STATE_ERASED 6
+
 struct LooperState
 {
 	int state;
@@ -46,6 +54,8 @@ struct LooperState
 	bool isReversed;
 	unsigned long recordPressTime;
 	unsigned long erasePressTime;
+	byte erasePressCount;
+	bool atLestOneLayer;
 };
 
 struct KemperState
@@ -72,11 +82,6 @@ struct KemperState
 
 	char performanceNames[6][20];
 };
-
-#define LOOPER_STATE_EMPTY 0
-#define LOOPER_STATE_RECORDING 1
-#define LOOPER_STATE_PLAYBACK 2
-#define LOOPER_STATE_OVERDUB 3
 
 class AbstractKemper
 {

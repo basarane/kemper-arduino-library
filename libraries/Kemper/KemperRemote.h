@@ -44,9 +44,6 @@ BEGIN_KEMPER_NAMESPACE
 #define REMOTE_STATE_STOMP_PARAMETER_LOAD 8
 #define REMOTE_STATE_STOMP_PARAMETER_POST_LOAD 9
 
-#define LOOPER_STATE_NONE     0
-#define LOOPER_STATE_RECORD   1
-#define LOOPER_STATE_PLAYBACK 2
 #define LED_COUNT 26
 
 #define PERFORM_SLOT_COUNT 5 
@@ -113,7 +110,6 @@ public:
 	byte leds[LED_COUNT * 3];
 	byte rigAssignSwitch;
 	byte currentStompAssignment[SWITCH_STOMP_COUNT];
-	int looperState;
 	KemperRemoteState state;
 	
 	AbstractKemper* kemper;
