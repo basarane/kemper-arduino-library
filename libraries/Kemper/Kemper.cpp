@@ -67,6 +67,10 @@ void Kemper::getReverb() {
 }
 
 void Kemper::getStompParameter(int stompIdx, int paramNumber) {
+	if (paramNumber >= 100 && paramNumber < 120)
+		paramNumber -= 100;
+	if (paramNumber >= 120 && paramNumber < 140)
+		paramNumber -= 120;
 	getParam(StompPageIds[stompIdx], paramNumber);
 }
 
@@ -240,6 +244,10 @@ void Kemper::toggleStomp(byte idx) {
 }
 
 void Kemper::setStompParam(int stompIdx, byte number, int val) {
+	if (stompIdx == 6)
+		number -= 100;
+	if (stompIdx == 7)
+		number -= 120;
 	setParam(StompPageIds[stompIdx], number, val);
 }
 
@@ -333,6 +341,10 @@ void Kemper::onSysEx(byte* buffer, unsigned int size) {
 							state.parameterState++;
 						}
 					}
+					if (stompId == 6)
+						number += 100;
+					if (stompId == 7)
+						number += 120;
 					if (stompId == lastStompParam[0] && number == lastStompParam[1]) {
 						lastStompParam[2] = value;
 					}
