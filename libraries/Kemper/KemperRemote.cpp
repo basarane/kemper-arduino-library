@@ -417,6 +417,19 @@ void KemperRemote::onStompDown(int switchIdx) {
 }
 
 void KemperRemote::onRigDown(int switchIdx) {
+	bool isChanged = false;
+	if (state.state != REMOTE_STATE_LOOPER)
+	{
+		if (kemper->state.mode == MODE_BROWSE) {
+			isChanged = kemper->state.currentRig != rigMap[state.currentPage * SWITCH_RIG_COUNT + switchIdx];
+		}
+		else {
+			isChanged = kemper->state.slot != switchIdx;
+		}
+	}
+	if (isChanged && state.state == REMOTE_STATE_STOMP_PARAMETER)
+		state.state = REMOTE_STATE_NORMAL;
+
 	if (state.state == REMOTE_STATE_STOMP_PARAMETER) {
 		state.state = REMOTE_STATE_STOMP_PARAMETER_POST_LOAD;
 		memset(newStompParameters, -1, sizeof(newStompParameters));
@@ -433,20 +446,15 @@ void KemperRemote::onRigDown(int switchIdx) {
 		}
 		return;
 	}
-	bool isChanged = false;
 	if (state.state!=REMOTE_STATE_LOOPER)
 	{
 		if (kemper->state.mode == MODE_BROWSE) {
-			isChanged = kemper->state.currentRig != rigMap[state.currentPage * SWITCH_RIG_COUNT + switchIdx];
 			kemper->setRig(rigMap[state.currentPage * SWITCH_RIG_COUNT + switchIdx]);
 		}
 		else {
-			isChanged = kemper->state.slot != switchIdx;
 			kemper->setPerformance(kemper->state.performance, switchIdx);
 		}
 	}
-	if (isChanged && state.state == REMOTE_STATE_STOMP_PARAMETER)
-		state.state = REMOTE_STATE_NORMAL;
 }
 
 void KemperRemote::onRigUp(int switchIdx) {
