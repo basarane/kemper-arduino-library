@@ -141,7 +141,7 @@ Compile and run the project. If you receive any errors during compilation or run
 
 
 ### DIY Kemper Profiler Remote
-
+If you have the same Hardware setup described in this documentation, you may directly use `KemperRemoteDIYArduino` project. If you use different circuits for buttons update `MultiButton` project inside libraries folder. If you use different circuit for leds, update the relevant code inside `KemperRemoteDIYArduino` project. All other classes like `Kemper`, `KemperRemote` and `KemperRemoteDisplay` are hardware independent. They do not contain a single line of code about the hardware used except `KemperRemoteDisplay`. It assumes an TFT LCD screen is present. It won't work with character displays. Although you can completely discard `KemperRemoteDisplay` class and use your own  (since both `Kemper` and `KemperRemote` classes does not depend on `KemperRemoteDisplay`).
 
 The MIT License (MIT)
 
