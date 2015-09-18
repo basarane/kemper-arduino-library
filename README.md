@@ -88,19 +88,7 @@ void loop()
 
 #### On Windows
 
-Create a new empty C++ project on the same directory with `KemperRemoteDIYWin` in Visual Studio 2015. Right click on the project in the solution explorer, and click on properties. Add following values to the corresponding sections:
-
-- Configuration Properties > C++ > General > Additional Include Directories    
-    ..\KemperRemoteDIYWin\mocks
-    ..\KemperRemoteDIYWin
-    ..\libraries\Kemper
-    ..\libraries\MIDI
-- Configuration Properties > C++ > General > Preprocessor     
-    _MBCS;_CRT_SECURE_NO_WARNINGS
-- Configuration Properties > Linker > Input     
-    winmm.lib
-
-Right click on "Source files" and add all cpp files inside KemperRemoteDIYWin (except KemperRemoteDIYWin.cpp), KemperRemoteDIYWin/Mocks, libraries/Kemper (except Display_ER_RA8875.cpp). 
+Create a new empty C++ project on the same directory with `KemperRemoteDIYWin` in Visual Studio 2015. 
 
 Then create a new .cpp file under "Source files" and add the following code (which is very similar to Arduino version). This code will print the name of the current rig each second. This code will connect the first MIDI input port and second MIDI output port on your system. Connect Kemper Profiler to corresponding MIDI ports. 
 
@@ -131,6 +119,23 @@ int main(int argc, char**argv) {
 	}
 }
 ```
+
+Right click on the project in the solution explorer, and click on properties. Add following values to the corresponding sections:
+
+- Configuration Properties > C++ > General > Additional Include Directories    
+    ..\KemperRemoteDIYWin\mocks    
+    ..\KemperRemoteDIYWin    
+    ..\libraries\Kemper    
+    ..\libraries\MIDI    
+- Configuration Properties > C++ > General > Preprocessor > Preprocessor Definitions    
+    _MBCS;_CRT_SECURE_NO_WARNINGS
+- Configuration Properties > Linker > Input > Additional Dependencies   
+    winmm.lib
+
+Right click on "Source files" and click on "Add > Existing Item...". Add all cpp files inside KemperRemoteDIYWin (except KemperRemoteDIYWin.cpp), KemperRemoteDIYWin/Mocks, libraries/Kemper (except Display_ER_RA8875.cpp). 
+
+Compile and run the project. If you receive any errors during compilation or run, please unload all other projects first (esspecially KemperRemoteDIYArduino project). 
+
 
 ### DIY Kemper Profiler Remote
 
