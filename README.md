@@ -23,6 +23,44 @@ cd Simulator
 npm install
 ```
 
+##Hardware
+If you use Arduino, you at least need to prepare a circuit to send and receive MIDI messages to and from Kemper Profiler. You can follow [these instructions](http://www.instructables.com/id/Send-and-Receive-MIDI-with-Arduino/). 
+
+##Usage
+
+### Arduino Kemper Profiler Library
+Library is located under Libraries/Kemper folder. Copy this folder to your [Arduino library folder](https://www.arduino.cc/en/Guide/Libraries#toc5). Restart Arduino IDE or Visual Studio.
+
+The following code prints the name of the current rig or the performance to the serial port on each second. 
+
+```C++
+#include <Kemper.h>
+USING_NAMESPACE_KEMPER
+
+Kemper kemper;
+
+unsigned long lastDebugTime = 0;
+
+void setup()
+{
+	Serial.begin(9600);
+	kemper.begin();
+}
+
+void loop()
+{
+	kemper.read();
+	if (millis() - lastDebugTime > 1000) {
+		if (kemper.state.mode == MODE_BROWSE)
+			Serial.println(kemper.state.rigName);
+		else if (kemper.state.mode == MODE_PERFORM)
+			Serial.println(kemper.state.performanceNames[0]);
+		lastDebugTime = millis();
+	}
+}
+```
+
+
 The MIT License (MIT)
 
 Copyright (c) 2015 Ersin Basaran
