@@ -132,7 +132,7 @@ Right click on the project in the solution explorer, and click on properties. Ad
 - Configuration Properties > Linker > Input > Additional Dependencies   
     winmm.lib
 
-Right click on "Source files" and click on "Add > Existing Item...". Add all cpp files inside KemperRemoteDIYWin (except KemperRemoteDIYWin.cpp), KemperRemoteDIYWin/Mocks, libraries/Kemper (except Display_ER_RA8875.cpp). 
+Right click on "Source files" and click on "Add > Existing Item...". Add all cpp files inside **KemperRemoteDIYWin** (except *KemperRemoteDIYWin.cpp*), **KemperRemoteDIYWin/Mocks** and **libraries/Kemper** (except *Display_ER_RA8875.cpp*) folders. 
 
 Compile and run the project. If you receive any errors during compilation or run, please unload all other projects first (esspecially KemperRemoteDIYArduino project). 
 
