@@ -10,9 +10,11 @@ This project consists of 3 sub projects:
 
 C++ Library, is designed to run on both Arduino and Windows so that the later two projects can use the same C++ Kemper Library. Windows project has some mock classes, which mimics their Arduino counterparts. This allows you to code and debug using familiar tools. 
 
-`KemperRemoteDIYWin` can talk with Kemper (either through Arduino or directly using your sound card). It will send and receive commands (like switch down, led states, display etc). The `Simulator` node.js project, is the user interface layer. Using your browser you will be able to use your mouse and keyboard to interact with Kemper. 
+`KemperRemoteDIYWin` can talk with Kemper (directly using your sound card without Arduino). It will send and receive commands (like switch down, led states, display etc). It also have a simulated `KemperMock` class to be able to run even without Kemper Profiler. 
 
-This allows several different configurations to code:
+The `Simulator` node.js project, is the user interface layer. Using your browser you will be able to use your mouse and keyboard to interact with Kemper. Arduino project can also connect to `Simulator`. 
+
+These allow several different configurations to code:
 
 1. **You have Arduino and you have setup the complete circuit (details will be added later):**    
 Use `KemperRemoteDIYArduino` project. It is complete implementation of DIY Kemper Remote project. 
