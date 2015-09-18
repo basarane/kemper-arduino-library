@@ -14,7 +14,7 @@ C++ Library, is designed to run on both Arduino and Windows so that the later tw
 
 The `Simulator` node.js project, is the user interface layer. Using your browser you will be able to use your mouse and keyboard to interact with Kemper. Arduino project can also connect to `Simulator`. 
 
-These allow several different configurations to code:
+All of these properties allow several different configurations to code:
 
 1. **You have Arduino and you have setup the complete circuit (details will be added later):**    
 Use `KemperRemoteDIYArduino` project. It is complete implementation of DIY Kemper Remote project. 
