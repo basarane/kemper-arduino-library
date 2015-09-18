@@ -11,13 +11,13 @@ C++ Library, is designed to run on both Arduino and Windows so that the later tw
 
 This allows several different configurations to code:
 
-1. You have Arduino and you have setup the complete circuit (details will be added later):
+1. **You have Arduino and you have setup the complete circuit (details will be added later):**    
 Use `KemperRemoteDIYArduino` project. It is complete implementation of DIY Kemper Remote project. 
-2. You have Arduino and you have setup only MIDI interface (input and output) part of your circuit. 
+2. **You have Arduino and you have setup only MIDI interface (input and output) part of your circuit.**     
 Use `KemperRemoteDIYArduino`, `KemperRemoteDIYWin` and `Simulator` projects together. `Simulator` will communicate with Arduino through `KemperRemoteDIYWin`. 
-3. You don't setup MIDI circuit but you have a sound card with MIDI inputs and outputs
+3. **You don't setup MIDI circuit but you have a sound card with MIDI inputs and outputs**     
 Connect your Kemper Profiler to your sound card using two MIDI cables. Use `KemperRemoteDIYWin` and `Simulator` projects together. 
-4. You don't have a sound card or you even don't have a Kemper Profiler. 
+4. **You don't have a sound card or you even don't have a Kemper Profiler.**     
 This is also OK :) There is a mock class for Kemper inside `KemperRemoteDIYWin` project. It simulates most of the Kemper (apart from sound obviously) that is needed for a foot controller. With this option, you can install just a bunch of software and see how the foot controller behaves. 
 
 ## Installation
