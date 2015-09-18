@@ -14,34 +14,34 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="_core">
-      <UniqueIdentifier>{43bee938-ccaa-4a18-b52d-d833f18acdaa}</UniqueIdentifier>
+      <UniqueIdentifier>{acb92b2b-b2e5-443e-abc1-3c86309fe22c}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries">
-      <UniqueIdentifier>{bb154cdf-08a4-480c-817e-b13633ad2332}</UniqueIdentifier>
+      <UniqueIdentifier>{d5c91e9c-3d26-4479-a575-bb1a8364e190}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\EEPROM">
-      <UniqueIdentifier>{d08af6ea-ac82-4da1-b065-c95d3ccefc29}</UniqueIdentifier>
+      <UniqueIdentifier>{00bfd801-1eaa-4cf6-9403-3c0f498a1696}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\ER-TFTM043-3">
-      <UniqueIdentifier>{0aee61aa-2c3c-48d5-a2ce-408965c5e5fb}</UniqueIdentifier>
+      <UniqueIdentifier>{e45537b1-ac4b-47bf-bc64-99ae06395da0}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\Kemper">
-      <UniqueIdentifier>{6eeeb1c7-3c9c-4606-be2a-3ea0994f26ce}</UniqueIdentifier>
+      <UniqueIdentifier>{f82344da-7a66-43f2-af13-c516c41f5c24}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\MemoryFree">
-      <UniqueIdentifier>{6983c1b8-6ef4-4bc1-9b27-886875dd834a}</UniqueIdentifier>
+      <UniqueIdentifier>{43c8ff3d-bffb-44bd-9491-64746fe4376c}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\MIDI">
-      <UniqueIdentifier>{c891cd0c-3cc0-436f-8da3-6146d67860e0}</UniqueIdentifier>
+      <UniqueIdentifier>{adefa072-0171-4f22-9ba2-325707856d12}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\MultiButton">
-      <UniqueIdentifier>{1652d6e1-329b-476e-8563-3f7655eba41e}</UniqueIdentifier>
+      <UniqueIdentifier>{2207a2fa-9f5a-48f8-b958-6d3556903ce2}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\SPI">
-      <UniqueIdentifier>{b915bda3-d5a8-4bb1-9df2-9442fab8e86f}</UniqueIdentifier>
+      <UniqueIdentifier>{62c4d52e-0123-4dc2-9db2-9de93bd2b436}</UniqueIdentifier>
     </Filter>
     <Filter Include="_libraries\Tlc5940">
-      <UniqueIdentifier>{6c9a6765-fd3a-4771-8b3c-4697b7a5301a}</UniqueIdentifier>
+      <UniqueIdentifier>{8891b541-940c-4f2c-866b-323d9184f14a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

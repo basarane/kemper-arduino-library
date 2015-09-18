@@ -155,7 +155,7 @@ void KemperRemoteDisplay::draw() {
 
 			if (kemperRemote->state.state == REMOTE_STATE_STOMP_ASSIGN && lastKemperRemoteState.state != REMOTE_STATE_STOMP_ASSIGN) {
 				display->fillRect(0, height/2, width-1, height/2-1, getColor(255,0,0));
-				char* stompAssignText = "STOMP PARAMETER";
+				char* stompAssignText = "STOMP ASSIGNMENT";
 				display->drawText(0, height/2, width-1, height/2-1, TextAlignCenter, TextAlignMiddle, 48, stompAssignText, strlen(stompAssignText), getColor(255,255,255));
 			} else if (parameterChanged) {
 
