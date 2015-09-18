@@ -24,9 +24,6 @@
     <ClCompile Include="..\libraries\Kemper\KemperRemote.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mocks\wstring.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mocks\Arduino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

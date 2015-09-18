@@ -57,9 +57,6 @@
     <ClInclude Include="..\libraries\Kemper\AbstractKemper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\libraries\Kemper\Display_ER_RA8875.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\libraries\Kemper\ExpressionPedal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -198,9 +195,15 @@
     <ClInclude Include="..\libraries\Tlc5940\tlc_shifts.h">
       <Filter>_libraries\Tlc5940</Filter>
     </ClInclude>
+    <ClInclude Include="Display_ER_RA8875.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="KemperRemoteDIYArduino.ino" />
+    <None Include="Display_ER_RA8875.ino">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\abi.cpp">

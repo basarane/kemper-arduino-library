@@ -47,7 +47,7 @@ If you use Arduino (currently you need Arduino Mega), you at least need to prepa
 
 Then connect Serial1 (TX1) and Serial2 (RX2) to MIDI input and output of Kemper Profiler, respectively. If you don't have Arduino Mega, you may use Software serial. The serial ports can be changed in `libraries/Kemper/Kemper.cpp`.
 
-DIY Kemper Remote project uses a TFT display, 14 buttons and 26 leds (8 of which are RGB). It uses 74HC595 shift registers for buttons, TLC5940 led drivers for leds and 4.3'' TFT display (ER-TFTM043-3). You can use other TFT displays also. All you have to do is extend the class `AbstractDisplay` and implement the functions it contains. `Display_ER_RA8875` class is such a class for ER-TFTM043-3.
+DIY Kemper Remote project uses a TFT display, 14 buttons and 26 leds (8 of which are RGB). It uses 74HC595 shift registers for buttons, TLC5940 led drivers for leds and 4.3'' TFT display (ER-TFTM043-3). You can use other TFT displays also. All you have to do is extend the class `AbstractDisplay` and implement the functions it contains. `Display_ER_RA8875` class is such a class for ER-TFTM043-3 and it is located under `KemperRemoteDIYArduino` project.
 
 ##Usage
 
@@ -55,12 +55,15 @@ DIY Kemper Remote project uses a TFT display, 14 buttons and 26 leds (8 of which
 
 #### On Arduino
 
-Library is located under Libraries/Kemper folder. Copy this folder to your [Arduino library folder](https://www.arduino.cc/en/Guide/Libraries#toc5). Restart Arduino IDE or Visual Studio.
+Library is located under Libraries/Kemper folder. Copy this folder and Libraries/MIDI folder to your [Arduino library folder](https://www.arduino.cc/en/Guide/Libraries#toc5). Restart Arduino IDE or Visual Studio.
 
-The following code prints the name of the current rig or the performance to the serial port on each second. 
+The following code prints the name of the current rig or the performance to the serial port on each second. Run the program and open serial monitor. Change the current rig from Kemper and observe the serial monitor. 
 
 ```C++
 #include <Kemper.h>
+#include <MIDI.h>
+#include <EEPROM.h>
+
 USING_NAMESPACE_KEMPER
 
 Kemper kemper;
@@ -69,20 +72,20 @@ unsigned long lastDebugTime = 0;
 
 void setup()
 {
-	Serial.begin(9600);
-	kemper.begin();
+  Serial.begin(9600);
+  kemper.begin();
 }
 
 void loop()
 {
-	kemper.read();
-	if (millis() - lastDebugTime > 1000) {
-		if (kemper.state.mode == MODE_BROWSE)
-			Serial.println(kemper.state.rigName);
-		else if (kemper.state.mode == MODE_PERFORM)
-			Serial.println(kemper.state.performanceNames[0]);
-		lastDebugTime = millis();
-	}
+  kemper.read();
+  if (millis() - lastDebugTime > 1000) {
+    if (kemper.state.mode == MODE_BROWSE)
+      Serial.println(kemper.state.rigName);
+    else if (kemper.state.mode == MODE_PERFORM)
+      Serial.println(kemper.state.performanceNames[0]);
+    lastDebugTime = millis();
+  }
 }
 ```
 
@@ -132,7 +135,7 @@ Right click on the project in the solution explorer, and click on properties. Ad
 - Configuration Properties > Linker > Input > Additional Dependencies   
     winmm.lib
 
-Right click on "Source files" and click on "Add > Existing Item...". Add all cpp files inside **KemperRemoteDIYWin** (except *KemperRemoteDIYWin.cpp*), **KemperRemoteDIYWin/Mocks** and **libraries/Kemper** (except *Display_ER_RA8875.cpp*) folders. 
+Right click on "Source files" and click on "Add > Existing Item...". Add all cpp files inside **KemperRemoteDIYWin** (except *KemperRemoteDIYWin.cpp*), **KemperRemoteDIYWin/Mocks** and **libraries/Kemper** folders. 
 
 Compile and run the project. If you receive any errors during compilation or run, please unload all other projects first (esspecially KemperRemoteDIYArduino project). 
 

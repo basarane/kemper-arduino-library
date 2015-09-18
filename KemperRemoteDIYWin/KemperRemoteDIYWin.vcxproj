@@ -94,7 +94,6 @@
     <ClCompile Include="mocks\Arduino.cpp" />
     <ClCompile Include="mocks\EEPROM.cpp" />
     <ClCompile Include="mocks\KemperMock.cpp" />
-    <ClCompile Include="mocks\wstring.cpp" />
     <ClCompile Include="RtMidi.cpp" />
     <ClCompile Include="SerialDisplaySerializer.cpp" />
     <ClCompile Include="WindowsSerial.cpp" />

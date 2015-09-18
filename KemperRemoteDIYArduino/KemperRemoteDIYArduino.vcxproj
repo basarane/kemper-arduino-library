@@ -72,6 +72,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="Display_ER_RA8875.ino" />
     <None Include="KemperRemoteDIYArduino.ino">
       <FileType>CppCode</FileType>
     </None>
@@ -81,7 +82,6 @@
     <ClInclude Include="..\libraries\Kemper\AbstractDisplay.h" />
     <ClInclude Include="..\libraries\Kemper\AbstractDisplaySerializer.h" />
     <ClInclude Include="..\libraries\Kemper\AbstractKemper.h" />
-    <ClInclude Include="..\libraries\Kemper\Display_ER_RA8875.h" />
     <ClInclude Include="..\libraries\Kemper\ExpressionPedal.h" />
     <ClInclude Include="..\libraries\Kemper\Kemper.h" />
     <ClInclude Include="..\libraries\Kemper\KemperRemote.h" />
@@ -127,6 +127,7 @@
     <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\EEPROM\EEPROM.h" />
     <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\SPI\SPI.h" />
     <ClInclude Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\mega\pins_arduino.h" />
+    <ClInclude Include="Display_ER_RA8875.h" />
     <ClInclude Include="__vm\.KemperRemoteDIYArduino.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>

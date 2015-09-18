@@ -87,6 +87,7 @@ extern "C" void __cxa_pure_virtual() {;}
 #include <AbstractDisplaySerializer.h>
 #include <AbstractKemper.h>
 #include <Display_ER_RA8875.h>
+#include <Display_ER_RA8875.ino>
 #include <ExpressionPedal.h>
 #include <Kemper.h>
 #include <KemperRemote.h>
