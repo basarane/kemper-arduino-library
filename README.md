@@ -1,21 +1,21 @@
 # Kemper Profiler Arduino Library and DIY Kemper Remote 
 
 This project consists of 2 sub projects:
-- An Arduino library for Kemper and Kemper Remote
+- An Arduino library for Kemper and DIY Kemper Remote
 - A simulator for this library (requires node.js and windows)
 
 ## Installation
 You can use Arduino IDE for development. However I strongly suggest to use a modern IDE like Visual Studio. 
 
-- Download and install [Visual Studio 2015 Community Edition](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
-- Download and install [Arduino Extension For Visual Studio](http://www.visualmicro.com/page/Arduino-Visual-Studio-Downloads.aspx)
-- Download the repository as [zip file] (https://github.com/basarane/kemper-arduino-library/archive/master.zip), or [fork the repository] (https://help.github.com/articles/fork-a-repo/)
-- Optionally if you want to fork the repository, I suggest you using [GitHub Extensions for Visual Studio](https://visualstudio.github.com/)
+- Download and install [Visual Studio 2015 Community Edition](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx){:target="_blank"}
+- Download and install [Arduino Extension For Visual Studio](http://www.visualmicro.com/page/Arduino-Visual-Studio-Downloads.aspx){:target="_blank"}
+- Download the repository as [zip file] (https://github.com/basarane/kemper-arduino-library/archive/master.zip){:target="_blank"}, or [fork the repository] (https://help.github.com/articles/fork-a-repo/){:target="_blank"}
+- Optionally if you want to fork the repository, I suggest you using [GitHub Extensions for Visual Studio](https://visualstudio.github.com/){:target="_blank"}
 
 ###Optional
 If you want to use Simulator:
 
-- Download and install [node.js](https://nodejs.org/)
+- Download and install [node.js](https://nodejs.org/){:target="_blank"}
 - Open a command prompt. Goto `simulator` folder and run the following command:
 
 ```
