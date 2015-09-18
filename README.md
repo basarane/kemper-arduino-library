@@ -17,8 +17,8 @@ Use `KemperRemoteDIYArduino` project. It is complete implementation of DIY Kempe
 Use `KemperRemoteDIYArduino`, `KemperRemoteDIYWin` and `Simulator` projects together. `Simulator` will communicate with Arduino through `KemperRemoteDIYWin`. 
 3. **You don't setup MIDI circuit but you have a sound card with MIDI inputs and outputs**     
 Connect your Kemper Profiler to your sound card using two MIDI cables. Use `KemperRemoteDIYWin` and `Simulator` projects together. 
-4. **You don't have a sound card or you even don't have a Kemper Profiler.**     
-This is also OK :) There is a mock class for Kemper inside `KemperRemoteDIYWin` project. It simulates most of the Kemper (apart from sound obviously) that is needed for a foot controller. With this option, you can install just a bunch of software and see how the foot controller behaves. 
+4. **You don't have a sound card or you don't even have a Kemper Profiler.**     
+This is also OK :) There is a mock class for Kemper inside `KemperRemoteDIYWin` project. It simulates most of the Kemper (apart from sound obviously) that are needed for a foot controller. With this option, you can install just a bunch of software and see how the foot controller behaves. 
 
 ## Installation
 You can use Arduino IDE for development on Arduino. However I strongly suggest to use a modern IDE like Visual Studio. 
@@ -48,7 +48,10 @@ DIY Kemper Remote project uses a TFT display, 14 buttons and 26 leds (8 of which
 
 ##Usage
 
-### Arduino Kemper Profiler Library
+### Kemper Profiler Library
+
+#### On Arduino
+
 Library is located under Libraries/Kemper folder. Copy this folder to your [Arduino library folder](https://www.arduino.cc/en/Guide/Libraries#toc5). Restart Arduino IDE or Visual Studio.
 
 The following code prints the name of the current rig or the performance to the serial port on each second. 
@@ -76,6 +79,41 @@ void loop()
 		else if (kemper.state.mode == MODE_PERFORM)
 			Serial.println(kemper.state.performanceNames[0]);
 		lastDebugTime = millis();
+	}
+}
+```
+
+#### On Windows
+
+Create a new C++ project and add `libraries/Kemper`, `KemperRemoteDIYWin` and `KemperRemoteDIYWin/mocks` folders to include path. The following code (which is very similar to Arduino version) will print the name of the current rig each second. 
+
+```C++
+#include <stdio.h>
+#include <iostream>
+#include <cstdlib>
+#include <windows.h>
+
+#include "Kemper.h"
+
+USING_NAMESPACE_KEMPER
+
+unsigned long lastDebugTime = 0;
+
+int main(int argc, char**argv) {
+
+	Kemper kemper;
+	kemper.setMidiPorts(0, 1);  // input and output midi device ids
+	kemper.begin();
+
+	while (true) {
+		kemper.read();
+		if (millis() - lastDebugTime > 1000) {
+			if (kemper.state.mode == MODE_BROWSE)
+				printf("%s/n", kemper.state.rigName);
+			else if (kemper.state.mode == MODE_PERFORM)
+				printf("%s/n", kemper.state.performanceNames[0]);
+			lastDebugTime = millis();
+	    }
 	}
 }
 ```
