@@ -1,5 +1,8 @@
 # Kemper Profiler Arduino Library and DIY Kemper Remote 
 
+**IMPORTANT:**
+Current state of documentation may contains errors, and code will be refactored in a few days. 
+
 This project consists of 3 sub projects:
 - **C++ library** for Kemper and DIY Kemper Remote (`/libraries/kemper`)
 - DIY Kemper Remote **Arduino** project (`/KemperRemoteDIYArduino`)

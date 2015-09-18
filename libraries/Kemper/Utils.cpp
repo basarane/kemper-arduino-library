@@ -65,10 +65,10 @@ char *KEMPER_NAMESPACE::ftoa(char *a, double f, int precision)
  
  char *ret = a;
  long heiltal = (long)f;
- itoa(heiltal, a, 10);
+ _itoa(heiltal, a, 10);
  while (*a != '\0') a++;
  *a++ = '.';
  long desimal = abs((long)((f - heiltal) * p[precision]));
- itoa(desimal, a, 10);
+ _itoa(desimal, a, 10);
  return ret;
 }
