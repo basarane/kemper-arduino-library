@@ -1,11 +1,27 @@
 # Kemper Profiler Arduino Library and DIY Kemper Remote 
 
-This project consists of 2 sub projects:
-- An Arduino library for Kemper and DIY Kemper Remote
-- A simulator for this library (requires node.js and windows)
+This project consists of 3 sub projects:
+- **C++ library** for Kemper and DIY Kemper Remote (`/libraries/kemper`)
+- DIY Kemper Remote **Arduino** project (`/KemperRemoteDIYArduino`)
+- DIY Kemper Remote **Windows** project (`/KemperRemoteDIYWin` and `/Simulator`)
+
+C++ Library, is designed to run on both Arduino and Windows so that the later two projects can use the same C++ Kemper Library. Windows project has some mock classes, which mimics their Arduino counterparts. This allows you to code and debug using familiar tools. 
+
+`KemperRemoteDIYWin` can talked with Kemper (either through Arduino or directly using your sound card). It will send and receive commands (like switch down, led states, display etc). The `Simulator` node.js project, is the user interface layer. Using your browser you will be able to use your mouse and keyboard to interact with Kemper. 
+
+This allows several different configurations to code:
+
+1. You have Arduino and you have setup the complete circuit (details will be added later):
+Use `KemperRemoteDIYArduino` project. It is complete implementation of DIY Kemper Remote project. 
+2. You have Arduino and you have setup only MIDI interface (input and output) part of your circuit. 
+Use `KemperRemoteDIYArduino`, `KemperRemoteDIYWin` and `Simulator` projects together. `Simulator` will communicate with Arduino through `KemperRemoteDIYWin`. 
+3. You don't setup MIDI circuit but you have a sound card with MIDI inputs and outputs
+Connect your Kemper Profiler to your sound card using two MIDI cables. Use `KemperRemoteDIYWin` and `Simulator` projects together. 
+4. You don't have a sound card or you even don't have a Kemper Profiler. 
+This is also OK :) There is a mock class for Kemper inside `KemperRemoteDIYWin` project. It simulates most of the Kemper (apart from sound obviously) that is needed for a foot controller. With this option, you can install just a bunch of software and see how the foot controller behaves. 
 
 ## Installation
-You can use Arduino IDE for development. However I strongly suggest to use a modern IDE like Visual Studio. 
+You can use Arduino IDE for development on Arduino. However I strongly suggest to use a modern IDE like Visual Studio. 
 
 - Download and install [Visual Studio 2015 Community Edition](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
 - Download and install [Arduino Extension For Visual Studio](http://www.visualmicro.com/page/Arduino-Visual-Studio-Downloads.aspx)
@@ -27,6 +43,8 @@ npm install
 If you use Arduino (currently you need Arduino Mega), you at least need to prepare a circuit to send and receive MIDI messages to and from Kemper Profiler. You can follow [these instructions](http://www.instructables.com/id/Send-and-Receive-MIDI-with-Arduino/). 
 
 Then connect Serial1 (TX1) and Serial2 (RX2) to MIDI input and output of Kemper Profiler, respectively. If you don't have Arduino Mega, you may use Software serial. The serial ports can be changed in `libraries/Kemper/Kemper.cpp`.
+
+DIY Kemper Remote project uses a TFT display, 14 buttons and 26 leds (8 of which are RGB). For buttons it uses 74HC595 shift registers, TLC5940 for leds and 4.3'' TFT display (ER-TFTM043-3). You can use other TFT displays also. All you have to do is extend the class `AbstractDisplay` and implement the functions it contains. `Display_ER_RA8875` class is such a class for ER-TFTM043-3.
 
 ##Usage
 
