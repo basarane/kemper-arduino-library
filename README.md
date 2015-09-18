@@ -88,13 +88,24 @@ void loop()
 
 #### On Windows
 
-Create a new C++ project and add `libraries/Kemper`, `KemperRemoteDIYWin` and `KemperRemoteDIYWin/mocks` folders to include path. The following code (which is very similar to Arduino version) will print the name of the current rig each second. 
+Create a new empty C++ project on the same directory with `KemperRemoteDIYWin` in Visual Studio 2015. Right click on the project in the solution explorer, and click on properties. Add following values to the corresponding sections:
+
+- Configuration Properties > C++ > General > Additional Include Directories    
+    ..\KemperRemoteDIYWin\mocks
+    ..\KemperRemoteDIYWin
+    ..\libraries\Kemper
+    ..\libraries\MIDI
+- Configuration Properties > C++ > General > Preprocessor     
+    _MBCS;_CRT_SECURE_NO_WARNINGS
+- Configuration Properties > Linker > Input     
+    winmm.lib
+
+Right click on "Source files" and add all cpp files inside KemperRemoteDIYWin (except KemperRemoteDIYWin.cpp), KemperRemoteDIYWin/Mocks, libraries/Kemper (except Display_ER_RA8875.cpp). 
+
+Then create a new .cpp file under "Source files" and add the following code (which is very similar to Arduino version). This code will print the name of the current rig each second. This code will connect the first MIDI input port and second MIDI output port on your system. Connect Kemper Profiler to corresponding MIDI ports. 
 
 ```C++
 #include <stdio.h>
-#include <iostream>
-#include <cstdlib>
-#include <windows.h>
 
 #include "Kemper.h"
 
@@ -112,11 +123,11 @@ int main(int argc, char**argv) {
 		kemper.read();
 		if (millis() - lastDebugTime > 1000) {
 			if (kemper.state.mode == MODE_BROWSE)
-				printf("%s/n", kemper.state.rigName);
+				printf("%s\n", kemper.state.rigName);
 			else if (kemper.state.mode == MODE_PERFORM)
-				printf("%s/n", kemper.state.performanceNames[0]);
+				printf("%s\n", kemper.state.performanceNames[0]);
 			lastDebugTime = millis();
-	    }
+		}
 	}
 }
 ```

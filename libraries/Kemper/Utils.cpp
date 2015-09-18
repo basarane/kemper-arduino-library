@@ -1,6 +1,13 @@
 
 #include "Utils.h"
 
+
+#ifndef ARDUINO
+#define ITOA _itoa
+#else
+#define ITOA itoa
+#endif
+
 #ifdef ARDUINO
 
 void KEMPER_NAMESPACE::debug(const __FlashStringHelper* str) {
@@ -65,10 +72,10 @@ char *KEMPER_NAMESPACE::ftoa(char *a, double f, int precision)
  
  char *ret = a;
  long heiltal = (long)f;
- _itoa(heiltal, a, 10);
+ ITOA(heiltal, a, 10);
  while (*a != '\0') a++;
  *a++ = '.';
  long desimal = abs((long)((f - heiltal) * p[precision]));
- _itoa(desimal, a, 10);
+ ITOA(desimal, a, 10);
  return ret;
 }

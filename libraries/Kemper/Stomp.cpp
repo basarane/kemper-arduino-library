@@ -32,6 +32,8 @@ void KEMPER_NAMESPACE::loadStompParameters(PartialParameter *parameter, StompInf
 		parameter->stompInfo = info;
 		parameter->stompType = info->type;
 	}
+	if (!parameter->stompInfo)
+		return;
 	if (parameter->stompType != parameter->stompInfo->type) {
 		parameter->currentOption = 0;
 		parameter->currentParam = 0;
