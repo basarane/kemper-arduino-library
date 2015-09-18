@@ -335,16 +335,16 @@ void Kemper::onSysEx(byte* buffer, unsigned int size) {
 						state.stomps[stompId].active = value?1:0;
 						state.stomps[stompId].dirty = 1;
 					}
-					if (stompId == parameter.stompIdx) {
+					if (stompId == 6)
+						number += 100;
+					if (stompId == 7)
+						number += 120;
+					if (stompId == parameter.stompIdx && parameter.params[parameter.currentParam-parameter.startParamIndex].number==number) {
 						if (updateStompParameterValue(&parameter, value)) {
 							loadStompParameters(&parameter);
 							state.parameterState++;
 						}
 					}
-					if (stompId == 6)
-						number += 100;
-					if (stompId == 7)
-						number += 120;
 					if (stompId == lastStompParam[0] && number == lastStompParam[1]) {
 						lastStompParam[2] = value;
 					}
