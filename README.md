@@ -24,7 +24,9 @@ npm install
 ```
 
 ##Hardware
-If you use Arduino, you at least need to prepare a circuit to send and receive MIDI messages to and from Kemper Profiler. You can follow [these instructions](http://www.instructables.com/id/Send-and-Receive-MIDI-with-Arduino/). 
+If you use Arduino (currently you need Arduino Mega), you at least need to prepare a circuit to send and receive MIDI messages to and from Kemper Profiler. You can follow [these instructions](http://www.instructables.com/id/Send-and-Receive-MIDI-with-Arduino/). 
+
+Then connect Serial1 (TX1) and Serial2 (RX2) to MIDI input and output of Kemper Profiler, respectively. If you don't have Arduino Mega, you may use Software serial. The serial ports can be changed in `libraries/Kemper/Kemper.cpp`.
 
 ##Usage
 
@@ -59,6 +61,8 @@ void loop()
 	}
 }
 ```
+
+### DIY Kemper Profiler Remote
 
 
 The MIT License (MIT)
