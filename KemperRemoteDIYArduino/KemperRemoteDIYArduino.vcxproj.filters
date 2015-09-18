@@ -201,9 +201,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="KemperRemoteDIYArduino.ino" />
-    <None Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\wiring_pulse.S">
-      <Filter>_core</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino\abi.cpp">

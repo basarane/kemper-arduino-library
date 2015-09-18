@@ -1,4 +1,6 @@
-# KemperArduinoLibrary
-Kemper Profiler Arduino Library and DIY Kemper Remote 
+# Kemper Profiler Arduino Library and DIY Kemper Remote 
 
-This project is still under initial development. Come back in a few weeks for detailed information.
+This project consists of 2 sub projects:
+- An Arduino library for Kemper and Kemper Remote
+- A simulator for this library, which runs on Windows 
+
