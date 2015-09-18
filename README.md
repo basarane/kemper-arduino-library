@@ -45,7 +45,7 @@ npm install
 ##Hardware
 If you use Arduino (currently you need Arduino Mega), you at least need to prepare a circuit to send and receive MIDI messages to and from Kemper Profiler. You can follow [these instructions](http://www.instructables.com/id/Send-and-Receive-MIDI-with-Arduino/). 
 
-Then connect Serial1 (TX1) and Serial2 (RX2) to MIDI input and output of Kemper Profiler, respectively. If you don't have Arduino Mega, you may use Software serial. The serial ports can be changed in `libraries/Kemper/Kemper.cpp`.
+Then connect Serial1 (TX1) and Serial2 (RX2) to MIDI input and output of Kemper Profiler, respectively. If you don't have Arduino Mega but Arduino UNO, you may use Software serial (as you need at least 3 serial interface; one for debug output and two for MIDI input and output). The serial ports can be changed in `libraries/Kemper/Kemper.cpp`.
 
 DIY Kemper Remote project uses a TFT display, 14 buttons and 26 leds (8 of which are RGB). It uses 74HC595 shift registers for buttons, TLC5940 led drivers for leds and 4.3'' TFT display (ER-TFTM043-3). You can use other TFT displays also. All you have to do is extend the class `AbstractDisplay` and implement the functions it contains. `Display_ER_RA8875` class is such a class for ER-TFTM043-3 and it is located under `KemperRemoteDIYArduino` project.
 
