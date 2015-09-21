@@ -150,7 +150,7 @@ If you have the same Hardware setup described in this documentation, you may dir
 ### Using Simulator
 Simulator is a virtual foot controller. It is designed to work with both projects (Arduino and Windows). In order to run the simulator, select one of the options below then open "http://localhost" in your browser. *(You may need admin privilages to run the following commands)*
 
-#### Using with Arduino
+#### Using with Arduino (configurations 1 & 2)
 If Simulator will be used together with KemperRemoteDIYArduino project, the following command should be run under **Simulator** folder:
 
 ```
@@ -159,14 +159,15 @@ node app.js serial COM7
 
 where *COM7* is the serial port number of Arduino. It should be changed to the correct port number on your system. 
 
-#### Using with MIDI interfaces of a sound card 
+#### Using with MIDI interfaces of a sound card  (configuration 3)
 If Kemper MIDI ports are connected to corresponding ports on a soundcard, the following command should be run:
 ```
 node app.js midi 0 1
 ```
 
 Here, 0 and 1 are the midi port numbers of the midi input and output, respectively. 
-#### Using with Kemper Mock class
+
+#### Using with Kemper Mock class (configuration 4)
 If you don't have a soundcard or two midi cables or a Kemper, you can run Simulator by the following command line:
 ```
 node app.js mock
