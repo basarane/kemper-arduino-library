@@ -22,6 +22,7 @@ KemperRemote::KemperRemote(AbstractKemper *_kemper) { //
 	
 	state.currentParameters = 0;
 	state.currentParametersChanged = false;
+	state.parameterState = REMOTE_PARAMETER_STATE_PARAMETER;
 
 	saveUpDown = 0;
 
@@ -967,9 +968,11 @@ void KemperRemote::save() {
 				//move latter blocks to here (eCur+idx)
 				int curSize = 3 + b[2] * 6;
 				byte tmp[1];
+				byte tmp2[1];
 				while (idx +curSize < PARAMETER_BUFFER_ALL_SIZE) {
 					EEPROM.get(eCur + idx + curSize, tmp);
-					if (tmp[0] == 0xff) {
+					EEPROM.get(eCur + idx + curSize+1, tmp2);
+					if (tmp[0] == 0xff && tmp2[0] == 0xff) {
 						break;
 					}
 					EEPROM.put(eCur + idx, tmp);
@@ -977,13 +980,13 @@ void KemperRemote::save() {
 				}
 				break;
 			}
-			if (b[0] == 0xff)
+			if (b[0] == 0xff && b[1] == 0xff)
 				break;
 			idx = idx + 3+b[2]*6;
 		}
 		if (idx + newSize < PARAMETER_BUFFER_ALL_SIZE) {
 			byte b[1];
-			while (p[0] != 0xff) {
+			while (p[0] != 0xff || p[1]!=0xff) {
 				b[0] = p[0];
 				EEPROM.put(eCur + idx, b);
 				idx = idx + 1;

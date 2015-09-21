@@ -43,9 +43,6 @@ int main(int argc, char**argv) {
 		midiOutPort = atoi(argv[3]);
 	}
 
-
-
-	printf("%d, %d\n", midiInPort, midiOutPort);
 	AbstractKemper* kemper;
 
 	if (mode == 0) {

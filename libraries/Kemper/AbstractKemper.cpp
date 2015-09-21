@@ -26,6 +26,8 @@ AbstractKemper::AbstractKemper() {
 	state.looperState.isReversed = false;
 	state.looperState.erasePressCount = 0;
 	state.looperState.atLestOneLayer = false;
+
+	parameter.isActive = false;
 }
 
 void AbstractKemper::loadPartialParam(int stompIdx) {
