@@ -10,16 +10,54 @@ var testConsole = null;
 //serialPort = new SerialPort("COM14", {baudrate: 115200});
 //testConsole = spawn('TestKemperWin.exe', [], {encoding: 'binary', maxBuffer: 0});
 
+var validCommands = ["serial", "midi", "mock"];
 
-var comPort = "";
-if (process.argv.length >= 3) {
-    comPort = process.argv[2];
+var command = process.argv[2];
+var comPort = process.argv[3];
+var midiInPort = parseInt(process.argv[3]);
+var midiOutPort = parseInt(process.argv[4]);
+//console.log(isNaN(midiInPort));
+
+console.log();
+
+var errorStr = "";
+
+if (process.argv.length < 3) {
+    errorStr = "Missing command";
+} else if (validCommands.indexOf(command)<0) {
+    errorStr = "Invalid command: '" + process.argv[2] + "'";
+} else if (command == "serial" && process.argv.length < 4 ) {
+    errorStr = "Missing COM port";
+} else if (command == "serial" && comPort.indexOf("COM")<0) {
+    errorStr = "Invalid COM port name. Examples: COM4, COM14";
+} else if (command == "midi" && isNaN(midiInPort)) {
+    errorStr = "Invalid midi-in port number. It should be an integer.";
+} else if (command == "midi" && isNaN(midiOutPort)) {
+    errorStr = "Invalid midi-out port number. It should be an integer.";
 }
 
-if (comPort)
+if (errorStr) {
+    console.log("ERROR: " + errorStr + "!!!");
+    console.log("\nUSAGE:");
+    console.log("   node app.js [COMMAND] [OPTIONS ...]");
+    console.log("\nUsing serial");
+    console.log("    node app.js serial [COM_PORT]");
+    console.log("\nUsing sound card midi interface");
+    console.log("    node app.js midi [MIDI_IN_PORT] [MIDI_OUT_PORT]");
+    console.log("\nUsing Kemper mock (simulated Kemper)");
+    console.log("    node app.js mock\n");
+    return;
+}
+
+if (command == "mock") {
+    midiInPort = "";
+    midiOutPort = "";
+}
+
+if (command == "serial")
     serialPort = new SerialPort(comPort, { baudrate: 921600 });
 else
-    testConsole = spawn('KemperRemoteDIYWin.exe', ["0"], { encoding: 'binary', maxBuffer: 0 });
+    testConsole = spawn('KemperRemoteDIYWin.exe', [command=="mock"?"0":"1", midiInPort + "", midiOutPort + ""], { encoding: 'binary', maxBuffer: 0 });
 
 
 if (testConsole) {

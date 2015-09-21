@@ -28,6 +28,24 @@ int main(int argc, char**argv) {
 	}
 	int mode = atoi(argv[1]);
 
+	int midiInPort = -1;
+	int midiOutPort = -1;
+
+	if (mode == 1) {
+		if (argc < 4) {
+			printf("ERROR: Missing midi port numbers!!\n\n");
+			printf("USAGE: KemperRemoteDIYWin.exe <mode> [<midi_in_port>] [<midi_out_port>]\n\n");
+			printf("mode = 0: Kemper Mock\n");
+			printf("mode = 1: Kemper MIDI\n");
+			exit(1);
+		}
+		midiInPort = atoi(argv[2]);
+		midiOutPort = atoi(argv[3]);
+	}
+
+
+
+	printf("%d, %d\n", midiInPort, midiOutPort);
 	AbstractKemper* kemper;
 
 	if (mode == 0) {
@@ -35,7 +53,7 @@ int main(int argc, char**argv) {
 		kemper = &kemperMock;
 	} else {
 		Kemper kemperReal;
-		kemperReal.setMidiPorts(0, 1);
+		kemperReal.setMidiPorts(midiInPort, midiOutPort);
 		kemperReal.begin();
 		kemper = &kemperReal;
 	}
@@ -49,9 +67,9 @@ int main(int argc, char**argv) {
 	VirtualDisplay displayProvider(&displaySerializer, 480, 272);
 	KemperRemoteDisplay display(kemper, &kemperRemote, &displayProvider);
 
-	SerialDisplaySerializer serialDisplaySerializer("COM7");
-	VirtualDisplay displayProvider2(&serialDisplaySerializer, 480, 320);
-	KemperRemoteDisplay display2(kemper, &kemperRemote, &displayProvider2);
+	//SerialDisplaySerializer serialDisplaySerializer("COM7");
+	//VirtualDisplay displayProvider2(&serialDisplaySerializer, 480, 320);
+	//KemperRemoteDisplay display2(kemper, &kemperRemote, &displayProvider2);
 
 
 	//kemperRemote.read();
@@ -143,7 +161,7 @@ int main(int argc, char**argv) {
 		Serial.flush();
 
 		display.draw();
-		display2.draw();
+		//display2.draw();
 		//Sleep(50);
 	}
 

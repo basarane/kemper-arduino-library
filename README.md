@@ -17,7 +17,7 @@ The `Simulator` node.js project, is the user interface layer. Using your browser
 All of these properties allow several different configurations to code:
 
 1. **You have Arduino and you have setup the complete circuit (details will be added later):**    
-Use `KemperRemoteDIYArduino` project. It is complete implementation of DIY Kemper Remote project. 
+Use `KemperRemoteDIYArduino` project. It is a complete implementation of DIY Kemper Remote project. 
 2. **You have Arduino and you have setup only MIDI interface (input and output) part of your circuit.**     
 Use `KemperRemoteDIYArduino` and `Simulator` projects together. `Simulator` will communicate with Arduino through serial interface. You can use `Simulator` also in the previous setup.
 3. **You don't setup MIDI circuit but you have a sound card with MIDI inputs and outputs**     
@@ -146,6 +146,34 @@ Compile and run the project. If you receive any errors during compilation or run
 
 ### DIY Kemper Profiler Remote
 If you have the same Hardware setup described in this documentation, you may directly use `KemperRemoteDIYArduino` project. If you use different circuits for buttons update `MultiButton` project inside libraries folder. If you use different circuit for leds, update the relevant code inside `KemperRemoteDIYArduino` project. All other classes like `Kemper`, `KemperRemote` and `KemperRemoteDisplay` are hardware independent. They do not contain a single line of code about the hardware used except `KemperRemoteDisplay`. It assumes an TFT LCD screen is present. It won't work with character displays. Although you can completely discard `KemperRemoteDisplay` class and use your own  (since both `Kemper` and `KemperRemote` classes does not depend on `KemperRemoteDisplay`).
+
+### Using Simulator
+Simulator is a virtual foot controller. It is designed to work with both projects (Arduino and Windows). In order to run the simulator, select one of the options below then open "http://localhost" in your browser. *(You may need admin privilages to run the following commands)*
+
+#### Using with Arduino
+If Simulator will be used together with KemperRemoteDIYArduino project, the following command should be run under **Simulator** folder:
+
+```
+node app.js serial COM7
+```
+
+where *COM7* is the serial port number of Arduino. It should be changed to the correct port number on your system. 
+
+#### Using with MIDI interfaces of a sound card 
+If Kemper MIDI ports are connected to corresponding ports on a soundcard, the following command should be run:
+```
+node app.js midi 0 1
+```
+
+Here, 0 and 1 are the midi port numbers of the midi input and output, respectively. 
+#### Using with Kemper Mock class
+If you don't have a soundcard or two midi cables or a Kemper, you can run Simulator by the following command line:
+```
+node app.js mock
+```
+
+This will start a simulated Kemper instance. 
+
 
 The MIT License (MIT)
 
