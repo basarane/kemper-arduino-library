@@ -115,6 +115,9 @@ void KemperRemote::read() {
 						break;
 					}
 			}
+			else if (millis() - kemper->lastStompParamTime > 100) {
+				nextParam = true;
+			}
 		} 
 		else
 			nextParam = true;
@@ -137,6 +140,7 @@ void KemperRemote::read() {
 						kemper->lastStompParam[0] = i;
 						kemper->lastStompParam[1] = (*stompParam)[i][j][0];
 						kemper->lastStompParam[2] = -1;
+						kemper->lastStompParamTime = millis();
 						debug(F("Request next stomp parameter"));
 						debug(i);
 						debug((*stompParam)[i][j][0]);
@@ -984,7 +988,7 @@ void KemperRemote::save() {
 				break;
 			idx = idx + 3+b[2]*6;
 		}
-		if (idx + newSize < PARAMETER_BUFFER_ALL_SIZE) {
+		if (idx + newSize < PARAMETER_BUFFER_ALL_SIZE-2) {
 			byte b[1];
 			while (p[0] != 0xff || p[1]!=0xff) {
 				b[0] = p[0];
@@ -994,6 +998,7 @@ void KemperRemote::save() {
 			}
 			b[0] = 0xff;
 			EEPROM.put(eCur + idx, b);
+			EEPROM.put(eCur + idx+1, b);
 		}
 		else {
 			debug("No space left to save parameters on EEPROM");

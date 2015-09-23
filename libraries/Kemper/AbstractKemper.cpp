@@ -21,6 +21,7 @@ AbstractKemper::AbstractKemper() {
 	state.performanceNames[4][0] = 0;
 	state.performanceNames[5][0] = 0;
 	memset(lastStompParam, -1, sizeof(lastStompParam));
+	lastStompParamTime = 0;
 	state.looperState.state = LOOPER_STATE_EMPTY;
 	state.looperState.isHalfTime = false;
 	state.looperState.isReversed = false;

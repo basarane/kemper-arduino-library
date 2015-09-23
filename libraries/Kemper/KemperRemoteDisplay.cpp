@@ -66,6 +66,7 @@ void KemperRemoteDisplay::draw() {
 							&& (lastKemperRemoteState.state != REMOTE_STATE_STOMP_PARAMETER && lastKemperRemoteState.state != REMOTE_STATE_STOMP_PARAMETER_POST_LOAD)
 							)
 						|| lastKemperRemoteState.currentParameters != kemperRemote->state.currentParameters
+						|| lastKemperRemoteState.currentParametersChanged != kemperRemote->state.currentParametersChanged
 						|| (lastKemperState.mode == MODE_TUNER && kemper->state.mode != MODE_TUNER) || lastShowSave != showSave
 						|| (lastKemperState.mode != MODE_BROWSE && kemper->state.mode == MODE_BROWSE)
 						|| (lastKemperState.mode != MODE_PERFORM && kemper->state.mode == MODE_PERFORM)
