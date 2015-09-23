@@ -59,29 +59,32 @@ void KEMPER_NAMESPACE::loadStompParameters(PartialParameter *parameter, StompInf
 		parameter->params[j].number = pgm_read_word_near(&param->number);
 		parameter->params[j].optionCount = pgm_read_word_near(&param->optionCount);
 
-		KemperParamValue *value = (KemperParamValue*)pgm_read_word_near(&param->value);
-		if (value) {
-			parameter->params[j].value.id = pgm_read_word_near(&value->id);
-			parameter->params[j].value.minValue = pgm_read_float_near(&value->minValue);
-			parameter->params[j].value.maxValue = pgm_read_float_near(&value->maxValue);
-			parameter->params[j].value.special = pgm_read_word_near(&value->special);
-			parameter->params[j].value.exponential = pgm_read_word_near(&value->exponential);
-			strcpy_P(parameter->params[j].value.suffix, value->suffix);
-		}
-		else {
-			parameter->params[j].value.id = 0xff;
-			parameter->params[j].value.minValue = 0;
-			parameter->params[j].value.maxValue = 0;
-			parameter->params[j].value.special = false;
-			parameter->params[j].value.exponential = false;
-			parameter->params[j].value.suffix[0] = 0;
-
-		}
-
 		strcpy_P(parameter->params[j].name, param->name);
 		parameter->paramCount = j+1;
 	}
+
 	const PGM_KemperParam *psrc = (PGM_KemperParam*) pgm_read_word_near(&params[parameter->currentParam]);
+
+	KemperParamValue *value = (KemperParamValue*)pgm_read_word_near(&psrc->value);
+	if (value) {
+		parameter->valueType.id = pgm_read_word_near(&value->id);
+		parameter->valueType.minValue = pgm_read_float_near(&value->minValue);
+		parameter->valueType.maxValue = pgm_read_float_near(&value->maxValue);
+		parameter->valueType.maxParam = pgm_read_word_near(&value->maxParam);
+		parameter->valueType.special = pgm_read_word_near(&value->special);
+		parameter->valueType.exponential = pgm_read_word_near(&value->exponential);
+		strcpy_P(parameter->valueType.suffix, value->suffix);
+	}
+	else {
+		parameter->valueType.id = 0xff;
+		parameter->valueType.minValue = 0;
+		parameter->valueType.maxValue = 0;
+		parameter->valueType.maxParam = 0;
+		parameter->valueType.special = false;
+		parameter->valueType.exponential = false;
+		parameter->valueType.suffix[0] = 0;
+	}
+
 	int j = 0;
 	parameter->optionCount = 0;
 	parameter->totalOptionCount = parameter->params[parameter->currentParam-startParamIndex].optionCount;

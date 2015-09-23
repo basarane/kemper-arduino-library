@@ -196,10 +196,35 @@ void KemperRemoteDisplay::draw() {
 					display->fillRect(x0,height/2+10, w, height/2-33, getColor(255,255,255));
 				
 					long maxVal = ((1<<14)-1);
+					if (kemper->parameter.valueType.maxParam)
+						maxVal = kemper->parameter.valueType.maxParam;
 					float val = (float)kemper->parameter.currentValue / maxVal;
+					val = max(0, val);
+					val = min(1, val);
 					int wdist = max(1, w*val);
-					int hdist = max(1, h*val);
-					display->fillTriangle(x0, y0, x0+wdist, y0, (long)x0+wdist, y0-hdist, kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_PARAMETER?0:getColor(0,0,255));
+
+					int pcolor = kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_PARAMETER ? 0 : getColor(0, 0, 255);
+
+					if (kemper->parameter.valueType.minValue >= 0)
+					{
+						int hdist = max(1, h*val);
+						display->fillTriangle(x0, y0, x0+wdist, y0, (long)x0+wdist, y0-hdist, pcolor);
+					}
+					else {
+						int hdist = max(1, abs((int)(h*2*(val-0.5))));
+						display->fillTriangle(x0+w/2, y0, x0 + wdist, y0, (long)x0 + wdist, y0 - hdist, pcolor);
+					}
+					char txt[20];
+					KemperParamValue *valueType = &kemper->parameter.valueType;
+					float displayVal = 0;
+					if (valueType->exponential) {
+						displayVal = pow(2, val*log2(valueType->maxValue) + (1 - val)*log2(valueType->minValue));
+					}
+					else {
+						displayVal = val*(valueType->maxValue - valueType->minValue) + valueType->minValue;
+					}
+					sprintf(txt, "%s%.1f %s", valueType->minValue<0&&val>0.5?"+":"", displayVal, valueType->suffix);
+					display->drawText(x0, y0 - h-20, w, 40, TextAlignCenter, TextAlignTop, 30, txt, strlen(txt), pcolor);
 					if (display->supportsLayers)
 					{
 						display->layerEffect(writeToLayer==0?2:1);

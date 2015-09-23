@@ -9,7 +9,7 @@ for (var a in consts.stompParamValue) {
     if (value) {
         if (value.special)
             value = { minValue: 0, maxValue: 0, suffix: null, exponential: null, special: true };
-        console.log("const KemperParamValue " + "Value_" + a + " PROGMEM = {" + a + "," + value.minValue + "," + value.maxValue + "," + (value.suffix ? "\"" + value.suffix + "\"" : 0) + "," + (value.exponential ? "true" : "false") + "," + (value.special ? "true" : "false") + "};");
+        console.log("const KemperParamValue " + "Value_" + a + " PROGMEM = {" + a + "," + value.minValue + "," + value.maxValue + "," + (value.maxParam?value.maxParam:0) + "," + (value.suffix ? "\"" + value.suffix + "\"" : 0) + "," + (value.exponential ? "true" : "false") + "," + (value.special ? "true" : "false") + "};");
     }
 
 }

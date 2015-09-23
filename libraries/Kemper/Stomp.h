@@ -27,6 +27,7 @@ struct KemperParamValue
 	byte id;
 	float minValue;
 	float maxValue;
+	int maxParam;
 	char suffix[3];
 	bool exponential;
 	bool special;
@@ -57,7 +58,6 @@ struct KemperParam
 	int number;
 	char name[32];
 	int optionCount;
-	KemperParamValue value;
 };
 
 struct StompInfo
@@ -101,6 +101,7 @@ struct PartialParameter
 	int stompType;
 	KemperParam params[NUMBER_OF_PARAMS_IN_LIST];
 	KemperParamOption options[NUMBER_OF_PARAMS_IN_LIST];
+	KemperParamValue valueType;
 };
 
 #define AllStompsCount 64

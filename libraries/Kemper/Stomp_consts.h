@@ -1,20 +1,20 @@
 
 //Kemper Parameter Value Types
-const KemperParamValue Value_1 PROGMEM = {1,0,10,0,false,false};
-const KemperParamValue Value_2 PROGMEM = {2,-5,5,0,false,false};
-const KemperParamValue Value_3 PROGMEM = {3,-100,100,"%",false,false};
-const KemperParamValue Value_4 PROGMEM = {4,0,100,"%",false,false};
-const KemperParamValue Value_5 PROGMEM = {5,-12,12,"dB",false,false};
-const KemperParamValue Value_6 PROGMEM = {6,20.6,33488.1,"Hz",true,false};
-const KemperParamValue Value_7 PROGMEM = {7,0.1,5000,0,true,false};
-const KemperParamValue Value_8 PROGMEM = {8,1,3,0,false,false};
-const KemperParamValue Value_9 PROGMEM = {9,1,38.4,"Hz",true,false};
-const KemperParamValue Value_10 PROGMEM = {10,64,0.042,"s",true,false};
-const KemperParamValue Value_11 PROGMEM = {11,4,50,"cm",true,false};
-const KemperParamValue Value_12 PROGMEM = {12,0,0,0,false,true};
-const KemperParamValue Value_13 PROGMEM = {13,0,200,"%",false,false};
-const KemperParamValue Value_14 PROGMEM = {14,0,1280,"ms",false,false};
-const KemperParamValue Value_15 PROGMEM = {15,0,320,"ms",false,false};
+const KemperParamValue Value_1 PROGMEM = {1,0,10,0,0,false,false};
+const KemperParamValue Value_2 PROGMEM = {2,-5,5,0,0,false,false};
+const KemperParamValue Value_3 PROGMEM = {3,-100,100,0,"%",false,false};
+const KemperParamValue Value_4 PROGMEM = {4,0,100,0,"%",false,false};
+const KemperParamValue Value_5 PROGMEM = {5,-12,12,0,"dB",false,false};
+const KemperParamValue Value_6 PROGMEM = {6,20.6,33488.1,0,"Hz",true,false};
+const KemperParamValue Value_7 PROGMEM = {7,0.1,5000,0,0,true,false};
+const KemperParamValue Value_8 PROGMEM = {8,1,3,0,0,false,false};
+const KemperParamValue Value_9 PROGMEM = {9,1,38.4,127,"Hz",true,false};
+const KemperParamValue Value_10 PROGMEM = {10,64,0.042,127,"s",true,false};
+const KemperParamValue Value_11 PROGMEM = {11,4,50,0,"cm",true,false};
+const KemperParamValue Value_12 PROGMEM = {12,0,0,0,0,false,true};
+const KemperParamValue Value_13 PROGMEM = {13,0,200,0,"%",false,false};
+const KemperParamValue Value_14 PROGMEM = {14,0,1280,0,"ms",false,false};
+const KemperParamValue Value_15 PROGMEM = {15,0,320,0,"ms",false,false};
 
 // Kemper Parameter Option Values
 const KemperParamOption Option_delaytype_0 PROGMEM = {0,""};
