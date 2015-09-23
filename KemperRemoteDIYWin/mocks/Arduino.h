@@ -14,6 +14,7 @@ typedef unsigned char byte;
 #define strcpy_P strcpy
 #define pgm_read_word_near(a) (int)(*(a))
 #define pgm_read_byte_near(a) (byte)(*(a))
+#define pgm_read_float_near(a) (float)(*(a))
 
 #define __FlashStringHelper char
 

@@ -57,10 +57,27 @@ void KEMPER_NAMESPACE::loadStompParameters(PartialParameter *parameter, StompInf
 		PGM_KemperParam *param = (PGM_KemperParam*) pgm_read_word_near(&params[startParamIndex+j]);
 
 		parameter->params[j].number = pgm_read_word_near(&param->number);
-		parameter->params[j].minValue = pgm_read_word_near(&param->minValue);
-		parameter->params[j].maxValue = pgm_read_word_near(&param->maxValue);
 		parameter->params[j].optionCount = pgm_read_word_near(&param->optionCount);
-		
+
+		KemperParamValue *value = (KemperParamValue*)pgm_read_word_near(&param->value);
+		if (value) {
+			parameter->params[j].value.id = pgm_read_word_near(&value->id);
+			parameter->params[j].value.minValue = pgm_read_float_near(&value->minValue);
+			parameter->params[j].value.maxValue = pgm_read_float_near(&value->maxValue);
+			parameter->params[j].value.special = pgm_read_word_near(&value->special);
+			parameter->params[j].value.exponential = pgm_read_word_near(&value->exponential);
+			strcpy_P(parameter->params[j].value.suffix, value->suffix);
+		}
+		else {
+			parameter->params[j].value.id = 0xff;
+			parameter->params[j].value.minValue = 0;
+			parameter->params[j].value.maxValue = 0;
+			parameter->params[j].value.special = false;
+			parameter->params[j].value.exponential = false;
+			parameter->params[j].value.suffix[0] = 0;
+
+		}
+
 		strcpy_P(parameter->params[j].name, param->name);
 		parameter->paramCount = j+1;
 	}

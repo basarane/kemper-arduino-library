@@ -2,6 +2,18 @@ var consts = require("./consts.js");
 
 var warnings = [];
 
+console.log("\n//Kemper Parameter Value Types");
+
+for (var a in consts.stompParamValue) {
+    var value = consts.stompParamValue[a];
+    if (value) {
+        if (value.special)
+            value = { minValue: 0, maxValue: 0, suffix: null, exponential: null, special: true };
+        console.log("const KemperParamValue " + "Value_" + a + " PROGMEM = {" + a + "," + value.minValue + "," + value.maxValue + "," + (value.suffix ? "\"" + value.suffix + "\"" : 0) + "," + (value.exponential ? "true" : "false") + "," + (value.special ? "true" : "false") + "};");
+    }
+
+}
+
 console.log("\n\// Kemper Parameter Option Values");
 
 var maxKemperParamOptionLength = 0;
@@ -31,29 +43,30 @@ for (var a in consts.types) {
             o += "&" + type.optionNames[key] + ", ";
         }
         console.log(o.substr(0, o.length-2) + "};");
-//        console.log("\t{" + type.minValue + "," + type.maxValue + ",{" + o.substr(1) + "}},");
     }
 }
 
 console.log("\n\// Kemper Parameters");
 for (var a in consts.stompParams) {
     var s = consts.stompParams[a];
-    var arr = s.split("|");
-    var name = s;
-    var type = "f";
-    if (arr.length>1) {
-        name = arr[1];
-        type = arr[0];
+    if (typeof s === "string")
+        s = { "default": s };
+
+    for (var id in s) {
+        var arr = s[id].split("|");
+        var name = s[id];
+        var type = "f";
+        if (arr.length>1) {
+            name = arr[1];
+            type = arr[0];
+        }
+        var value = parseInt(type);
+        var optionCount = 0;
+        if (consts.types[type]) {
+            optionCount = consts.types[type].optionNames.length;
+        }
+        console.log("const PGM_KemperParam Param_" + getVarName(name+"_"+ a + "_" +id) + " PROGMEM =  {"+a+", \""+name+"\", " +  optionCount + ", " + (type!="f"&& consts.types[type]?"Options_" + type:0 )+", "+ (!isNaN(value)?"&Value_" + value:0) +"};");
     }
-    var minValue = 0;
-    var maxValue = 100;
-    var optionCount = 0;
-    if (consts.types[type]) {
-        minValue = consts.types[type].minValue;
-        maxValue = consts.types[type].maxValue;
-        optionCount = consts.types[type].optionNames.length;
-    }
-    console.log("const PGM_KemperParam Param_" + getVarName(name) + " PROGMEM =  {"+a+", \""+name+"\", " + minValue + ", " + maxValue + ", " + optionCount + ", " + (type!="f"&& consts.types[type]?"Options_" + type:0 )+"};");
 }
 
 console.log("\n\// Kemper Stomp Parameters");
@@ -67,13 +80,34 @@ for (var a in consts.stomps) {
         var pName = consts.stompParams[s.params[b]];
         if (pName)
         {
-            var arr = pName.split("|");
-            if (arr.length>1) {
-                pName = arr[1];
+            if (typeof pName === "string")
+                pName = { "default": pName };
+
+            var param = "";
+            var paramKey = "";
+            for (var id in pName) {
+                if (id.indexOf("," + a + ",") >= 0) {
+                    param = pName[id];
+                    paramKey = id;
+                }
             }
-            o += "&Param_" + getVarName(pName) + ", ";
-            hasParam = true;
-            paramCount++;
+            if (!param) {
+                param = pName["default"];
+                paramKey = "default";
+            }
+
+            if (param)
+            {
+                var arr = param.split("|");
+                if (arr.length > 1) {
+                    param = arr[1];
+                }
+                o += "&Param_" + getVarName(param + "_" + s.params[b] + "_" + paramKey) + ", ";
+                hasParam = true;
+                paramCount++;
+            } else {
+                warnings.push(["Error!!, No parameter default", b, s.params[b], consts.stompParams[s.params[b]]]);
+            }
         } else {
             warnings.push(["Error!!, No parameter name", b, s.params[b], consts.stompParams[s.params[b]]]);
         }

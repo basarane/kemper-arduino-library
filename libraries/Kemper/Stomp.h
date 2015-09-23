@@ -22,14 +22,23 @@ struct KemperParamOption
 	char name[20];
 };
 
+struct KemperParamValue
+{
+	byte id;
+	float minValue;
+	float maxValue;
+	char suffix[3];
+	bool exponential;
+	bool special;
+};
+
 struct PGM_KemperParam
 {
 	int number;
 	char name[32];
-	int minValue;
-	int maxValue;
 	int optionCount;
 	const KemperParamOption* const* options;
+	const KemperParamValue* value;
 };
 
 struct PGM_StompInfo
@@ -47,9 +56,8 @@ struct KemperParam
 {
 	int number;
 	char name[32];
-	int minValue;
-	int maxValue;
 	int optionCount;
+	KemperParamValue value;
 };
 
 struct StompInfo

@@ -322,69 +322,88 @@ for (var a in consts.stomps) {
 // 14: 0 ms, 1280 ms
 // 15: 0 ms, 320 ms
 
+consts.stompParamValue = [
+    null,
+    { minValue: 0, maxValue: 10 },
+    { minValue: -5, maxValue: 5 },
+    { minValue: -100, maxValue: 100, suffix: "%" },
+    { minValue: 0, maxValue: 100, suffix: "%" },
+    { minValue: -12, maxValue: 12, suffix: "dB" },
+    { minValue: 20.6, maxValue: 33488.1, suffix: "Hz", exponential: true },
+    { minValue: 0.1, maxValue: 5000, exponential: true },
+    { minValue: 1, maxValue: 3 },
+    { minValue: 1, maxValue: 38.4, suffix: "Hz", exponential: true, maxParam: 127 },
+    { minValue: 64, maxValue: 0.042, suffix: "s", exponential: true, maxParam: 127 },
+    { minValue: 4, maxValue: 50, suffix: "cm", exponential: true },
+    { special: 1 },
+    { minValue: 0, maxValue: 200, suffix: "%" },
+    { minValue: 0, maxValue: 1280, suffix: "ms" },
+    { minValue: 0, maxValue: 320, suffix: "ms" },
+];
+
 consts.stompParams = {
     0  : "t|Type",
     3  : "b|On/Off",
-    4  : "Mix",       //4
-    6  : "Volume",    //2
+    4  : "4|Mix",
+    6  : "2|Volume",
     7  : "Stereo",
-    8  : "Wah Manual", //1, Manual
-    9  : "Wah Peak",   //1, Peak
-    10 : "Wah Range",  //3, Pedal Range
-    12 : "wpm|Wah Pedal Mode",  // Pedal Mode
-    13 : "Wah Touch Attack", //1, Touch Attack   //13,14,15 sadece 12(wpm)==1(touch) olunca gozukuyor???
-    14 : "Wah Touch Release", //1, Touch Release
-    15 : "Wah Touch Boost",  //1, Touch Boost
-    16 : "Distortion/Shaper Drive",  // 1, Drive
-    17 : "Distortion/Booster Tone",  // 2, Tone
-    18 : "Compressor/Gate Intensity", //1, Intensity    (Noise gate'te threshold)
-    19 : "Compressor Attack",       //1, attack
-    20 : "Modulation Rate",    //1, 2, 9, 10, Rate/Tune     //stereo widener'da 1(Tune), tremoloda 9(Rate), phaser, phaser vibe ve flanger'da 10(Rate), phaser oneway ve flanger oneway'de 2(Rate), Vintage Chorus ve Vibrato'da 1(Rate)              //modrate|  @ersin: there is a problem with modrate, investigate
-    21 : "Modulation Depth",   //1, Depth
-    22 : "Modulation Feedback",  //4, Feedback
-    23 : "Modulation Crossover",  //6, Crossover (tremolo, vintage chorus, hyper chorus, air chorus, vibrato, micro pitch); 1, Low Cut (analog octaver)
-    24 : "Modulation HyperChorus Amount",  //8, Amount
-    25 : "Modulation Manual",   //1, 2, Manual  //phaser oneway ve flanger oneway'de 2
-    26 : "Modulation Phaser Peak Spread",  //2, Spread   (Phaser'da Peak Spread)
-    27 : "modstages|Modulation Phaser Stages", // Stages
-    30 : "rotaryspeed|Rotary Speed (Slow-Off/Fast-On)", // Rotary Speed
-    31 : "Rotary Distance",  //11, Distance
-    32 : "Rotary Balance",  //3, Low-High-Bal.
-    33 : "Compressor Squash",   //2, squash
-    34 : "Graphic EQ Band 1",  //5, 80 Hz
-    35 : "Graphic EQ Band 2",  //5, 160 Hz
-    36 : "Graphic EQ Band 3",  //5, 320 Hz
-    37 : "Graphic EQ Band 4",  //5, 640 Hz
-    38 : "Graphic EQ Band 5",  //5, 1250 Hz
-    39 : "Graphic EQ Band 6",  //5, 2500 Hz
-    40 : "Graphic EQ Band 7",  //5, 5000 Hz
-    41 : "Graphic EQ Band 8",  //5, 10000 Hz
-    42 : "Parametric EQ Low Gain",        //5, Low (Gain)      // studio equalizer'da extra "Gain" yazisi var.
-    43 : "Parametric EQ Low Frequency",   //6, Low Freq
-    44 : "Parametric EQ High Gain",       //5, High (Gain)
-    45 : "Parametric EQ High Frequency",  //6, High Freq
-    46 : "Parametric EQ Peak Gain",       //5, Middle          // studio eq. de Mid1 Gain
-    47 : "Parametric EQ Peak Frequency",  //6, Mid Freq        // studio eq. de Mid1 Freq
-    48 : "Parametric EQ Peak Q-Factor",   //7, Mid1 Q-Factor
-    49 : "Parametric EQ Peak Gain 2",     //5, Mid2 Gain
-    50 : "Parametric EQ Peak Frequency 2", //6, Mid2 Freq
-    51 : "Parametric EQ Peak Q-Factor 2",  //7, Mid2 Q-Factor
-    52 : "Wah Peak Range",    //3, Peak Range
-    53 : "Ducking",  //2
-    54 : "Intensity",  //1, Intensity; 4, Mix (Chromatic pitch, harmonic pitch, analog octaver)     //
-    55 : "Voice Mix", //2
-    56 : "pitch|Voice 1 Pitch",  //  Pitch (transpose), Heel Pitch (pedal pitch), Voice 1 Pitch (chromatic pitch)
-    57 : "pitch|Voice 2 Pitch",  //Pitch Shift, Toe Pitch (pedal pitch), Voice 2 Pitch (chromatic pitch)
-    58 : "Detune",  //1
+    8  : "1|Manual", //Wah Manual
+    9  : "1|Peak",   //Wah Peak
+    10 : "3|Pedal Range",  //Wah Range
+    12 : "wpm|Pedal Mode",  // Wah Pedal Mode
+    13 : "1|Touch Attack", //Wah Touch Attack   //13,14,15 sadece 12(wpm)==1(touch) olunca gozukuyor???
+    14 : "1|Touch Release", //Wah Touch Release
+    15 : "1|Touch Boost",  //Wah Touch Boost
+    16 : "1|Drive",  // Distortion/Shaper Drive
+    17 : "2|Tone",  // Distortion/Booster Tone
+    18 : { ",57,58,": "1|Threshold", "default": "1|Intensity "}, //Compressor/Gate Intensity
+    19 : "1|Attack",       //Compressor Attack
+    20 : {",101,":"1|Tune", ",70,":"9|Rate", ",81,82,89,":"10|Rate",",83,91,":"2|Rate", "default": "1|Rate"},  //  "Modulation Rate"
+    21 : "1|Depth",   //Modulation Depth
+    22 : "4|Feedback",  //Modulation Feedback
+    23 : {",132,":"1|Low Cut", "default": "6|Crossover"},  // Modulation Crossover
+    24 : "8|Amount",  //Modulation HyperChorus Amount
+    25 : {",83,91,":"2|Manual", "default":"1|Manual"}, //Modulation Manual
+    26 : {",6,":"2|Spread", "default": "2|Peak Spread"},  //Modulation Phaser Peak Spread
+    27 : "modstages|Stages", // Modulation Phaser Stages
+    30 : "rotaryspeed|Rotary Speed", // Rotary Speed (Slow-Off/Fast-On)
+    31 : "11|Distance",  //Rotary Distance
+    32 : "3|Low-High-Bal.",  //Rotary Balance
+    33 : "2|squash",   //Compressor Squash
+    34 : "5|80 Hz",  //Graphic EQ Band 1
+    35 : "5|160 Hz",  //Graphic EQ Band 2
+    36 : "5|320 Hz",  //Graphic EQ Band 3
+    37 : "5|640 Hz",  //Graphic EQ Band 4
+    38 : "5|1250 Hz",  //Graphic EQ Band 5
+    39 : "5|2500 Hz",  //Graphic EQ Band 6
+    40 : "5|5000 Hz",  //Graphic EQ Band 7
+    41 : "5|10000 Hz",  //Graphic EQ Band 8
+    42 : {",98,":"5|Low Gain", "default": "5|Low"},  //Parametric EQ Low Gain
+    43 : "6|Low Freq",   //Parametric EQ Low Frequency
+    44 : "5|High (Gain)",       //Parametric EQ High Gain
+    45 : "6|High Freq",  //Parametric EQ High Frequency
+    46 : {",98,":"5|Mid1 Gain", "default": "5|Middle"},   //Parametric EQ Peak Gain
+    47 : {",98,":"6|Mid1 Freq", "default": "6|Mid Freq"}, //Parametric EQ Peak Frequency
+    48 : "7|Mid1 Q-Factor",   //Parametric EQ Peak Q-Factor
+    49 : "5|Mid2 Gain",     //Parametric EQ Peak Gain 2
+    50 : "6|Mid2 Freq", //Parametric EQ Peak Frequency 2
+    51 : "7|Mid2 Q-Factor",  //Parametric EQ Peak Q-Factor 2
+    52 : "3|Peak Range",    //Wah Peak Range
+    53 : "2|Ducking",  //2
+    54 : {",64,":"1|Intensity", "default":"4|Mix"}, //Intensity
+    55 : "2|Voice Mix", //2
+    56 : { ",129,": "pitch|Pitch", ",11,": "pitch|Heel Pitch", ",130,": "pitch|Voice 1 Pitch" }, //Voice 1 Pitch
+    57 : {",12,":"pitch|Pitch Shift", ",11,": "pitch|Toe Pitch", ",130,":"pitch|Voice 2 Pitch"},  //Voice 2 Pitch
+    58 : "1|Detune",  //1
     60 : "b|Smooth Chords",
     61 : "b|Pure Tuning",
     62 : "voiceinterval|Voice 1 Interval",
     63 : "voiceinterval|Voice 2 Interval",
     64 : "key|Key",
     65 : "b|Free Formants",
-    66: "Formant Shift", //2
-    67: "Low Cut",   //6
-    68: "High Cut"   //6
+    66: "2|Formant Shift", //2
+    67: "6|Low Cut",   //6
+    68: "6|High Cut"   //6
 };
 
 consts.params = {
@@ -469,18 +488,18 @@ consts.params = {
         params: {
             0 : "delaytype|Type",
             2 : "b|On/Off (cuts tail)",
-            3 : "Mix", //12
-            4 : "Volume", //2
-            5 : "Time", //14
+            3 : "12|Mix", //12
+            4 : "2|Volume", //2
+            5 : "14|Time", //14
             6 : "delayratio|Ratio",
             7 : "delayclock|Clock Left",
             8 : "delayclock|Clock Right",
-            9 : "Feedback", //13
-            10: "Bandwidth", //1
-            11: "Center Frequency", //2
-            12: "Modulation", //1
+            9 : "13|Feedback", //13
+            10: "1|Bandwidth", //1
+            11: "2|Center Frequency", //2
+            12: "1|Modulation", //1
             13: "b|On/off (keeps tail)",
-            14: "Ducking"  //2
+            14: "2|Ducking"  //2
         }
     },
     75: {
@@ -488,17 +507,17 @@ consts.params = {
         color: consts.color.green,
         params: {
             0 : "reverbtype|Type",
-            2 : "On/off (cuts tail)",
-            3 : "Mix",  //12
-            4 : "Volume", //2
-            5 : "Del/Rev Balance", //3
-            6 : "Time", //1
-            7 : "Damping", //1
-            8 : "Bandwidth", //1
-            9 : "Center Frequency",//2, Frequency
-            10: "Pre-delay", //15
-            11: "On/off (keeps tail)",
-            12: "Ducking" //2
+            2 : "b|On/off (cuts tail)",
+            3 : "12|Mix",  //12
+            4 : "2|Volume", //2
+            5 : "3|Del/Rev Balance", //3
+            6 : "1|Time", //1
+            7 : "1|Damping", //1
+            8 : "1|Bandwidth", //1
+            9 : "2|Center Frequency",//2, Frequency
+            10: "15|Pre-delay", //15
+            11: "b|On/off (keeps tail)",
+            12: "2|Ducking" //2
         }
     },
     127: {
@@ -550,10 +569,11 @@ for (var a in consts.types.delaytype.options) {
 }
 for (var b in consts.params[74].params) {
     var x = consts.params[74].params[b];
+    /*
     if (x.indexOf("|") >= 0)
         x = x.replace("|", "|Delay ");
     else
-        x = "Delay " + x;
+        x = "Delay " + x; */
     consts.stompParams[100 + parseInt(b)] = x;
     
 }
@@ -578,10 +598,11 @@ for (var a in consts.types.reverbtype.options) {
 }
 for (var b in consts.params[75].params) {
     var x = consts.params[75].params[b];
+    /*
     if (x.indexOf("|") >= 0)
         x = x.replace("|", "|Reverb ");
     else
-        x = "Reverb " + x;
+        x = "Reverb " + x; */
     consts.stompParams[120 + parseInt(b)] = x;
 }
 

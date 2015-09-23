@@ -1,4 +1,21 @@
 
+//Kemper Parameter Value Types
+const KemperParamValue Value_1 PROGMEM = {1,0,10,0,false,false};
+const KemperParamValue Value_2 PROGMEM = {2,-5,5,0,false,false};
+const KemperParamValue Value_3 PROGMEM = {3,-100,100,"%",false,false};
+const KemperParamValue Value_4 PROGMEM = {4,0,100,"%",false,false};
+const KemperParamValue Value_5 PROGMEM = {5,-12,12,"dB",false,false};
+const KemperParamValue Value_6 PROGMEM = {6,20.6,33488.1,"Hz",true,false};
+const KemperParamValue Value_7 PROGMEM = {7,0.1,5000,0,true,false};
+const KemperParamValue Value_8 PROGMEM = {8,1,3,0,false,false};
+const KemperParamValue Value_9 PROGMEM = {9,1,38.4,"Hz",true,false};
+const KemperParamValue Value_10 PROGMEM = {10,64,0.042,"s",true,false};
+const KemperParamValue Value_11 PROGMEM = {11,4,50,"cm",true,false};
+const KemperParamValue Value_12 PROGMEM = {12,0,0,0,false,true};
+const KemperParamValue Value_13 PROGMEM = {13,0,200,"%",false,false};
+const KemperParamValue Value_14 PROGMEM = {14,0,1280,"ms",false,false};
+const KemperParamValue Value_15 PROGMEM = {15,0,320,"ms",false,false};
+
 // Kemper Parameter Option Values
 const KemperParamOption Option_delaytype_0 PROGMEM = {0,""};
 const KemperParamOption Option_delaytype_1 PROGMEM = {1,"Tap Delay"};
@@ -101,12 +118,12 @@ const KemperParamOption Option_key_8 PROGMEM = {8,"Ab/Fm"};
 const KemperParamOption Option_key_9 PROGMEM = {9,"A/F#m"};
 const KemperParamOption Option_key_10 PROGMEM = {10,"Bb/Gm"};
 const KemperParamOption Option_key_11 PROGMEM = {11,"B/G#m"};
-const KemperParamOption Option_modstages_0 PROGMEM = {0,"Stages 2"};
-const KemperParamOption Option_modstages_1 PROGMEM = {1,"Stages 4"};
-const KemperParamOption Option_modstages_2 PROGMEM = {2,"Stages 6"};
-const KemperParamOption Option_modstages_3 PROGMEM = {3,"Stages 8"};
-const KemperParamOption Option_modstages_4 PROGMEM = {4,"Stages 10"};
-const KemperParamOption Option_modstages_5 PROGMEM = {5,"Stages 12"};
+const KemperParamOption Option_modstages_0 PROGMEM = {0,"2"};
+const KemperParamOption Option_modstages_1 PROGMEM = {1,"4"};
+const KemperParamOption Option_modstages_2 PROGMEM = {2,"6"};
+const KemperParamOption Option_modstages_3 PROGMEM = {3,"8"};
+const KemperParamOption Option_modstages_4 PROGMEM = {4,"10"};
+const KemperParamOption Option_modstages_5 PROGMEM = {5,"12"};
 const KemperParamOption Option_voiceinterval_42 PROGMEM = {42,"-3 Oct"};
 const KemperParamOption Option_voiceinterval_43 PROGMEM = {43,"-21th"};
 const KemperParamOption Option_voiceinterval_44 PROGMEM = {44,"-20th"};
@@ -246,6 +263,8 @@ const KemperParamOption Option_delayclock_11 PROGMEM = {11,"2/12(Triplet)"};
 const KemperParamOption Option_delayclock_12 PROGMEM = {12,"4/12(Triplet)"};
 const KemperParamOption Option_b_0 PROGMEM = {0,"Off"};
 const KemperParamOption Option_b_1 PROGMEM = {1,"On"};
+const KemperParamOption Option_rotaryspeed_0 PROGMEM = {0,"Slow"};
+const KemperParamOption Option_rotaryspeed_1 PROGMEM = {1,"Fast"};
 
 // Kemper Parameter Option Collections
 const KemperParamOption * const Options_delaytype[] PROGMEM = {&Option_delaytype_0, &Option_delaytype_1, &Option_delaytype_2, &Option_delaytype_3};
@@ -259,157 +278,178 @@ const KemperParamOption * const Options_t[] PROGMEM = {&Option_t_1, &Option_t_2,
 const KemperParamOption * const Options_delayratio[] PROGMEM = {&Option_delayratio_0, &Option_delayratio_1, &Option_delayratio_2, &Option_delayratio_3, &Option_delayratio_4, &Option_delayratio_5, &Option_delayratio_6};
 const KemperParamOption * const Options_delayclock[] PROGMEM = {&Option_delayclock_0, &Option_delayclock_1, &Option_delayclock_2, &Option_delayclock_3, &Option_delayclock_4, &Option_delayclock_5, &Option_delayclock_6, &Option_delayclock_7, &Option_delayclock_8, &Option_delayclock_9, &Option_delayclock_10, &Option_delayclock_11, &Option_delayclock_12};
 const KemperParamOption * const Options_b[] PROGMEM = {&Option_b_0, &Option_b_1};
+const KemperParamOption * const Options_rotaryspeed[] PROGMEM = {&Option_rotaryspeed_0, &Option_rotaryspeed_1};
 
 // Kemper Parameters
-const PGM_KemperParam Param_Type PROGMEM =  {0, "Type", 1, 215, 63, Options_t};
-const PGM_KemperParam Param_On_Off PROGMEM =  {3, "On/Off", 0, 1, 2, Options_b};
-const PGM_KemperParam Param_Mix PROGMEM =  {4, "Mix", 0, 100, 0, 0};
-const PGM_KemperParam Param_Volume PROGMEM =  {6, "Volume", 0, 100, 0, 0};
-const PGM_KemperParam Param_Stereo PROGMEM =  {7, "Stereo", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Manual PROGMEM =  {8, "Wah Manual", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Peak PROGMEM =  {9, "Wah Peak", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Range PROGMEM =  {10, "Wah Range", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Pedal_Mode PROGMEM =  {12, "Wah Pedal Mode", 0, 5, 6, Options_wpm};
-const PGM_KemperParam Param_Wah_Touch_Attack PROGMEM =  {13, "Wah Touch Attack", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Touch_Release PROGMEM =  {14, "Wah Touch Release", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Touch_Boost PROGMEM =  {15, "Wah Touch Boost", 0, 100, 0, 0};
-const PGM_KemperParam Param_Distortion_Shaper_Drive PROGMEM =  {16, "Distortion/Shaper Drive", 0, 100, 0, 0};
-const PGM_KemperParam Param_Distortion_Booster_Tone PROGMEM =  {17, "Distortion/Booster Tone", 0, 100, 0, 0};
-const PGM_KemperParam Param_Compressor_Gate_Intensity PROGMEM =  {18, "Compressor/Gate Intensity", 0, 100, 0, 0};
-const PGM_KemperParam Param_Compressor_Attack PROGMEM =  {19, "Compressor Attack", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Rate PROGMEM =  {20, "Modulation Rate", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Depth PROGMEM =  {21, "Modulation Depth", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Feedback PROGMEM =  {22, "Modulation Feedback", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Crossover PROGMEM =  {23, "Modulation Crossover", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_HyperChorus_Amount PROGMEM =  {24, "Modulation HyperChorus Amount", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Manual PROGMEM =  {25, "Modulation Manual", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Phaser_Peak_Spread PROGMEM =  {26, "Modulation Phaser Peak Spread", 0, 100, 0, 0};
-const PGM_KemperParam Param_Modulation_Phaser_Stages PROGMEM =  {27, "Modulation Phaser Stages", 0, 5, 6, Options_modstages};
-const PGM_KemperParam Param_Rotary_Speed__Slow_Off_Fast_On_ PROGMEM =  {30, "Rotary Speed (Slow-Off/Fast-On)", 0, 100, 0, 0};
-const PGM_KemperParam Param_Rotary_Distance PROGMEM =  {31, "Rotary Distance", 0, 100, 0, 0};
-const PGM_KemperParam Param_Rotary_Balance PROGMEM =  {32, "Rotary Balance", 0, 100, 0, 0};
-const PGM_KemperParam Param_Compressor_Squash PROGMEM =  {33, "Compressor Squash", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_1 PROGMEM =  {34, "Graphic EQ Band 1", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_2 PROGMEM =  {35, "Graphic EQ Band 2", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_3 PROGMEM =  {36, "Graphic EQ Band 3", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_4 PROGMEM =  {37, "Graphic EQ Band 4", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_5 PROGMEM =  {38, "Graphic EQ Band 5", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_6 PROGMEM =  {39, "Graphic EQ Band 6", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_7 PROGMEM =  {40, "Graphic EQ Band 7", 0, 100, 0, 0};
-const PGM_KemperParam Param_Graphic_EQ_Band_8 PROGMEM =  {41, "Graphic EQ Band 8", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Low_Gain PROGMEM =  {42, "Parametric EQ Low Gain", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Low_Frequency PROGMEM =  {43, "Parametric EQ Low Frequency", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_High_Gain PROGMEM =  {44, "Parametric EQ High Gain", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_High_Frequency PROGMEM =  {45, "Parametric EQ High Frequency", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Peak_Gain PROGMEM =  {46, "Parametric EQ Peak Gain", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Peak_Frequency PROGMEM =  {47, "Parametric EQ Peak Frequency", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Peak_Q_Factor PROGMEM =  {48, "Parametric EQ Peak Q-Factor", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Peak_Gain_2 PROGMEM =  {49, "Parametric EQ Peak Gain 2", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Peak_Frequency_2 PROGMEM =  {50, "Parametric EQ Peak Frequency 2", 0, 100, 0, 0};
-const PGM_KemperParam Param_Parametric_EQ_Peak_Q_Factor_2 PROGMEM =  {51, "Parametric EQ Peak Q-Factor 2", 0, 100, 0, 0};
-const PGM_KemperParam Param_Wah_Peak_Range PROGMEM =  {52, "Wah Peak Range", 0, 100, 0, 0};
-const PGM_KemperParam Param_Ducking PROGMEM =  {53, "Ducking", 0, 100, 0, 0};
-const PGM_KemperParam Param_Voice_Mix PROGMEM =  {55, "Voice Mix", 0, 100, 0, 0};
-const PGM_KemperParam Param_Voice_1_Pitch PROGMEM =  {56, "Voice 1 Pitch", 28, 100, 73, Options_pitch};
-const PGM_KemperParam Param_Voice_2_Pitch PROGMEM =  {57, "Voice 2 Pitch", 28, 100, 73, Options_pitch};
-const PGM_KemperParam Param_Detune PROGMEM =  {58, "Detune", 0, 100, 0, 0};
-const PGM_KemperParam Param_Smooth_Chords PROGMEM =  {60, "Smooth Chords", 0, 1, 2, Options_b};
-const PGM_KemperParam Param_Pure_Tuning PROGMEM =  {61, "Pure Tuning", 0, 1, 2, Options_b};
-const PGM_KemperParam Param_Voice_1_Interval PROGMEM =  {62, "Voice 1 Interval", 42, 95, 54, Options_voiceinterval};
-const PGM_KemperParam Param_Voice_2_Interval PROGMEM =  {63, "Voice 2 Interval", 42, 95, 54, Options_voiceinterval};
-const PGM_KemperParam Param_Key PROGMEM =  {64, "Key", 0, 11, 12, Options_key};
-const PGM_KemperParam Param_Free_Formants PROGMEM =  {65, "Free Formants", 0, 1, 2, Options_b};
-const PGM_KemperParam Param_Formant_Shift PROGMEM =  {66, "Formant Shift", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Type PROGMEM =  {100, "Delay Type", 0, 3, 4, Options_delaytype};
-const PGM_KemperParam Param_Delay_On_Off__cuts_tail_ PROGMEM =  {102, "Delay On/Off (cuts tail)", 0, 1, 2, Options_b};
-const PGM_KemperParam Param_Delay_Mix PROGMEM =  {103, "Delay Mix", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Volume PROGMEM =  {104, "Delay Volume", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Time PROGMEM =  {105, "Delay Time", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Ratio PROGMEM =  {106, "Delay Ratio", 0, 6, 7, Options_delayratio};
-const PGM_KemperParam Param_Delay_Clock_Left PROGMEM =  {107, "Delay Clock Left", 0, 12, 13, Options_delayclock};
-const PGM_KemperParam Param_Delay_Clock_Right PROGMEM =  {108, "Delay Clock Right", 0, 12, 13, Options_delayclock};
-const PGM_KemperParam Param_Delay_Feedback PROGMEM =  {109, "Delay Feedback", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Bandwidth PROGMEM =  {110, "Delay Bandwidth", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Center_Frequency PROGMEM =  {111, "Delay Center Frequency", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_Modulation PROGMEM =  {112, "Delay Modulation", 0, 100, 0, 0};
-const PGM_KemperParam Param_Delay_On_off__keeps_tail_ PROGMEM =  {113, "Delay On/off (keeps tail)", 0, 1, 2, Options_b};
-const PGM_KemperParam Param_Delay_Ducking PROGMEM =  {114, "Delay Ducking", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Type PROGMEM =  {120, "Reverb Type", 0, 5, 6, Options_reverbtype};
-const PGM_KemperParam Param_Reverb_On_off__cuts_tail_ PROGMEM =  {122, "Reverb On/off (cuts tail)", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Mix PROGMEM =  {123, "Reverb Mix", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Volume PROGMEM =  {124, "Reverb Volume", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Del_Rev_Balance PROGMEM =  {125, "Reverb Del/Rev Balance", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Time PROGMEM =  {126, "Reverb Time", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Damping PROGMEM =  {127, "Reverb Damping", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Bandwidth PROGMEM =  {128, "Reverb Bandwidth", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Center_Frequency PROGMEM =  {129, "Reverb Center Frequency", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Pre_delay PROGMEM =  {130, "Reverb Pre-delay", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_On_off__keeps_tail_ PROGMEM =  {131, "Reverb On/off (keeps tail)", 0, 100, 0, 0};
-const PGM_KemperParam Param_Reverb_Ducking PROGMEM =  {132, "Reverb Ducking", 0, 100, 0, 0};
+const PGM_KemperParam Param_Type_0_default PROGMEM =  {0, "Type", 63, Options_t, 0};
+const PGM_KemperParam Param_On_Off_3_default PROGMEM =  {3, "On/Off", 2, Options_b, 0};
+const PGM_KemperParam Param_Mix_4_default PROGMEM =  {4, "Mix", 0, 0, &Value_4};
+const PGM_KemperParam Param_Volume_6_default PROGMEM =  {6, "Volume", 0, 0, &Value_2};
+const PGM_KemperParam Param_Stereo_7_default PROGMEM =  {7, "Stereo", 0, 0, 0};
+const PGM_KemperParam Param_Manual_8_default PROGMEM =  {8, "Manual", 0, 0, &Value_1};
+const PGM_KemperParam Param_Peak_9_default PROGMEM =  {9, "Peak", 0, 0, &Value_1};
+const PGM_KemperParam Param_Pedal_Range_10_default PROGMEM =  {10, "Pedal Range", 0, 0, &Value_3};
+const PGM_KemperParam Param_Pedal_Mode_12_default PROGMEM =  {12, "Pedal Mode", 6, Options_wpm, 0};
+const PGM_KemperParam Param_Touch_Attack_13_default PROGMEM =  {13, "Touch Attack", 0, 0, &Value_1};
+const PGM_KemperParam Param_Touch_Release_14_default PROGMEM =  {14, "Touch Release", 0, 0, &Value_1};
+const PGM_KemperParam Param_Touch_Boost_15_default PROGMEM =  {15, "Touch Boost", 0, 0, &Value_1};
+const PGM_KemperParam Param_Drive_16_default PROGMEM =  {16, "Drive", 0, 0, &Value_1};
+const PGM_KemperParam Param_Tone_17_default PROGMEM =  {17, "Tone", 0, 0, &Value_2};
+const PGM_KemperParam Param_Threshold_18__57_58_ PROGMEM =  {18, "Threshold", 0, 0, &Value_1};
+const PGM_KemperParam Param_Intensity__18_default PROGMEM =  {18, "Intensity ", 0, 0, &Value_1};
+const PGM_KemperParam Param_Attack_19_default PROGMEM =  {19, "Attack", 0, 0, &Value_1};
+const PGM_KemperParam Param_Tune_20__101_ PROGMEM =  {20, "Tune", 0, 0, &Value_1};
+const PGM_KemperParam Param_Rate_20__70_ PROGMEM =  {20, "Rate", 0, 0, &Value_9};
+const PGM_KemperParam Param_Rate_20__81_82_89_ PROGMEM =  {20, "Rate", 0, 0, &Value_10};
+const PGM_KemperParam Param_Rate_20__83_91_ PROGMEM =  {20, "Rate", 0, 0, &Value_2};
+const PGM_KemperParam Param_Rate_20_default PROGMEM =  {20, "Rate", 0, 0, &Value_1};
+const PGM_KemperParam Param_Depth_21_default PROGMEM =  {21, "Depth", 0, 0, &Value_1};
+const PGM_KemperParam Param_Feedback_22_default PROGMEM =  {22, "Feedback", 0, 0, &Value_4};
+const PGM_KemperParam Param_Low_Cut_23__132_ PROGMEM =  {23, "Low Cut", 0, 0, &Value_1};
+const PGM_KemperParam Param_Crossover_23_default PROGMEM =  {23, "Crossover", 0, 0, &Value_6};
+const PGM_KemperParam Param_Amount_24_default PROGMEM =  {24, "Amount", 0, 0, &Value_8};
+const PGM_KemperParam Param_Manual_25__83_91_ PROGMEM =  {25, "Manual", 0, 0, &Value_2};
+const PGM_KemperParam Param_Manual_25_default PROGMEM =  {25, "Manual", 0, 0, &Value_1};
+const PGM_KemperParam Param_Spread_26__6_ PROGMEM =  {26, "Spread", 0, 0, &Value_2};
+const PGM_KemperParam Param_Peak_Spread_26_default PROGMEM =  {26, "Peak Spread", 0, 0, &Value_2};
+const PGM_KemperParam Param_Stages_27_default PROGMEM =  {27, "Stages", 6, Options_modstages, 0};
+const PGM_KemperParam Param_Rotary_Speed_30_default PROGMEM =  {30, "Rotary Speed", 2, Options_rotaryspeed, 0};
+const PGM_KemperParam Param_Distance_31_default PROGMEM =  {31, "Distance", 0, 0, &Value_11};
+const PGM_KemperParam Param_Low_High_Bal__32_default PROGMEM =  {32, "Low-High-Bal.", 0, 0, &Value_3};
+const PGM_KemperParam Param_squash_33_default PROGMEM =  {33, "squash", 0, 0, &Value_2};
+const PGM_KemperParam Param_80_Hz_34_default PROGMEM =  {34, "80 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_160_Hz_35_default PROGMEM =  {35, "160 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_320_Hz_36_default PROGMEM =  {36, "320 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_640_Hz_37_default PROGMEM =  {37, "640 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_1250_Hz_38_default PROGMEM =  {38, "1250 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_2500_Hz_39_default PROGMEM =  {39, "2500 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_5000_Hz_40_default PROGMEM =  {40, "5000 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_10000_Hz_41_default PROGMEM =  {41, "10000 Hz", 0, 0, &Value_5};
+const PGM_KemperParam Param_Low_Gain_42__98_ PROGMEM =  {42, "Low Gain", 0, 0, &Value_5};
+const PGM_KemperParam Param_Low_42_default PROGMEM =  {42, "Low", 0, 0, &Value_5};
+const PGM_KemperParam Param_Low_Freq_43_default PROGMEM =  {43, "Low Freq", 0, 0, &Value_6};
+const PGM_KemperParam Param_High__Gain__44_default PROGMEM =  {44, "High (Gain)", 0, 0, &Value_5};
+const PGM_KemperParam Param_High_Freq_45_default PROGMEM =  {45, "High Freq", 0, 0, &Value_6};
+const PGM_KemperParam Param_Mid1_Gain_46__98_ PROGMEM =  {46, "Mid1 Gain", 0, 0, &Value_5};
+const PGM_KemperParam Param_Middle_46_default PROGMEM =  {46, "Middle", 0, 0, &Value_5};
+const PGM_KemperParam Param_Mid1_Freq_47__98_ PROGMEM =  {47, "Mid1 Freq", 0, 0, &Value_6};
+const PGM_KemperParam Param_Mid_Freq_47_default PROGMEM =  {47, "Mid Freq", 0, 0, &Value_6};
+const PGM_KemperParam Param_Mid1_Q_Factor_48_default PROGMEM =  {48, "Mid1 Q-Factor", 0, 0, &Value_7};
+const PGM_KemperParam Param_Mid2_Gain_49_default PROGMEM =  {49, "Mid2 Gain", 0, 0, &Value_5};
+const PGM_KemperParam Param_Mid2_Freq_50_default PROGMEM =  {50, "Mid2 Freq", 0, 0, &Value_6};
+const PGM_KemperParam Param_Mid2_Q_Factor_51_default PROGMEM =  {51, "Mid2 Q-Factor", 0, 0, &Value_7};
+const PGM_KemperParam Param_Peak_Range_52_default PROGMEM =  {52, "Peak Range", 0, 0, &Value_3};
+const PGM_KemperParam Param_Ducking_53_default PROGMEM =  {53, "Ducking", 0, 0, &Value_2};
+const PGM_KemperParam Param_Intensity_54__64_ PROGMEM =  {54, "Intensity", 0, 0, &Value_1};
+const PGM_KemperParam Param_Mix_54_default PROGMEM =  {54, "Mix", 0, 0, &Value_4};
+const PGM_KemperParam Param_Voice_Mix_55_default PROGMEM =  {55, "Voice Mix", 0, 0, &Value_2};
+const PGM_KemperParam Param_Pitch_56__129_ PROGMEM =  {56, "Pitch", 73, Options_pitch, 0};
+const PGM_KemperParam Param_Heel_Pitch_56__11_ PROGMEM =  {56, "Heel Pitch", 73, Options_pitch, 0};
+const PGM_KemperParam Param_Voice_1_Pitch_56__130_ PROGMEM =  {56, "Voice 1 Pitch", 73, Options_pitch, 0};
+const PGM_KemperParam Param_Pitch_Shift_57__12_ PROGMEM =  {57, "Pitch Shift", 73, Options_pitch, 0};
+const PGM_KemperParam Param_Toe_Pitch_57__11_ PROGMEM =  {57, "Toe Pitch", 73, Options_pitch, 0};
+const PGM_KemperParam Param_Voice_2_Pitch_57__130_ PROGMEM =  {57, "Voice 2 Pitch", 73, Options_pitch, 0};
+const PGM_KemperParam Param_Detune_58_default PROGMEM =  {58, "Detune", 0, 0, &Value_1};
+const PGM_KemperParam Param_Smooth_Chords_60_default PROGMEM =  {60, "Smooth Chords", 2, Options_b, 0};
+const PGM_KemperParam Param_Pure_Tuning_61_default PROGMEM =  {61, "Pure Tuning", 2, Options_b, 0};
+const PGM_KemperParam Param_Voice_1_Interval_62_default PROGMEM =  {62, "Voice 1 Interval", 54, Options_voiceinterval, 0};
+const PGM_KemperParam Param_Voice_2_Interval_63_default PROGMEM =  {63, "Voice 2 Interval", 54, Options_voiceinterval, 0};
+const PGM_KemperParam Param_Key_64_default PROGMEM =  {64, "Key", 12, Options_key, 0};
+const PGM_KemperParam Param_Free_Formants_65_default PROGMEM =  {65, "Free Formants", 2, Options_b, 0};
+const PGM_KemperParam Param_Formant_Shift_66_default PROGMEM =  {66, "Formant Shift", 0, 0, &Value_2};
+const PGM_KemperParam Param_Low_Cut_67_default PROGMEM =  {67, "Low Cut", 0, 0, &Value_6};
+const PGM_KemperParam Param_High_Cut_68_default PROGMEM =  {68, "High Cut", 0, 0, &Value_6};
+const PGM_KemperParam Param_Type_100_default PROGMEM =  {100, "Type", 4, Options_delaytype, 0};
+const PGM_KemperParam Param_On_Off__cuts_tail__102_default PROGMEM =  {102, "On/Off (cuts tail)", 2, Options_b, 0};
+const PGM_KemperParam Param_Mix_103_default PROGMEM =  {103, "Mix", 0, 0, &Value_12};
+const PGM_KemperParam Param_Volume_104_default PROGMEM =  {104, "Volume", 0, 0, &Value_2};
+const PGM_KemperParam Param_Time_105_default PROGMEM =  {105, "Time", 0, 0, &Value_14};
+const PGM_KemperParam Param_Ratio_106_default PROGMEM =  {106, "Ratio", 7, Options_delayratio, 0};
+const PGM_KemperParam Param_Clock_Left_107_default PROGMEM =  {107, "Clock Left", 13, Options_delayclock, 0};
+const PGM_KemperParam Param_Clock_Right_108_default PROGMEM =  {108, "Clock Right", 13, Options_delayclock, 0};
+const PGM_KemperParam Param_Feedback_109_default PROGMEM =  {109, "Feedback", 0, 0, &Value_13};
+const PGM_KemperParam Param_Bandwidth_110_default PROGMEM =  {110, "Bandwidth", 0, 0, &Value_1};
+const PGM_KemperParam Param_Center_Frequency_111_default PROGMEM =  {111, "Center Frequency", 0, 0, &Value_2};
+const PGM_KemperParam Param_Modulation_112_default PROGMEM =  {112, "Modulation", 0, 0, &Value_1};
+const PGM_KemperParam Param_On_off__keeps_tail__113_default PROGMEM =  {113, "On/off (keeps tail)", 2, Options_b, 0};
+const PGM_KemperParam Param_Ducking_114_default PROGMEM =  {114, "Ducking", 0, 0, &Value_2};
+const PGM_KemperParam Param_Type_120_default PROGMEM =  {120, "Type", 6, Options_reverbtype, 0};
+const PGM_KemperParam Param_On_off__cuts_tail__122_default PROGMEM =  {122, "On/off (cuts tail)", 2, Options_b, 0};
+const PGM_KemperParam Param_Mix_123_default PROGMEM =  {123, "Mix", 0, 0, &Value_12};
+const PGM_KemperParam Param_Volume_124_default PROGMEM =  {124, "Volume", 0, 0, &Value_2};
+const PGM_KemperParam Param_Del_Rev_Balance_125_default PROGMEM =  {125, "Del/Rev Balance", 0, 0, &Value_3};
+const PGM_KemperParam Param_Time_126_default PROGMEM =  {126, "Time", 0, 0, &Value_1};
+const PGM_KemperParam Param_Damping_127_default PROGMEM =  {127, "Damping", 0, 0, &Value_1};
+const PGM_KemperParam Param_Bandwidth_128_default PROGMEM =  {128, "Bandwidth", 0, 0, &Value_1};
+const PGM_KemperParam Param_Center_Frequency_129_default PROGMEM =  {129, "Center Frequency", 0, 0, &Value_2};
+const PGM_KemperParam Param_Pre_delay_130_default PROGMEM =  {130, "Pre-delay", 0, 0, &Value_15};
+const PGM_KemperParam Param_On_off__keeps_tail__131_default PROGMEM =  {131, "On/off (keeps tail)", 2, Options_b, 0};
+const PGM_KemperParam Param_Ducking_132_default PROGMEM =  {132, "Ducking", 0, 0, &Value_2};
 
 // Kemper Stomp Parameters
-const PGM_KemperParam * const Params_Wah_Wah[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Low_Pass[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_High_Pass[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Vowel_Filter[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Phaser[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Modulation_Phaser_Peak_Spread, &Param_Modulation_Phaser_Stages, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Flanger[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Rate_Reducer[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Peak, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Wah_Peak_Range, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Ring_Modulator[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Ducking};
-const PGM_KemperParam * const Params_Wah_Freq_Shifter[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Ducking};
-const PGM_KemperParam * const Params_Pedal_Pitch[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Ducking, &Param_Voice_1_Pitch, &Param_Voice_2_Pitch};
-const PGM_KemperParam * const Params_Wah_Formant_Shift[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Wah_Manual, &Param_Wah_Range, &Param_Wah_Pedal_Mode, &Param_Ducking, &Param_Voice_2_Pitch};
-const PGM_KemperParam * const Params_Pedal_Vinyl_Stop[] PROGMEM = {&Param_Mix, &Param_Volume};
-const PGM_KemperParam * const Params_Bit_Shaper[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Distortion_Booster_Tone};
-const PGM_KemperParam * const Params_Recti_Shaper[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Ducking};
-const PGM_KemperParam * const Params_Soft_Shaper[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive};
-const PGM_KemperParam * const Params_Hard_Shaper[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive};
-const PGM_KemperParam * const Params_Wave_Shaper[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive};
-const PGM_KemperParam * const Params_Green_Screem[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Distortion_Booster_Tone};
-const PGM_KemperParam * const Params_Plus_DS[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive};
-const PGM_KemperParam * const Params_One_DS[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Distortion_Booster_Tone};
-const PGM_KemperParam * const Params_Muffin[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Distortion_Booster_Tone};
-const PGM_KemperParam * const Params_Mouse[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Distortion_Booster_Tone};
-const PGM_KemperParam * const Params_Fuzz_DS[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive};
-const PGM_KemperParam * const Params_Metal_DS[] PROGMEM = {&Param_Volume, &Param_Distortion_Shaper_Drive, &Param_Parametric_EQ_Low_Gain, &Param_Parametric_EQ_High_Gain, &Param_Parametric_EQ_Peak_Gain, &Param_Parametric_EQ_Peak_Frequency};
-const PGM_KemperParam * const Params_Compressor[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Compressor_Gate_Intensity, &Param_Compressor_Attack, &Param_Compressor_Squash};
-const PGM_KemperParam * const Params_Gate_2_1[] PROGMEM = {&Param_Compressor_Gate_Intensity};
-const PGM_KemperParam * const Params_Gate_4_1[] PROGMEM = {&Param_Compressor_Gate_Intensity};
-const PGM_KemperParam * const Params_Vintage_Chorus[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Crossover, &Param_Ducking};
-const PGM_KemperParam * const Params_Hyper_Chorus[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Depth, &Param_Modulation_Crossover, &Param_Modulation_HyperChorus_Amount, &Param_Ducking};
-const PGM_KemperParam * const Params_Air_Chorus[] PROGMEM = {&Param_Volume, &Param_Modulation_Depth, &Param_Modulation_Crossover};
-const PGM_KemperParam * const Params_Vibrato[] PROGMEM = {&Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Crossover};
-const PGM_KemperParam * const Params_Rotary_Speaker[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Rotary_Speed__Slow_Off_Fast_On_, &Param_Rotary_Distance, &Param_Rotary_Balance, &Param_Ducking};
-const PGM_KemperParam * const Params_Tremolo[] PROGMEM = {&Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Crossover, &Param_Ducking};
-const PGM_KemperParam * const Params_Micro_Pitch[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Depth, &Param_Modulation_Crossover, &Param_Ducking};
-const PGM_KemperParam * const Params_Phaser[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Feedback, &Param_Modulation_Manual, &Param_Modulation_Phaser_Peak_Spread, &Param_Modulation_Phaser_Stages, &Param_Ducking};
-const PGM_KemperParam * const Params_Phase_Vibe[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Feedback, &Param_Modulation_Manual, &Param_Modulation_Phaser_Peak_Spread, &Param_Modulation_Phaser_Stages, &Param_Ducking};
-const PGM_KemperParam * const Params_Phaser_Oneway[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Feedback, &Param_Modulation_Manual, &Param_Modulation_Phaser_Peak_Spread, &Param_Modulation_Phaser_Stages, &Param_Ducking};
-const PGM_KemperParam * const Params_Flanger[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Feedback, &Param_Modulation_Manual, &Param_Ducking};
-const PGM_KemperParam * const Params_Flanger_Oneway[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Modulation_Feedback, &Param_Modulation_Manual, &Param_Ducking};
-const PGM_KemperParam * const Params_Graphic_Equalizer[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Graphic_EQ_Band_1, &Param_Graphic_EQ_Band_2, &Param_Graphic_EQ_Band_3, &Param_Graphic_EQ_Band_4, &Param_Graphic_EQ_Band_5, &Param_Graphic_EQ_Band_6, &Param_Graphic_EQ_Band_7, &Param_Graphic_EQ_Band_8, &Param_Ducking};
-const PGM_KemperParam * const Params_Studio_Equalizer[] PROGMEM = {&Param_Parametric_EQ_Low_Gain, &Param_Parametric_EQ_Low_Frequency, &Param_Parametric_EQ_High_Gain, &Param_Parametric_EQ_High_Frequency, &Param_Parametric_EQ_Peak_Gain, &Param_Parametric_EQ_Peak_Frequency, &Param_Parametric_EQ_Peak_Q_Factor, &Param_Parametric_EQ_Peak_Gain_2, &Param_Parametric_EQ_Peak_Frequency_2, &Param_Parametric_EQ_Peak_Q_Factor_2};
-const PGM_KemperParam * const Params_Metal_Equalizer[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Parametric_EQ_Low_Gain, &Param_Parametric_EQ_High_Gain, &Param_Parametric_EQ_Peak_Gain, &Param_Parametric_EQ_Peak_Frequency, &Param_Ducking};
-const PGM_KemperParam * const Params_Stereo_Widener[] PROGMEM = {&Param_Modulation_Rate, &Param_Modulation_Depth, &Param_Ducking};
-const PGM_KemperParam * const Params_Treble_Booster[] PROGMEM = {&Param_Volume, &Param_Distortion_Booster_Tone, &Param_Ducking};
-const PGM_KemperParam * const Params_Lead_Booster[] PROGMEM = {&Param_Volume, &Param_Distortion_Booster_Tone, &Param_Ducking};
-const PGM_KemperParam * const Params_Pure_Booster[] PROGMEM = {&Param_Volume};
-const PGM_KemperParam * const Params_Wah_Pedal_Booster[] PROGMEM = {&Param_Volume, &Param_Wah_Range};
-const PGM_KemperParam * const Params_Loop_Mono[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Ducking};
-const PGM_KemperParam * const Params_Loop_Stereo[] PROGMEM = {&Param_Mix, &Param_Volume, &Param_Ducking};
-const PGM_KemperParam * const Params_Loop_Distortion[] PROGMEM = {&Param_Volume};
-const PGM_KemperParam * const Params_Transpose[] PROGMEM = {&Param_Voice_1_Pitch};
-const PGM_KemperParam * const Params_Chromatic_Pitch[] PROGMEM = {&Param_Volume, &Param_Ducking, &Param_Voice_Mix, &Param_Voice_1_Pitch, &Param_Voice_2_Pitch, &Param_Detune, &Param_Smooth_Chords, &Param_Pure_Tuning, &Param_Free_Formants, &Param_Formant_Shift};
-const PGM_KemperParam * const Params_Harmonic_Pitch[] PROGMEM = {&Param_Volume, &Param_Ducking, &Param_Voice_Mix, &Param_Pure_Tuning, &Param_Voice_1_Interval, &Param_Voice_2_Interval, &Param_Key, &Param_Free_Formants, &Param_Formant_Shift};
-const PGM_KemperParam * const Params_Analog_Octaver[] PROGMEM = {&Param_Volume, &Param_Modulation_Crossover, &Param_Ducking, &Param_Voice_Mix};
-const PGM_KemperParam * const Params_Tap_Delay[] PROGMEM = {&Param_Delay_Type, &Param_Delay_On_Off__cuts_tail_, &Param_Delay_Mix, &Param_Delay_Volume, &Param_Delay_Time, &Param_Delay_Ratio, &Param_Delay_Clock_Left, &Param_Delay_Clock_Right, &Param_Delay_Feedback, &Param_Delay_Bandwidth, &Param_Delay_Center_Frequency, &Param_Delay_Modulation, &Param_Delay_On_off__keeps_tail_, &Param_Delay_Ducking};
-const PGM_KemperParam * const Params_Free_Delay[] PROGMEM = {&Param_Delay_Type, &Param_Delay_On_Off__cuts_tail_, &Param_Delay_Mix, &Param_Delay_Volume, &Param_Delay_Time, &Param_Delay_Ratio, &Param_Delay_Clock_Left, &Param_Delay_Clock_Right, &Param_Delay_Feedback, &Param_Delay_Bandwidth, &Param_Delay_Center_Frequency, &Param_Delay_Modulation, &Param_Delay_On_off__keeps_tail_, &Param_Delay_Ducking};
-const PGM_KemperParam * const Params_Analog_Delay[] PROGMEM = {&Param_Delay_Type, &Param_Delay_On_Off__cuts_tail_, &Param_Delay_Mix, &Param_Delay_Volume, &Param_Delay_Time, &Param_Delay_Ratio, &Param_Delay_Clock_Left, &Param_Delay_Clock_Right, &Param_Delay_Feedback, &Param_Delay_Bandwidth, &Param_Delay_Center_Frequency, &Param_Delay_Modulation, &Param_Delay_On_off__keeps_tail_, &Param_Delay_Ducking};
-const PGM_KemperParam * const Params_Hall[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
-const PGM_KemperParam * const Params_Large_Room[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
-const PGM_KemperParam * const Params_Small_Room[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
-const PGM_KemperParam * const Params_Ambience[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
-const PGM_KemperParam * const Params_Matchbox[] PROGMEM = {&Param_Reverb_Type, &Param_Reverb_On_off__cuts_tail_, &Param_Reverb_Mix, &Param_Reverb_Volume, &Param_Reverb_Del_Rev_Balance, &Param_Reverb_Time, &Param_Reverb_Damping, &Param_Reverb_Bandwidth, &Param_Reverb_Center_Frequency, &Param_Reverb_Pre_delay, &Param_Reverb_On_off__keeps_tail_, &Param_Reverb_Ducking};
+const PGM_KemperParam * const Params_Wah_Wah[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Low_Pass[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_High_Pass[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Vowel_Filter[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Phaser[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Spread_26__6_, &Param_Stages_27_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Flanger[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Rate_Reducer[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Peak_9_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Peak_Range_52_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Ring_Modulator[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Wah_Freq_Shifter[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Pedal_Pitch[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Ducking_53_default, &Param_Heel_Pitch_56__11_, &Param_Toe_Pitch_57__11_, &Param_Smooth_Chords_60_default, &Param_Pure_Tuning_61_default, &Param_Free_Formants_65_default, &Param_Formant_Shift_66_default};
+const PGM_KemperParam * const Params_Wah_Formant_Shift[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Manual_8_default, &Param_Pedal_Range_10_default, &Param_Pedal_Mode_12_default, &Param_Ducking_53_default, &Param_Pitch_Shift_57__12_};
+const PGM_KemperParam * const Params_Pedal_Vinyl_Stop[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default};
+const PGM_KemperParam * const Params_Bit_Shaper[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Tone_17_default};
+const PGM_KemperParam * const Params_Recti_Shaper[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Soft_Shaper[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default};
+const PGM_KemperParam * const Params_Hard_Shaper[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default};
+const PGM_KemperParam * const Params_Wave_Shaper[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default};
+const PGM_KemperParam * const Params_Green_Screem[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Tone_17_default};
+const PGM_KemperParam * const Params_Plus_DS[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default};
+const PGM_KemperParam * const Params_One_DS[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Tone_17_default};
+const PGM_KemperParam * const Params_Muffin[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Tone_17_default};
+const PGM_KemperParam * const Params_Mouse[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Tone_17_default};
+const PGM_KemperParam * const Params_Fuzz_DS[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default};
+const PGM_KemperParam * const Params_Metal_DS[] PROGMEM = {&Param_Volume_6_default, &Param_Drive_16_default, &Param_Low_42_default, &Param_High__Gain__44_default, &Param_Middle_46_default, &Param_Mid_Freq_47_default};
+const PGM_KemperParam * const Params_Compressor[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Intensity__18_default, &Param_Attack_19_default, &Param_squash_33_default};
+const PGM_KemperParam * const Params_Gate_2_1[] PROGMEM = {&Param_Threshold_18__57_58_};
+const PGM_KemperParam * const Params_Gate_4_1[] PROGMEM = {&Param_Threshold_18__57_58_};
+const PGM_KemperParam * const Params_Space[] PROGMEM = {&Param_Intensity_54__64_};
+const PGM_KemperParam * const Params_Vintage_Chorus[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rate_20_default, &Param_Depth_21_default, &Param_Crossover_23_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Hyper_Chorus[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Depth_21_default, &Param_Crossover_23_default, &Param_Amount_24_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Air_Chorus[] PROGMEM = {&Param_Volume_6_default, &Param_Depth_21_default, &Param_Crossover_23_default};
+const PGM_KemperParam * const Params_Vibrato[] PROGMEM = {&Param_Volume_6_default, &Param_Rate_20_default, &Param_Depth_21_default, &Param_Crossover_23_default};
+const PGM_KemperParam * const Params_Rotary_Speaker[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rotary_Speed_30_default, &Param_Distance_31_default, &Param_Low_High_Bal__32_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Tremolo[] PROGMEM = {&Param_Volume_6_default, &Param_Rate_20__70_, &Param_Depth_21_default, &Param_Crossover_23_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Micro_Pitch[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Depth_21_default, &Param_Crossover_23_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Phaser[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rate_20__81_82_89_, &Param_Depth_21_default, &Param_Feedback_22_default, &Param_Manual_25_default, &Param_Peak_Spread_26_default, &Param_Stages_27_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Phase_Vibe[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rate_20__81_82_89_, &Param_Depth_21_default, &Param_Feedback_22_default, &Param_Manual_25_default, &Param_Peak_Spread_26_default, &Param_Stages_27_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Phaser_Oneway[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rate_20__83_91_, &Param_Depth_21_default, &Param_Feedback_22_default, &Param_Manual_25__83_91_, &Param_Peak_Spread_26_default, &Param_Stages_27_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Flanger[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rate_20__81_82_89_, &Param_Depth_21_default, &Param_Feedback_22_default, &Param_Manual_25_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Flanger_Oneway[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Rate_20__83_91_, &Param_Depth_21_default, &Param_Feedback_22_default, &Param_Manual_25__83_91_, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Graphic_Equalizer[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_80_Hz_34_default, &Param_160_Hz_35_default, &Param_320_Hz_36_default, &Param_640_Hz_37_default, &Param_1250_Hz_38_default, &Param_2500_Hz_39_default, &Param_5000_Hz_40_default, &Param_10000_Hz_41_default, &Param_Ducking_53_default, &Param_Low_Cut_67_default, &Param_High_Cut_68_default};
+const PGM_KemperParam * const Params_Studio_Equalizer[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Low_Gain_42__98_, &Param_Low_Freq_43_default, &Param_High__Gain__44_default, &Param_High_Freq_45_default, &Param_Mid1_Gain_46__98_, &Param_Mid1_Freq_47__98_, &Param_Mid1_Q_Factor_48_default, &Param_Mid2_Gain_49_default, &Param_Mid2_Freq_50_default, &Param_Mid2_Q_Factor_51_default, &Param_Ducking_53_default, &Param_Low_Cut_67_default, &Param_High_Cut_68_default};
+const PGM_KemperParam * const Params_Metal_Equalizer[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Low_42_default, &Param_High__Gain__44_default, &Param_Middle_46_default, &Param_Mid_Freq_47_default, &Param_Ducking_53_default, &Param_Low_Cut_67_default, &Param_High_Cut_68_default};
+const PGM_KemperParam * const Params_Stereo_Widener[] PROGMEM = {&Param_Tune_20__101_, &Param_Depth_21_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Treble_Booster[] PROGMEM = {&Param_Volume_6_default, &Param_Tone_17_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Lead_Booster[] PROGMEM = {&Param_Volume_6_default, &Param_Tone_17_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Pure_Booster[] PROGMEM = {&Param_Volume_6_default};
+const PGM_KemperParam * const Params_Wah_Pedal_Booster[] PROGMEM = {&Param_Volume_6_default, &Param_Pedal_Range_10_default};
+const PGM_KemperParam * const Params_Loop_Mono[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Loop_Stereo[] PROGMEM = {&Param_Mix_4_default, &Param_Volume_6_default, &Param_Ducking_53_default};
+const PGM_KemperParam * const Params_Loop_Distortion[] PROGMEM = {&Param_Volume_6_default};
+const PGM_KemperParam * const Params_Transpose[] PROGMEM = {&Param_Pitch_56__129_};
+const PGM_KemperParam * const Params_Chromatic_Pitch[] PROGMEM = {&Param_Volume_6_default, &Param_Ducking_53_default, &Param_Mix_54_default, &Param_Voice_Mix_55_default, &Param_Voice_1_Pitch_56__130_, &Param_Voice_2_Pitch_57__130_, &Param_Detune_58_default, &Param_Smooth_Chords_60_default, &Param_Pure_Tuning_61_default, &Param_Free_Formants_65_default, &Param_Formant_Shift_66_default};
+const PGM_KemperParam * const Params_Harmonic_Pitch[] PROGMEM = {&Param_Volume_6_default, &Param_Ducking_53_default, &Param_Mix_54_default, &Param_Voice_Mix_55_default, &Param_Pure_Tuning_61_default, &Param_Voice_1_Interval_62_default, &Param_Voice_2_Interval_63_default, &Param_Key_64_default, &Param_Free_Formants_65_default, &Param_Formant_Shift_66_default};
+const PGM_KemperParam * const Params_Analog_Octaver[] PROGMEM = {&Param_Volume_6_default, &Param_Low_Cut_23__132_, &Param_Ducking_53_default, &Param_Mix_54_default, &Param_Voice_Mix_55_default};
+const PGM_KemperParam * const Params_Tap_Delay[] PROGMEM = {&Param_Type_100_default, &Param_On_Off__cuts_tail__102_default, &Param_Mix_103_default, &Param_Volume_104_default, &Param_Time_105_default, &Param_Ratio_106_default, &Param_Clock_Left_107_default, &Param_Clock_Right_108_default, &Param_Feedback_109_default, &Param_Bandwidth_110_default, &Param_Center_Frequency_111_default, &Param_Modulation_112_default, &Param_On_off__keeps_tail__113_default, &Param_Ducking_114_default};
+const PGM_KemperParam * const Params_Free_Delay[] PROGMEM = {&Param_Type_100_default, &Param_On_Off__cuts_tail__102_default, &Param_Mix_103_default, &Param_Volume_104_default, &Param_Time_105_default, &Param_Ratio_106_default, &Param_Clock_Left_107_default, &Param_Clock_Right_108_default, &Param_Feedback_109_default, &Param_Bandwidth_110_default, &Param_Center_Frequency_111_default, &Param_Modulation_112_default, &Param_On_off__keeps_tail__113_default, &Param_Ducking_114_default};
+const PGM_KemperParam * const Params_Analog_Delay[] PROGMEM = {&Param_Type_100_default, &Param_On_Off__cuts_tail__102_default, &Param_Mix_103_default, &Param_Volume_104_default, &Param_Time_105_default, &Param_Ratio_106_default, &Param_Clock_Left_107_default, &Param_Clock_Right_108_default, &Param_Feedback_109_default, &Param_Bandwidth_110_default, &Param_Center_Frequency_111_default, &Param_Modulation_112_default, &Param_On_off__keeps_tail__113_default, &Param_Ducking_114_default};
+const PGM_KemperParam * const Params_Hall[] PROGMEM = {&Param_Type_120_default, &Param_On_off__cuts_tail__122_default, &Param_Mix_123_default, &Param_Volume_124_default, &Param_Del_Rev_Balance_125_default, &Param_Time_126_default, &Param_Damping_127_default, &Param_Bandwidth_128_default, &Param_Center_Frequency_129_default, &Param_Pre_delay_130_default, &Param_On_off__keeps_tail__131_default, &Param_Ducking_132_default};
+const PGM_KemperParam * const Params_Large_Room[] PROGMEM = {&Param_Type_120_default, &Param_On_off__cuts_tail__122_default, &Param_Mix_123_default, &Param_Volume_124_default, &Param_Del_Rev_Balance_125_default, &Param_Time_126_default, &Param_Damping_127_default, &Param_Bandwidth_128_default, &Param_Center_Frequency_129_default, &Param_Pre_delay_130_default, &Param_On_off__keeps_tail__131_default, &Param_Ducking_132_default};
+const PGM_KemperParam * const Params_Small_Room[] PROGMEM = {&Param_Type_120_default, &Param_On_off__cuts_tail__122_default, &Param_Mix_123_default, &Param_Volume_124_default, &Param_Del_Rev_Balance_125_default, &Param_Time_126_default, &Param_Damping_127_default, &Param_Bandwidth_128_default, &Param_Center_Frequency_129_default, &Param_Pre_delay_130_default, &Param_On_off__keeps_tail__131_default, &Param_Ducking_132_default};
+const PGM_KemperParam * const Params_Ambience[] PROGMEM = {&Param_Type_120_default, &Param_On_off__cuts_tail__122_default, &Param_Mix_123_default, &Param_Volume_124_default, &Param_Del_Rev_Balance_125_default, &Param_Time_126_default, &Param_Damping_127_default, &Param_Bandwidth_128_default, &Param_Center_Frequency_129_default, &Param_Pre_delay_130_default, &Param_On_off__keeps_tail__131_default, &Param_Ducking_132_default};
+const PGM_KemperParam * const Params_Matchbox[] PROGMEM = {&Param_Type_120_default, &Param_On_off__cuts_tail__122_default, &Param_Mix_123_default, &Param_Volume_124_default, &Param_Del_Rev_Balance_125_default, &Param_Time_126_default, &Param_Damping_127_default, &Param_Bandwidth_128_default, &Param_Center_Frequency_129_default, &Param_Pre_delay_130_default, &Param_On_off__keeps_tail__131_default, &Param_Ducking_132_default};
 
 // Kemper Stomps
 const PGM_StompInfo AllStomps[] PROGMEM = {
@@ -422,7 +462,7 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 	{8, ColorOrange,"Wah Rate Reducer", 8, Params_Wah_Rate_Reducer, 1, 0},
 	{9, ColorOrange,"Wah Ring Modulator", 6, Params_Wah_Ring_Modulator, 1, 0},
 	{10, ColorOrange,"Wah Freq Shifter", 6, Params_Wah_Freq_Shifter, 1, 0},
-	{11, ColorOrange,"Pedal Pitch", 5, Params_Pedal_Pitch, 0, 1},
+	{11, ColorOrange,"Pedal Pitch", 9, Params_Pedal_Pitch, 0, 1},
 	{12, ColorOrange,"Wah Formant Shift", 7, Params_Wah_Formant_Shift, 1, 0},
 	{13, ColorLightGreen,"Pedal Vinyl Stop", 2, Params_Pedal_Vinyl_Stop, 0, 0},
 	{17, ColorRed,"Bit Shaper", 3, Params_Bit_Shaper, 0, 0},
@@ -440,7 +480,7 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 	{49, ColorCyan,"Compressor", 5, Params_Compressor, 0, 0},
 	{57, ColorCyan,"Gate 2:1", 1, Params_Gate_2_1, 0, 0},
 	{58, ColorCyan,"Gate 4:1", 1, Params_Gate_4_1, 0, 0},
-	{64, ColorGreen,"Space", 0, 0, 0, 0},
+	{64, ColorGreen,"Space", 1, Params_Space, 0, 0},
 	{65, ColorBlue,"Vintage Chorus", 6, Params_Vintage_Chorus, 0, 0},
 	{66, ColorBlue,"Hyper Chorus", 6, Params_Hyper_Chorus, 0, 0},
 	{67, ColorBlue,"Air Chorus", 3, Params_Air_Chorus, 0, 0},
@@ -448,14 +488,14 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 	{69, ColorBlue,"Rotary Speaker", 6, Params_Rotary_Speaker, 0, 0},
 	{70, ColorBlue,"Tremolo", 5, Params_Tremolo, 0, 0},
 	{71, ColorBlue,"Micro Pitch", 5, Params_Micro_Pitch, 0, 0},
-	{81, ColorBlue,"Phaser", 9, Params_Phaser, 0, 0},
-	{82, ColorBlue,"Phase Vibe", 9, Params_Phase_Vibe, 0, 0},
-	{83, ColorBlue,"Phaser Oneway", 9, Params_Phaser_Oneway, 0, 0},
-	{89, ColorBlue,"Flanger", 7, Params_Flanger, 0, 0},
-	{91, ColorBlue,"Flanger Oneway", 7, Params_Flanger_Oneway, 0, 0},
-	{97, ColorYellow,"Graphic Equalizer", 11, Params_Graphic_Equalizer, 0, 0},
-	{98, ColorYellow,"Studio Equalizer", 10, Params_Studio_Equalizer, 0, 0},
-	{99, ColorYellow,"Metal Equalizer", 7, Params_Metal_Equalizer, 0, 0},
+	{81, ColorPurple,"Phaser", 9, Params_Phaser, 0, 0},
+	{82, ColorPurple,"Phase Vibe", 9, Params_Phase_Vibe, 0, 0},
+	{83, ColorPurple,"Phaser Oneway", 9, Params_Phaser_Oneway, 0, 0},
+	{89, ColorPurple,"Flanger", 7, Params_Flanger, 0, 0},
+	{91, ColorPurple,"Flanger Oneway", 7, Params_Flanger_Oneway, 0, 0},
+	{97, ColorYellow,"Graphic Equalizer", 13, Params_Graphic_Equalizer, 0, 0},
+	{98, ColorYellow,"Studio Equalizer", 15, Params_Studio_Equalizer, 0, 0},
+	{99, ColorYellow,"Metal Equalizer", 9, Params_Metal_Equalizer, 0, 0},
 	{101, ColorYellow,"Stereo Widener", 3, Params_Stereo_Widener, 0, 0},
 	{113, ColorRed,"Treble Booster", 3, Params_Treble_Booster, 0, 0},
 	{114, ColorRed,"Lead Booster", 3, Params_Lead_Booster, 0, 0},
@@ -465,9 +505,9 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 	{122, ColorWhite,"Loop Stereo", 3, Params_Loop_Stereo, 0, 0},
 	{123, ColorWhite,"Loop Distortion", 1, Params_Loop_Distortion, 0, 0},
 	{129, ColorLightGreen,"Transpose", 1, Params_Transpose, 0, 0},
-	{130, ColorLightGreen,"Chromatic Pitch", 10, Params_Chromatic_Pitch, 0, 0},
-	{131, ColorLightGreen,"Harmonic Pitch", 9, Params_Harmonic_Pitch, 0, 0},
-	{132, ColorLightGreen,"Analog Octaver", 4, Params_Analog_Octaver, 0, 0},
+	{130, ColorLightGreen,"Chromatic Pitch", 11, Params_Chromatic_Pitch, 0, 0},
+	{131, ColorLightGreen,"Harmonic Pitch", 10, Params_Harmonic_Pitch, 0, 0},
+	{132, ColorLightGreen,"Analog Octaver", 5, Params_Analog_Octaver, 0, 0},
 	{201, ColorGreen,"Tap Delay", 14, Params_Tap_Delay, 0, 0},
 	{202, ColorGreen,"Free Delay", 14, Params_Free_Delay, 0, 0},
 	{203, ColorGreen,"Analog Delay", 14, Params_Analog_Delay, 0, 0},
@@ -481,12 +521,8 @@ const PGM_StompInfo AllStomps[] PROGMEM = {
 
 
 #define MAX_KEMPER_PARAM_OPTION_LENGTH 73
-#define MAX_KEMPER_PARAM_LENGTH 14
+#define MAX_KEMPER_PARAM_LENGTH 15
 
 
 
 
-// Error!!, No parameter name,0,54,
-// Error!!, No parameter name,2,54,
-// Error!!, No parameter name,2,54,
-// Error!!, No parameter name,3,54,

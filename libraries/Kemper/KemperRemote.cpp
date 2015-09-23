@@ -236,7 +236,7 @@ void KemperRemote::read() {
 			lastCalibrateDebug = millis();
 		}
 		if (expPedals[i].value == 0) {
-			if (state.state == REMOTE_STATE_EXPRESSION_CALIBRATE && calibratePedalId == i && millis() - pedalFirstZeroTimes[i] > 100 && pedalFirstZeroTimes[i]>0)
+			if (state.state == REMOTE_STATE_EXPRESSION_CALIBRATE && calibratePedalId == i && millis() - pedalFirstZeroTimes[i] > 1000 && pedalFirstZeroTimes[i]>0)
 				state.state = state.previousState;
 			pedalFirstNonZeroTimes[i] = 0;
 			if (pedalFirstZeroTimes[i] == 0)
@@ -249,7 +249,7 @@ void KemperRemote::read() {
 		}
 		if (state.state == REMOTE_STATE_STOMP_PARAMETER && state.parameterState!=REMOTE_PARAMETER_STATE_PARAMETER && expPedals[i].isCalibrated() && i==0) { //only first exp pedal
 			static unsigned int lastExpValue = 0;
-			if (abs((int)(expPedals[i].calibratedValue() - lastExpValue)) > 10) { // eliminate some noise
+			if (abs((int)(expPedals[i].calibratedValue() - lastExpValue)) > 2) { // eliminate some noise
 				lastExpValue = expPedals[i].calibratedValue();
 				float t = (float)expPedals[i].calibratedValue() / 1023;
 				kemper->setPartialParamValue(t);
