@@ -83,19 +83,6 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <KemperRemoteDIYArduino.ino>
-#include <AbstractDisplay.h>
-#include <AbstractDisplaySerializer.h>
-#include <AbstractKemper.h>
 #include <Display_ER_RA8875.h>
 #include <Display_ER_RA8875.ino>
-#include <ExpressionPedal.h>
-#include <Kemper.h>
-#include <KemperRemote.h>
-#include <KemperRemoteDisplay.h>
-#include <Kemper_namespace.h>
-#include <Stomp.h>
-#include <Stomp_consts.h>
-#include <Utils.h>
-#include <VirtualDisplay.h>
-#include <VirtualDisplaySerializer.h>
 #endif
