@@ -161,7 +161,7 @@ void KemperRemoteDisplay::draw() {
 			} else if (parameterChanged) {
 				int ph = 20;
 				for (int i=0;i<5;i++) {
-					bool selected = kemper->parameter.currentParam - kemper->parametopopoppooppopopopopopopopopoopopopoppoer.startParamIndex == i;
+					bool selected = kemper->parameter.currentParam - kemper->parameter.startParamIndex == i;
 				
 					display->fillRoundRect(10, height/2 + 10 + ph*i, 220, ph, 5, selected?(kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_VALUE?getColor(180,180,255): getColor(0, 0, 255)):getColor(255,255,255));
 					if (i<kemper->parameter.paramCount)
