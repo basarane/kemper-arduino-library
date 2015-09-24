@@ -218,12 +218,15 @@ void KemperRemoteDisplay::draw() {
 					KemperParamValue *valueType = &kemper->parameter.valueType;
 					float displayVal = 0;
 					if (valueType->exponential) {
-						displayVal = pow(2, val*log2(valueType->maxValue) + (1 - val)*log2(valueType->minValue));
+						displayVal = exp(val*log(valueType->maxValue) + (1 - val)*log(valueType->minValue));
 					}
 					else {
 						displayVal = val*(valueType->maxValue - valueType->minValue) + valueType->minValue;
 					}
-					sprintf(txt, "%s%.1f %s", valueType->minValue<0&&val>0.5?"+":"", displayVal, valueType->suffix);
+					char valStr[10];
+					ftoa(valStr, displayVal, 1);
+
+					sprintf(txt, "%s%s %s", valueType->minValue<0&&val>0.5?"+":"", valStr, valueType->suffix);
 					display->drawText(x0, y0 - h-20, w, 40, TextAlignCenter, TextAlignTop, 30, txt, strlen(txt), pcolor);
 					if (display->supportsLayers)
 					{

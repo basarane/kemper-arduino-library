@@ -309,7 +309,7 @@ void KemperRemote::read() {
 
 	static unsigned long lastParamSent = 0;
 	for (int i = 0; i < EXPRESSION_PEDAL_COUNT;i++)
-	if (expPedals[i].isCalibrated() && state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE && expPedals[i].isChanged(8))
+	if (expPedals[i].isCalibrated() && state.state!=REMOTE_STATE_EXPRESSION_CALIBRATE)
 	{
 		if (state.state == REMOTE_STATE_NORMAL || state.state == REMOTE_STATE_LOOPER) {
 			switch (expPedals[i].mode) {
@@ -335,7 +335,8 @@ void KemperRemote::read() {
 				case CC_WAH:
 				case CC_PITCH:
 				case CC_VOLUME:
-					kemper->sendControlChange(expPedals[i].mode, (expPedals[i].calibratedValue()) / 8);
+					if (expPedals[i].isChanged(8))
+						kemper->sendControlChange(expPedals[i].mode, (expPedals[i].calibratedValue()) / 8);
 					break;
 			}
 		}
