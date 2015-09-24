@@ -52,6 +52,14 @@ void KEMPER_NAMESPACE::debug(int x) {
 #endif
 }
 
+void KEMPER_NAMESPACE::debug(long x) {
+#ifndef KEMPER_DEBUG
+	Serial.write(0xF1);
+	Serial.print(x);
+	Serial.write(0xFF);
+	Serial.flush();
+#endif
+}
 void KEMPER_NAMESPACE::debug(byte a) {
 #ifndef KEMPER_DEBUG
 	Serial.write(0xF1);

@@ -121,15 +121,15 @@ void KemperRemote::read() {
 		} 
 		else
 			nextParam = true;
-		if (millis() - debugTime > 2000 || nextParam) {
-			debug(F("ParameterState"));
-			debug(state.state);
-			debug(F("Get parameter value"));
-			debug(stompIdx);
-			debug(paramNumber);
-			debug(paramValue);
-			debugTime = millis();
-		}
+		//if (millis() - debugTime > 2000 || nextParam) {
+		//	debug(F("ParameterState"));
+		//	debug(state.state);
+		//	debug(F("Get parameter value"));
+		//	debug(stompIdx);
+		//	debug(paramNumber);
+		//	debug(paramValue);
+		//	debugTime = millis();
+		//}
 		if (nextParam) {
 			bool paramFound = false;
 			for (int i = 0; i < KEMPER_STOMP_COUNT && !paramFound; i++) {
@@ -189,11 +189,15 @@ void KemperRemote::read() {
 							for (int j = 0; j < MAX_KEMPER_PARAM_LENGTH; j++) {
 								if (oldStompParameters[i][j][1] >= 0 && oldStompParameters[i][j][1] != newStompParameters[i][j][1]) {
 									*nextParameters++ = i;
+									// the following multiplier is needed because for parameter 20 (tune for stereo widener and rate for others)
+									// is read as 0-127. However the value should be sent as 0-16383
+									int multiplier = oldStompParameters[i][j][0] == 20 && i < 6?128:1; 
+									
 									*nextParameters++ = oldStompParameters[i][j][0];
-									*nextParameters++ = oldStompParameters[i][j][1] & 0xFF;
-									*nextParameters++ = oldStompParameters[i][j][1] >> 8;
-									*nextParameters++ = newStompParameters[i][j][1] & 0xFF;
-									*nextParameters++ = newStompParameters[i][j][1] >> 8;
+									*nextParameters++ = (oldStompParameters[i][j][1] * multiplier) & 0xFF;
+									*nextParameters++ = (oldStompParameters[i][j][1] * multiplier) >> 8;
+									*nextParameters++ = (newStompParameters[i][j][1] * multiplier) & 0xFF;
+									*nextParameters++ = (newStompParameters[i][j][1] * multiplier) >> 8;
 								}
 							}
 						}
@@ -227,6 +231,10 @@ void KemperRemote::read() {
 			if (pedalFirstNonZeroTimes[i] == 0)
 				pedalFirstNonZeroTimes[i] = millis();
 			else if (millis() - pedalFirstNonZeroTimes[i] > 2000) {
+				debug("Calibration activated");
+				debug(i);
+				debug((long)pedalFirstNonZeroTimes[i]);
+				debug((long)expPedals[i].value);
 				state.previousState = state.state;
 				state.state = REMOTE_STATE_EXPRESSION_CALIBRATE;
 				calibratePedalId = i;

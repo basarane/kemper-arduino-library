@@ -196,7 +196,7 @@ consts.stomps = {
         color: consts.color.red,
     },
     70: { //40
-        name: "Tremolo",
+        name: "Tremolo/Panner",
         params: [6, 20, 21, 23, 53],
         color: consts.color.blue,
     },

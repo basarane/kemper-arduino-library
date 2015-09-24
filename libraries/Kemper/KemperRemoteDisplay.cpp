@@ -159,11 +159,9 @@ void KemperRemoteDisplay::draw() {
 				char* stompAssignText = "STOMP ASSIGNMENT";
 				display->drawText(0, height/2, width-1, height/2-1, TextAlignCenter, TextAlignMiddle, 48, stompAssignText, strlen(stompAssignText), getColor(255,255,255));
 			} else if (parameterChanged) {
-
-				char* stompAssignText = "STOMP PARAMETER CHANGE";
 				int ph = 20;
 				for (int i=0;i<5;i++) {
-					bool selected = kemper->parameter.currentParam - kemper->parameter.startParamIndex == i;
+					bool selected = kemper->parameter.currentParam - kemper->parametopopoppooppopopopopopopopopoopopopoppoer.startParamIndex == i;
 				
 					display->fillRoundRect(10, height/2 + 10 + ph*i, 220, ph, 5, selected?(kemperRemote->state.parameterState == REMOTE_PARAMETER_STATE_VALUE?getColor(180,180,255): getColor(0, 0, 255)):getColor(255,255,255));
 					if (i<kemper->parameter.paramCount)
@@ -196,8 +194,9 @@ void KemperRemoteDisplay::draw() {
 					display->fillRect(x0,height/2+10, w, height/2-33, getColor(255,255,255));
 				
 					long maxVal = ((1<<14)-1);
-					if (kemper->parameter.valueType.maxParam)
-						maxVal = kemper->parameter.valueType.maxParam;
+					if (kemper->parameter.params[kemper->parameter.currentParam - kemper->parameter.startParamIndex].number == 20)
+						maxVal = 127;
+						//maxVal = kemper->parameter.valueType.maxParam;
 					float val = (float)kemper->parameter.currentValue / maxVal;
 					val = max(0, val);
 					val = min(1, val);

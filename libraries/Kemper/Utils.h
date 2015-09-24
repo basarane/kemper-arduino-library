@@ -15,6 +15,7 @@ void debug2(const __FlashStringHelper* str);
 #endif
 
 void debug(const char* str);
+void debug(long x);
 void debug(int x);
 void debug(byte a);
 void debug2(const char* str);
