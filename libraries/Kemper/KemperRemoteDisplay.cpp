@@ -320,7 +320,7 @@ void KemperRemoteDisplay::draw() {
 				if (lastKemperRemoteState.state != REMOTE_STATE_EXPRESSION_CALIBRATE) {
 					display->fillRect(0, 0, width-1, height/2, getColor(255,0,0));
 					char* calibrateText = "CALIBRATE EXPR. PEDAL";
-					display->drawText(0, 0, width-1, 40, TextAlignCenter, TextAlignMiddle, 40, calibrateText, strlen(calibrateText), getColor(255,255,255));
+					display->drawText(0, 0, width-1, 40, TextAlignCenter, TextAlignMiddle, 34, calibrateText, strlen(calibrateText), getColor(255,255,255));
 					char* calibrateText2 = "Move expression pedal to heal and toe positions several times to calibrate. Press any switch to exit";
 					display->drawText(0, 60, width-1, height/2-70, TextAlignCenter, TextAlignMiddle, 26, calibrateText2, strlen(calibrateText2), getColor(255,255,255));
 				}

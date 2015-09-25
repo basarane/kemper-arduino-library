@@ -201,6 +201,7 @@ void KemperRemote::read() {
 								}
 							}
 						}
+						updateExpPedalModes();
 					}
 					state.state = REMOTE_STATE_NORMAL;
 				} 

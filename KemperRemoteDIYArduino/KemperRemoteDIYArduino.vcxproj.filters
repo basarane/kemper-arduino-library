@@ -287,9 +287,6 @@
     <ClCompile Include="..\libraries\Kemper\AbstractKemper.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>
-    <ClCompile Include="..\libraries\Kemper\Display_ER_RA8875.cpp">
-      <Filter>_libraries\Kemper</Filter>
-    </ClCompile>
     <ClCompile Include="..\libraries\Kemper\ExpressionPedal.cpp">
       <Filter>_libraries\Kemper</Filter>
     </ClCompile>

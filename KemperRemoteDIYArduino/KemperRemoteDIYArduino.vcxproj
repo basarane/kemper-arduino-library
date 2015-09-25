@@ -136,7 +136,6 @@
     <ClCompile Include="..\libraries\ER-TFTM043-3\RA8875.cpp" />
     <ClCompile Include="..\libraries\Kemper\AbstractDisplay.cpp" />
     <ClCompile Include="..\libraries\Kemper\AbstractKemper.cpp" />
-    <ClCompile Include="..\libraries\Kemper\Display_ER_RA8875.cpp" />
     <ClCompile Include="..\libraries\Kemper\ExpressionPedal.cpp" />
     <ClCompile Include="..\libraries\Kemper\Kemper.cpp" />
     <ClCompile Include="..\libraries\Kemper\KemperRemote.cpp" />
