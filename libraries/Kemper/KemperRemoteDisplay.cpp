@@ -321,7 +321,7 @@ void KemperRemoteDisplay::draw() {
 					display->fillRect(0, 0, width-1, height/2, getColor(255,0,0));
 					char* calibrateText = "CALIBRATE EXPR. PEDAL";
 					display->drawText(0, 0, width-1, 40, TextAlignCenter, TextAlignMiddle, 34, calibrateText, strlen(calibrateText), getColor(255,255,255));
-					char* calibrateText2 = "Move expression pedal to heal and toe positions several times to calibrate. Press any switch to exit";
+					char* calibrateText2 = "Move expression pedal to heel and toe positions several times to calibrate. Press any switch to exit";
 					display->drawText(0, 60, width-1, height/2-70, TextAlignCenter, TextAlignMiddle, 26, calibrateText2, strlen(calibrateText2), getColor(255,255,255));
 				}
 			} else if (kemper->state.mode == MODE_TUNER && millis() - lastTunerTime > 50) {
